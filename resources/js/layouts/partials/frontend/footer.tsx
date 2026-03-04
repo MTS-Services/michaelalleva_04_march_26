@@ -1,56 +1,100 @@
 import { Link } from '@inertiajs/react';
 import AppLogo from '@/components/app-logo';
+import { Button } from '@/components/ui/button';
+import { Facebook, Instagram, Twitter } from 'lucide-react';
 
+const SocialLinks = [
+    {
+        name: 'Facebook',
+        icon: Facebook,
+        href: 'https://www.facebook.com/'
+    },
+    {
+        name: 'Instagram',
+        icon: Instagram,
+        href: 'https://www.instagram.com'
+    },
+    {
+        name: 'Twitter',
+        icon: Twitter,
+        href: 'https://x.com/'
+    }
+]
+
+const Destinations = [
+    {
+        name: 'Egypt',
+        href: '#'
+    },
+
+    {
+        name: 'Costa Rica',
+        href: '#'
+    },
+    {
+        name: 'Norway',
+        href: '#'
+    }
+]
+
+const Company = [
+    {
+        name: 'About Us',
+        href: '#'
+    },
+
+    {
+        name: 'Terms of Service',
+        href: '#'
+    },
+    {
+        name: 'Privacy Policy',
+        href: '#'
+    }
+]
 export function FrontendFooter() {
     return (
-        <footer className="border-t bg-muted/40 dark:bg-muted/10">
-            <div className="container mx-auto px-4 py-12 md:px-8 lg:py-16">
-                <div className="xl:grid xl:grid-cols-3 xl:gap-8">
-                    {/* Brand Section */}
-                    <div className="space-y-4">
-                        <AppLogo />
-                        <p className="max-w-xs text-sm leading-6 text-muted-foreground">
-                            Crafting beautiful digital experiences for modern teams. Build, ship, and scale with confidence.
-                        </p>
-                    </div>
-
-                    {/* Links Grid */}
-                    <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
-                        <div className="md:grid md:grid-cols-2 md:gap-8">
-                            <div>
-                                <h3 className="text-sm font-semibold text-foreground">Product</h3>
-                                <ul className="mt-4 space-y-3">
-                                    <li><Link href="#" className="text-sm text-muted-foreground hover:text-violet-600 dark:hover:text-violet-400 transition-colors">Features</Link></li>
-                                    <li><Link href="#" className="text-sm text-muted-foreground hover:text-violet-600 dark:hover:text-violet-400 transition-colors">Pricing</Link></li>
-                                </ul>
-                            </div>
-                            <div className="mt-10 md:mt-0">
-                                <h3 className="text-sm font-semibold text-foreground">Support</h3>
-                                <ul className="mt-4 space-y-3">
-                                    <li><Link href="#" className="text-sm text-muted-foreground hover:text-violet-600 dark:hover:text-violet-400 transition-colors">Documentation</Link></li>
-                                    <li><Link href="#" className="text-sm text-muted-foreground hover:text-violet-600 dark:hover:text-violet-400 transition-colors">API Status</Link></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div>
-                            <h3 className="text-sm font-semibold text-foreground">Company</h3>
-                            <ul className="mt-4 space-y-3">
-                                <li><Link href="#" className="text-sm text-muted-foreground hover:text-violet-600 dark:hover:text-violet-400 transition-colors">About Us</Link></li>
-                                <li><Link href="#" className="text-sm text-muted-foreground hover:text-violet-600 dark:hover:text-violet-400 transition-colors">Privacy</Link></li>
-                                <li><Link href="#" className="text-sm text-muted-foreground hover:text-violet-600 dark:hover:text-violet-400 transition-colors">Terms</Link></li>
-                            </ul>
-                        </div>
+        <footer className="bg-foreground">
+            <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 px-3 md:px-4 py-10 space-y-10">
+                <div className='space-y-5'>
+                    <Button asChild className="w-fit">
+                        <Link href="/" className='pr-10'>
+                            <AppLogo />
+                        </Link>
+                    </Button>
+                    <p className='text-muted-foreground w-full md:max-w-3/5'>
+                        Expertly creating unforgettable journeys since 2009. As a trusted travel partner for USA clients, we specialize in premium 5-night to 2-week excursions to Egypt, Norway, and Costa Rica. Book your next adventure at least 14 days in advance and experience the world with a team that prioritizes your safety, comfort, and discovery.
+                    </p>
+                    <div className='flex items-center gap-2'>
+                        {SocialLinks.map((link) => (
+                            <a href={link.href} target='_blank'>
+                                <Button key={link.name} size="icon" className='bg-card-foreground text-white cursor-pointer p-2 hover:bg-card-foreground/80 transition-all duration-200'>
+                                    <link.icon className="w-4 h-4" />
+                                </Button>
+                            </a>
+                        ))}
                     </div>
                 </div>
-
-                {/* Bottom Bar */}
-                <div className="mt-16 border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="text-xs text-muted-foreground">
-                        &copy; {new Date().getFullYear()} Team Artisan Inc. All rights reserved.
-                    </p>
-                    <div className="flex items-center space-x-4">
-                        <div className="h-1 w-1 rounded-full bg-muted-foreground/30" />
-                        <span className="text-xs text-muted-foreground">Version 2.4.0</span>
+                <div className='grid grid-cols-2 gap-5'>
+                    <div className='space-y-5'>
+                        <h5 className='text-white font-normal!'>Destinations</h5>
+                        <ul className='space-y-2'>
+                            {Destinations.map((destination) => (
+                                <li key={destination.name}>
+                                    <Link href={destination.href} className='text-muted-foreground text-sm! hover:text-white transition-all duration-200'>{destination.name}</Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className='space-y-5'>
+                        <h5 className='text-white font-normal!'>Company</h5>
+                        <ul className='space-y-2'>
+                            {Company.map((company) => (
+                                <li key={company.name}>
+                                    <Link href={company.href} className='text-muted-foreground text-sm! hover:text-white transition-all duration-200'>{company.name}</Link>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 </div>
             </div>
