@@ -48,10 +48,10 @@ class HandleInertiaRequests extends Middleware
                 // 'canResetPassword' => Features::enabled(Features::resetPasswords()),
                 // 'canVerifyEmail' => Features::enabled(Features::emailVerification()),
                 // 'canUseTwoFactorAuthentication' => Features::enabled(Features::twoFactorAuthentication()),
-                'canRegister' => false,
-                'canResetPassword' => false,
-                'canVerifyEmail' => false,
-                'canUseTwoFactorAuthentication' => false,
+                'canRegister' => true,
+                'canResetPassword' => true,
+                'canVerifyEmail' => true,
+                'canUseTwoFactorAuthentication' => true,
             ],
         ];
     }

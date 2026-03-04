@@ -33,7 +33,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
         <>
             <DropdownMenuLabel className="p-0 font-normal">
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                    <UserInfo user={user} showRole={true} />
+                    <UserInfo user={user} showEmail={true} />
                 </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
@@ -41,23 +41,27 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
                 <DropdownMenuItem asChild>
                     <Link
                         className="block w-full cursor-pointer"
-                        href={edit()}
+                        href={dashboardLink}
                         prefetch
                         onClick={cleanup}
                     >
-                        <Settings className="mr-2" />
-                        Settings
+                        <span className='bg-primary text-white rounded p-1 inline-flex items-center justify-center mr-2'>
+                            <LayoutDashboard className="size-4 text-white" />
+                        </span>
+                        Dashboard
                     </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                     <Link
                         className="block w-full cursor-pointer"
-                        href={dashboardLink}
+                        href={edit()}
                         prefetch
                         onClick={cleanup}
                     >
-                        <LayoutDashboard className="mr-2" />
-                        Back to Dashboard
+                        <span className='bg-primary text-white rounded p-1 inline-flex items-center justify-center mr-2'>
+                            <Settings className="size-4 text-white" />
+                        </span>
+                        Settings
                     </Link>
                 </DropdownMenuItem>
             </DropdownMenuGroup>
@@ -70,7 +74,9 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
                     onClick={handleLogout}
                     data-test="logout-button"
                 >
-                    <LogOut className="mr-2" />
+                    <span className='bg-primary text-white rounded p-1 inline-flex items-center justify-center mr-2'>
+                        <LogOut className="size-4 text-white" />
+                    </span>
                     Log out
                 </Link>
             </DropdownMenuItem>

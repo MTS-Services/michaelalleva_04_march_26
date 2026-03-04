@@ -50,7 +50,7 @@ createInertiaApp({
         );
     },
     progress: {
-        color: 'var(--color-destructive)',
+        color: 'var(--color-primary)',
     },
     defaults: {
         future: {
