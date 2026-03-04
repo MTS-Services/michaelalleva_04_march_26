@@ -6,7 +6,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useInitials } from '@/hooks/use-initials';
-import { type SharedData, type NavItemType } from '@/types';
+import { type SharedData, type NavItem as NavItemType } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { ChevronLeft, Menu, ChevronRight, Settings, LayoutGrid } from 'lucide-react';
 import * as React from 'react';
@@ -27,7 +27,7 @@ const mainNavItems: NavItemType[] = [
     },
     {
         title: 'Settings',
-        href: route('settings.profile.edit'),
+        href: route('profile.edit'),
         icon: Settings,
     },
 ];
@@ -78,7 +78,7 @@ export function UserHeader({ isCollapsed, setIsCollapsed }: UserHeaderProps) {
 
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                    <Button variant="ghost" size="icon" className="relative rounded-full">
                         <Avatar className="h-8 w-8">
                             <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
                             <AvatarFallback>{getInitials(auth.user.name)}</AvatarFallback>

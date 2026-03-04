@@ -2,6 +2,7 @@ import FrontendLayout from "@/layouts/frontend-layout";
 import { Link, usePage } from "@inertiajs/react";
 import { SharedData } from "@/types";
 import { login, register } from "@/routes";
+import { Button } from "@/components/ui/button";
 
 export default function Home({
     canRegister = true,
@@ -51,12 +52,13 @@ export default function Home({
                                 </Link>
                             ) : (
                                 <>
-                                    <Link
-                                        href={login()}
-                                        className="rounded-md bg-violet-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-violet-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600 transition-all"
-                                    >
-                                        Get Started
-                                    </Link>
+                                    <Button>
+                                        <Link
+                                            href={login()}
+                                        >
+                                            Get Started 
+                                        </Link>
+                                    </Button>
                                     {canRegister && (
                                         <Link
                                             href={register()}

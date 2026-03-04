@@ -6,21 +6,25 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class UserMiddleware
 {
     /**
      * Handle an incoming request.
      *
-     * @return mixed
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! $request->user() || ! $request->user()->is_admin) {
+        if (!$request->user()) {
+            return $next($request);
+        }
+
+        if ($request->user()->is_admin) {
             if ($request->expectsJson()) {
                 return response()->json(['error' => 'Unauthorized'], 403);
             }
 
-            return redirect()->route('home')->with('error', 'You do not have permission to access this area.');
+            return redirect()->route('admin.dashboard')->with('error', 'You do not have permission to access this area.');
         }
 
         return $next($request);

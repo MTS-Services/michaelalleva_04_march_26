@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
-import { type NavItemType } from '@/types';
+import { type NavItem as NavItemType } from '@/types';
 import { Link } from '@inertiajs/react';
-import { Settings, LayoutGrid } from 'lucide-react';
+import { Settings, LayoutGrid, LayoutDashboard } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import * as React from 'react';
 
@@ -9,11 +9,11 @@ const mainNavItems: NavItemType[] = [
     {
         title: 'Dashboard',
         href: route('user.dashboard'),
-        icon: LayoutGrid,
+        icon: LayoutDashboard,
     },
     {
         title: 'Settings',
-        href: route('settings.profile.edit'),
+        href: route('profile.edit'),
         icon: Settings,
     },
 ];
@@ -32,7 +32,7 @@ export function UserSidebar({ isCollapsed }: UserSidebarProps) {
         >
             <div className="flex h-16 items-center border-b px-6">
                 <Link href="/">
-                    {isCollapsed ? <LayoutGrid className="h-6 w-6" /> : <AppLogo />}
+                    {isCollapsed ? <LayoutDashboard className="h-6 w-6" /> : <AppLogo />}
                 </Link>
             </div>
             <nav className="flex-1 space-y-2 p-4">

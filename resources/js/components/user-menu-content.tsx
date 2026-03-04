@@ -1,14 +1,19 @@
 import { Link, router } from '@inertiajs/react';
-import { LogOut } from 'lucide-react';
+import { LayoutDashboard, LogOut, Settings } from 'lucide-react';
 
 import {
     DropdownMenuItem,
     DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuGroup,
 } from '@/components/ui/dropdown-menu';
 import { UserInfo } from '@/components/user-info';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { logout } from '@/routes';
+import { edit } from '@/routes/profile';
 import { type User } from '@/types';
+import { dashboard as userDashboard } from '@/routes/user';
+import { dashboard as adminDashboard } from '@/routes/admin';
 
 interface UserMenuContentProps {
     user: User;
@@ -22,6 +27,8 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
         router.flushAll();
     };
 
+    const dashboardLink = user.is_admin ? adminDashboard() : userDashboard();
+
     return (
         <>
             <DropdownMenuLabel className="p-0 font-normal">
@@ -29,7 +36,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
                     <UserInfo user={user} showRole={true} />
                 </div>
             </DropdownMenuLabel>
-            {/* <DropdownMenuSeparator />
+            <DropdownMenuSeparator />
             <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
                     <Link
@@ -42,8 +49,19 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
                         Settings
                     </Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                    <Link
+                        className="block w-full cursor-pointer"
+                        href={dashboardLink}
+                        prefetch
+                        onClick={cleanup}
+                    >
+                        <LayoutDashboard className="mr-2" />
+                        Back to Dashboard
+                    </Link>
+                </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator /> */}
+            <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
                 <Link
                     className="block w-full cursor-pointer"

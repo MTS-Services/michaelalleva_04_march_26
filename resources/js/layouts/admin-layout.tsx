@@ -2,6 +2,7 @@ import * as React from 'react';
 import { AdminSidebar } from '@/layouts/partials/admin/sidebar';
 import { AdminHeader } from '@/layouts/partials/admin/header';
 import { AdminFooter } from './partials/admin/footer';
+import { useAppearance } from '@/hooks/use-appearance';
 
 interface AdminLayoutProps {
     children: React.ReactNode;
@@ -9,6 +10,12 @@ interface AdminLayoutProps {
 }
 
 export default function AdminLayout({ children, activeSlug }: AdminLayoutProps) {
+    const { appearance, updateAppearance } = useAppearance();
+    React.useEffect(() => {
+        if (appearance !== 'light') {
+            updateAppearance('light');
+        }
+    }, [appearance, updateAppearance]);
     const [isCollapsed, setIsCollapsed] = React.useState(() => {
         // Persist sidebar state in localStorage
         if (typeof window !== 'undefined') {
@@ -33,7 +40,7 @@ export default function AdminLayout({ children, activeSlug }: AdminLayoutProps) 
                 <main className="flex-1 overflow-y-auto overflow-x-hidden p-6 space-y-6">
                     {children}
                 </main>
-            
+
                 <AdminFooter />
             </div>
         </div>

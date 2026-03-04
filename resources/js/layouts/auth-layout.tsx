@@ -5,6 +5,7 @@ import { AuthHeader } from '@/layouts/partials/auth/header';
 import { AuthFooter } from '@/layouts/partials/auth/footer';
 import AppLogoIcon from '@/components/app-logo-icon';
 import { home } from '@/routes';
+import { useAppearance } from '@/hooks/use-appearance';
 
 
 interface AuthLayoutProps {
@@ -22,6 +23,12 @@ export default function AuthLayout({
     showHeader = false,
     showFooter = false,
 }: AuthLayoutProps) {
+    const { appearance, updateAppearance } = useAppearance();
+    React.useEffect(() => {
+        if (appearance !== 'light') {
+            updateAppearance('light');
+        }
+    }, [appearance, updateAppearance]);
     return (
         <div className="flex min-h-svh flex-col bg-background relative overflow-hidden">
 

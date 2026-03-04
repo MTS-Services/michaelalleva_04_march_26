@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap');
+
 @import 'tailwindcss';
 
 @import 'tw-animate-css';
@@ -10,6 +12,16 @@
 @theme {
     --font-sans:
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji';
+
+    --font-libre-franklin:
+        'Libre Franklin', ui-sans-serif, system-ui, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji';
+
+    --font-oswald:
+        'Oswald', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
 
@@ -63,107 +75,103 @@
 
 :root {
     --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
+    --foreground: hsla(173, 80%, 4%, 1);
     --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
+    --card-foreground: hsla(171, 11%, 23%, 1);
     --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --destructive-foreground: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.87 0 0);
-    --chart-1: oklch(0.646 0.222 41.116);
-    --chart-2: oklch(0.6 0.118 184.704);
-    --chart-3: oklch(0.398 0.07 227.392);
-    --chart-4: oklch(0.828 0.189 84.429);
-    --chart-5: oklch(0.769 0.188 70.08);
+    --popover-foreground: hsla(171, 11%, 23%, 1);
+    --primary: hsla(173, 80%, 40%, 1);
+    --primary-foreground: hsl(173, 80%, 98%);
+    --secondary: hsla(173, 80%, 90%, 1);
+    --secondary-foreground: hsla(171, 11%, 23%, 1);
+    --muted: hsla(168, 9%, 79%, 1);
+    --muted-foreground: hsla(173, 21%, 93%, 1);
+    --accent: hsla(173, 80%, 40%, 1);
+    --accent-foreground: hsla(173, 80%, 98%, 1);
+    --destructive: hsla(358, 80%, 40%, 1);
+    --destructive-foreground: hsla(358, 80%, 70%, 1);
+    --border: hsla(173, 80%, 90%, 1);
+    --input: hsla(173, 80%, 90%, 1);
+    --ring: hsla(173, 80%, 90%, 1);
+    --chart-1: hsla(173, 80%, 40%, 1);
+    --chart-2: hsla(173, 80%, 40%, 1);
+    --chart-3: hsla(173, 80%, 40%, 1);
+    --chart-4: hsla(173, 80%, 40%, 1);
+    --chart-5: hsla(173, 80%, 40%, 1);
     --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.87 0 0);
+    --sidebar: hsla(173, 80%, 90%, 1);
+    --sidebar-foreground: hsla(173, 80%, 90%, 1);
+    --sidebar-primary: hsla(173, 80%, 90%, 1);
+    --sidebar-primary-foreground: hsla(173, 80%, 90%, 1);
+    --sidebar-accent: hsla(173, 80%, 90%, 1);
+    --sidebar-accent-foreground: hsla(173, 80%, 90%, 1);
+    --sidebar-border: hsla(173, 80%, 90%, 1);
+    --sidebar-ring: hsla(173, 80%, 90%, 1);
 
-    --datatable-bg: #ffffff;
-    --datatable-bg-secondary: #f8fafc;
-    --datatable-border: #e2e8f0;
-    --datatable-header-bg: #f1f5f9;
-    --datatable-row-hover: #f8fafc;
-    --datatable-text: #0f172a;
-    --datatable-text-secondary: #475569;
-    --datatable-text-muted: #64748b;
-    --datatable-primary: #3b82f6;
-    --datatable-primary-hover: #2563eb;
-    --datatable-destructive: #ef4444;
-    --datatable-destructive-hover: #dc2626;
-    --datatable-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --datatable-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-    --datatable-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-    --datatable-ring: rgba(59, 130, 246, 0.5);
+    --datatable-bg: hsla(173, 80%, 90%, 1);
+    --datatable-bg-secondary: hsla(173, 80%, 90%, 1);
+    --datatable-border: hsla(173, 80%, 90%, 1);
+    --datatable-header-bg: hsla(173, 80%, 90%, 1);
+    --datatable-row-hover: hsla(173, 80%, 90%, 1);
+    --datatable-text: hsla(173, 80%, 90%, 1);
+    --datatable-text-secondary: hsla(173, 80%, 90%, 1);
+    --datatable-text-muted: hsla(173, 80%, 90%, 1);
+    --datatable-primary: hsla(173, 80%, 90%, 1);
+    --datatable-primary-hover: hsla(173, 80%, 90%, 1);
+    --datatable-destructive: hsla(173, 80%, 90%, 1);
+    --datatable-destructive-hover: hsla(173, 80%, 90%, 1);
 }
 
 .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.145 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.145 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.985 0 0);
+    --background: hsla(171, 11%, 23%, 1);
+    --foreground: hsla(173, 80%, 90%, 1);
+    --card: hsla(171, 11%, 23%, 1);
+    --card-foreground: hsla(173, 80%, 90%, 1);
+    --popover: hsla(171, 11%, 23%, 1);
+    --popover-foreground: hsla(173, 80%, 90%, 1);
+    --primary: hsl(173, 80%, 40%);
     --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.396 0.141 25.723);
-    --destructive-foreground: oklch(0.637 0.237 25.331);
-    --border: oklch(0.269 0 0);
-    --input: oklch(0.269 0 0);
-    --ring: oklch(0.439 0 0);
-    --chart-1: oklch(0.488 0.243 264.376);
-    --chart-2: oklch(0.696 0.17 162.48);
-    --chart-3: oklch(0.769 0.188 70.08);
-    --chart-4: oklch(0.627 0.265 303.9);
-    --chart-5: oklch(0.645 0.246 16.439);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.985 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(0.269 0 0);
-    --sidebar-ring: oklch(0.439 0 0);
+    --secondary: hsla(173, 80%, 90%, 1);
+    --secondary-foreground: hsla(173, 80%, 90%, 1);
+    --muted: hsla(173, 80%, 90%, 1);
+    --muted-foreground: hsla(173, 80%, 90%, 1);
+    --accent: hsla(173, 80%, 90%, 1);
+    --accent-foreground: hsla(173, 80%, 90%, 1);
+    --destructive: hsla(173, 80%, 90%, 1);
+    --destructive-foreground: hsla(173, 80%, 90%, 1);
+    --border: hsla(173, 80%, 90%, 1);
+    --input: hsla(173, 80%, 90%, 1);
+    --ring: hsla(173, 80%, 90%, 1);
+    --chart-1: hsla(173, 80%, 90%, 1);
+    --chart-2: hsla(173, 80%, 90%, 1);
+    --chart-3: hsla(173, 80%, 90%, 1);
+    --chart-4: hsla(173, 80%, 90%, 1);
+    --chart-5: hsla(173, 80%, 90%, 1);
+    --sidebar: hsla(173, 80%, 90%, 1);
+    --sidebar-foreground: hsla(171, 11%, 23%, 1);
+    --sidebar-primary: hsla(171, 11%, 23%, 1);
+    --sidebar-primary-foreground: hsla(171, 11%, 23%, 1);
+    --sidebar-accent: hsla(171, 11%, 23%, 1);
+    --sidebar-accent-foreground: hsla(171, 11%, 23%, 1);
+    --sidebar-border: hsla(171, 11%, 23%, 1);
+    --sidebar-ring: hsla(171, 11%, 23%, 1);
 
-    --datatable-bg: #0f172a;
-    --datatable-bg-secondary: #1e293b;
-    --datatable-border: #334155;
-    --datatable-header-bg: #1e293b;
-    --datatable-row-hover: #1e293b;
-    --datatable-text: #f1f5f9;
-    --datatable-text-secondary: #cbd5e1;
-    --datatable-text-muted: #94a3b8;
-    --datatable-primary: #3b82f6;
-    --datatable-primary-hover: #2563eb;
-    --datatable-destructive: #ef4444;
-    --datatable-destructive-hover: #dc2626;
-    --datatable-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-    --datatable-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.3);
-    --datatable-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
-    --datatable-ring: rgba(59, 130, 246, 0.4);
+    --datatable-bg: hsla(171, 11%, 23%, 1);
+    --datatable-bg-secondary: hsla(171, 11%, 23%, 1);
+    --datatable-border: hsla(171, 11%, 23%, 1);
+    --datatable-header-bg: hsla(171, 11%, 23%, 1);
+    --datatable-row-hover: hsla(171, 11%, 23%, 1);
+    --datatable-text: hsla(171, 11%, 23%, 1);
+    --datatable-text-secondary: hsla(171, 11%, 23%, 1);
+    --datatable-text-muted: hsla(171, 11%, 23%, 1);
+    --datatable-primary: hsla(171, 11%, 23%, 1);
+    --datatable-primary-hover: hsla(171, 11%, 23%, 1);
+    --datatable-destructive: hsla(171, 11%, 23%, 1);
+    --datatable-destructive-hover: hsla(171, 11%, 23%, 1);
+    --datatable-shadow-sm: 0 1px 2px 0 hsla(171, 11%, 23%, 1);
+    --datatable-shadow: 0 1px 3px 0 hsla(171, 11%, 23%, 1), 0 1px 2px -1px hsla(171, 11%, 23%, 1);
+    --datatable-shadow-md: 0 4px 6px -1px hsla(171, 11%, 23%, 1), 0 2px 4px -2px hsla(171, 11%, 23%, 1);
+    --datatable-ring: hsla(171, 11%, 23%, 1);
 }
 
 @utility container {
@@ -205,12 +213,48 @@
 
 @layer base {
     * {
-        @apply border-border;
+        @apply border-border font-libre-franklin;
     }
 
     body {
         @apply bg-background text-foreground;
     }
+
+}
+
+@layer typography {
+    h1 {
+        @apply text-6xl font-bold font-oswald;
+    }
+
+    h2 {
+        @apply text-5xl font-bold font-oswald;
+    }
+
+    h3 {
+        @apply text-4xl font-bold font-oswald;
+    }
+
+    h4 {
+        @apply text-3xl font-bold font-oswald;
+    }
+
+    h5 {
+        @apply text-2xl font-bold font-oswald;
+    }
+
+    h6 {
+        @apply text-xl font-bold font-oswald;
+    }
+
+    p {
+        @apply text-base font-libre-franklin;
+    }
+
+    a {
+        @apply text-base font-libre-franklin;
+    }
+
 
 }
 
