@@ -20,20 +20,21 @@ const defaultContactContent =
     'Have questions about your journey? Our travel experts are here to help you plan the perfect adventure.';
 const defaultEmailHref = 'mailto:hello@example.com';
 const defaultPhoneHref = 'tel:+1234567890';
+const defaultUsaImageSrc = '/images/location.png';
 
 export function HomeContactSection({
     usaHeading = defaultUsaHeading,
     usaContent = defaultUsaContent,
-    usaImageSrc,
+    usaImageSrc = defaultUsaImageSrc,
     contactHeading = defaultContactHeading,
     contactContent = defaultContactContent,
     emailHref = defaultEmailHref,
     phoneHref = defaultPhoneHref,
 }: HomeContactSectionProps) {
     return (
-        <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 lg:px-8">
+        <section className="container mx-auto max-w-7xl px-4 py-16 md:px-6 lg:px-8">
             <div className="grid gap-6 lg:grid-cols-2">
-                <article className="flex flex-col items-center justify-center rounded-2xl bg-muted p-10 text-center">
+                <article className="flex flex-col items-center justify-center rounded-2xl bg-background p-10 text-center">
                     {usaImageSrc ? (
                         <div className="mb-6 size-[120px] overflow-hidden rounded-full">
                             <img
@@ -43,35 +44,37 @@ export function HomeContactSection({
                             />
                         </div>
                     ) : (
-                        <div className="bg-muted-foreground/10 mb-6 flex size-[120px] items-center justify-center rounded-full" />
+                        <div className="bg-background mb-6 flex size-[120px] items-center justify-center rounded-full" />
                     )}
-                    <h2 className="font-oswald text-foreground mb-2 text-4xl font-bold">
+                    <h2 className="font-oswald text-foreground mb-4 text-2xl sm:text-3xl md:text-5xl lg:text-[56px] leading-tight ">
                         {usaHeading}
                     </h2>
-                    <p className="font-libre-franklin text-foreground max-w-md text-xl leading-relaxed">
+                    <p className="font-libre-franklin text-foreground max-w-md text-base sm:text-lg md:text-2xl leading-relaxed text-left">
                         {usaContent}
                     </p>
                 </article>
-                <article className="flex flex-col justify-center rounded-2xl bg-muted p-10">
-                    <h2 className="font-oswald text-foreground mb-2 text-4xl font-bold">
-                        {contactHeading}
-                    </h2>
-                    <p className="font-libre-franklin text-foreground mb-10 text-xl leading-relaxed">
-                        {contactContent}
-                    </p>
-                    <div className="flex flex-wrap gap-6">
-                        <Button asChild>
-                            <a href={emailHref} className="gap-2">
-                                <Mail className="size-4" />
-                                Email Us
-                            </a>
-                        </Button>
-                        <Button variant="outline" asChild>
-                            <a href={phoneHref} className="gap-2">
-                                <Phone className="size-4" />
-                                Call Us
-                            </a>
-                        </Button>
+                <article className="flex flex-col flex-center justify-center rounded-2xl bg-background p-10">
+                    <div className='h-fit'>
+                        <h2 className="font-oswald text-foreground mb-4 text-2xl sm:text-3xl md:text-5xl lg:text-[56px] leading-tight ">
+                            {contactHeading}
+                        </h2>
+                        <p className="font-libre-franklin text-foreground mb-10 text-2xl leading-relaxed">
+                            {contactContent}
+                        </p>
+                        <div className="flex flex-wrap gap-6">
+                            <Button asChild>
+                                <a href={emailHref} className="gap-2">
+                                    <Mail className="size-4" />
+                                    Email Us
+                                </a>
+                            </Button>
+                            <Button variant="outline" asChild>
+                                <a href={phoneHref} className="gap-2">
+                                    <Phone className="size-4" />
+                                    Call Us
+                                </a>
+                            </Button>
+                        </div>
                     </div>
                 </article>
             </div>

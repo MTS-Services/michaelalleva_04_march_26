@@ -1,6 +1,7 @@
 import { HomeAboutSection } from '@/components/home-about-section';
 import { HomeFeatureCards } from '@/components/home-feature-cards';
 import FrontendLayout from '@/layouts/frontend-layout';
+import { contact } from '@/routes';
 
 const aboutParagraphs = [
     "We are a premium travel company specializing in curated experiences to the world's most extraordinary destinations. With over 15 years of expertise, we craft journeys that transform travelers into storytellers.",
@@ -26,7 +27,7 @@ export default function AboutUs() {
                 heading="About Us"
                 paragraphs={aboutParagraphs}
                 ctaLabel="Get in Touch"
-                ctaHref={route('contact.index')}
+                ctaHref={contact().url}
             />
             <HomeFeatureCards />
         </FrontendLayout>

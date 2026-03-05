@@ -46,15 +46,15 @@ export function HomeBanner({
             <div className="relative flex min-h-[480px] flex-col items-center justify-center px-4 py-16 md:min-h-[600px] md:px-6 lg:min-h-[730px]">
                 <div className="mx-auto flex max-w-[884px] flex-col items-center gap-2 text-center">
                     {badgeLabel ? (
-                        <span className="font-libre-franklin rounded-md border-2 border-foreground px-6 py-3 text-xs text-foreground">
+                        <span className="font-libre-franklin rounded-md border-2 border-foreground px-6 py-3 text-xs text-foreground mt-24 md:mt-0">
                             {badgeLabel}
                         </span>
                     ) : null}
                     <div className="flex flex-col gap-2">
-                        <h1 className="font-oswald text-foreground text-5xl font-bold leading-tight sm:text-6xl lg:text-[56px]">
+                        <h1 className="font-oswald text-foreground text-2xl sm:text-3xl md:text-5xl lg:text-[56px] leading-tight ">
                             {title}
                         </h1>
-                        <p className="font-libre-franklin text-foreground text-lg sm:text-2xl">
+                        <p className="font-libre-franklin text-foreground text-base sm:text-lg md:text-2xl">
                             {tagline}
                         </p>
                     </div>

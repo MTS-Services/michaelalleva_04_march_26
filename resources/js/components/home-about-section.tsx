@@ -1,13 +1,15 @@
 import { Button } from '@/components/ui/button';
+import { aboutUs } from '@/routes';
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
+import { HomeFeatureCards } from './home-feature-cards';
 
 export interface HomeAboutSectionProps {
     heading?: string;
     paragraphs?: string[];
     ctaLabel?: string;
     ctaHref?: string;
-    imageSrcs?: [string, string, string];
+    imageSrcs?: string[];
 }
 
 const defaultHeading = 'About Us';
@@ -16,7 +18,7 @@ const defaultParagraphs = [
     'Our commitment to excellence ensures every detail is meticulously planned, from accommodation to activities, creating seamless adventures that exceed expectations.',
 ];
 const defaultCtaLabel = 'Learn more';
-const defaultCtaHref = '/#about';
+const defaultCtaHref = aboutUs().url;
 
 export function HomeAboutSection({
     heading = defaultHeading,
@@ -26,18 +28,18 @@ export function HomeAboutSection({
     imageSrcs,
 }: HomeAboutSectionProps) {
     return (
-        <section className="bg-muted py-20">
-            <div className="container mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
-                <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-                    <div className="flex flex-col gap-10">
+        <section className="bg-background py-20">
+            <div className="container mx-auto max-w-7xl px-4 md:px-6 lg:px-8 space-y-10">
+                <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+                    <div className="flex flex-col justify-between gap-2">
                         <div className="flex flex-col gap-2">
-                            <h2 className="font-oswald text-foreground text-4xl font-bold">
+                            <h2 className="font-oswald text-foreground text-2xl sm:text-3xl md:text-5xl lg:text-[56px] leading-tight ">
                                 {heading}
                             </h2>
                             {paragraphs.map((p, i) => (
                                 <p
                                     key={i}
-                                    className="font-libre-franklin text-foreground text-xl leading-relaxed"
+                                    className="font-libre-franklin text-foreground text-base sm:text-lg md:text-2xl leading-relaxed text-left"
                                 >
                                     {p}
                                 </p>
@@ -73,7 +75,7 @@ export function HomeAboutSection({
                                     <img
                                         src={imageSrcs[2]}
                                         alt=""
-                                        className="size-full object-cover"
+                                        className="size-full object-cover object-bottom"
                                     />
                                 </div>
                             </>
@@ -88,6 +90,8 @@ export function HomeAboutSection({
                         )}
                     </div>
                 </div>
+
+                <HomeFeatureCards />
             </div>
         </section>
     );

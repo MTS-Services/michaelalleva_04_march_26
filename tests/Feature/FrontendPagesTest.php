@@ -15,7 +15,7 @@ test('about-us page loads successfully', function () {
 });
 
 test('contact page loads successfully', function () {
-    $response = $this->get(route('contact.index'));
+    $response = $this->get(route('contact'));
 
     $response->assertOk();
     $response->assertInertia(fn ($page) => $page->component('frontend/contact'));

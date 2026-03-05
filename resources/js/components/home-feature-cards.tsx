@@ -32,25 +32,23 @@ export function HomeFeatureCards({
     features = defaultFeatures,
 }: HomeFeatureCardsProps) {
     return (
-        <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 lg:px-8">
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {features.map(({ icon: Icon, title, description }) => (
-                    <article
-                        key={title}
-                        className="flex flex-col items-center rounded-2xl bg-background p-6 text-center shadow-sm"
-                    >
-                        <div className="mb-6 flex size-[98px] items-center justify-center rounded-lg bg-muted">
-                            <Icon className="text-foreground size-10" />
-                        </div>
-                        <h3 className="font-oswald text-foreground mb-2 text-2xl font-bold">
-                            {title}
-                        </h3>
-                        <p className="font-libre-franklin text-foreground text-base">
-                            {description}
-                        </p>
-                    </article>
-                ))}
-            </div>
-        </section>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {features.map(({ icon: Icon, title, description }) => (
+                <article
+                    key={title}
+                    className="flex flex-col items-center rounded-2xl bg-white p-6 text-center"
+                >
+                    <div className="mb-6 flex size-[98px] items-center justify-center rounded-lg bg-background">
+                        <Icon className="text-foreground size-10" />
+                    </div>
+                    <h3 className="font-oswald text-foreground mb-2 text-2xl font-bold">
+                        {title}
+                    </h3>
+                    <p className="font-libre-franklin text-foreground text-base">
+                        {description}
+                    </p>
+                </article>
+            ))}
+        </div>
     );
 }
