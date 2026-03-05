@@ -3,6 +3,7 @@ import { Facebook, Instagram, Twitter } from 'lucide-react';
 
 import AppLogo from '@/components/app-logo';
 import { Button } from '@/components/ui/button';
+import { aboutUs } from '@/routes';
 
 const SocialLinks = [
     {
@@ -41,7 +42,7 @@ const Destinations = [
 const Company = [
     {
         name: 'About Us',
-        href: '#'
+        href: aboutUs()
     },
 
     {
