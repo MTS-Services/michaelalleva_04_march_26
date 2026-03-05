@@ -3,19 +3,17 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useInitials } from '@/hooks/use-initials';
-import { login, register } from '@/routes';
+import { aboutUs, contact, destination, login, register } from '@/routes';
 import { type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { Menu, XIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import AppLogo from '@/components/app-logo';
 import { UserMenuContent } from '@/components/user-menu-content';
-import AppearanceToggleDropdown from '@/components/appearance-dropdown';
 import { useActiveUrl } from '@/hooks/use-active-url';
 import { cn } from '@/lib/utils';
 import { home } from '@/routes';
 import { useIsMobile } from '@/hooks/use-mobile';
-
 
 const NavItems = [
     {
@@ -24,15 +22,15 @@ const NavItems = [
     },
     {
         name: 'Destination',
-        href: '/destination',
+        href: destination(),
     },
     {
         name: 'About Us',
-        href: '/about-us',
+        href: aboutUs(),
     },
     {
         name: 'Contact',
-        href: '/contact',
+        href: contact(),
     },
 ];
 
@@ -71,7 +69,7 @@ export function FrontendHeader() {
             className="fixed left-0 right-0 z-50 transition-all duration-300 ease-in-out px-4"
             style={{ top: `${topOffset * 0.25}rem` }}
         >
-            <div className='container mx-auto flex items-center justify-between p-3 md:p-4 bg-muted rounded-lg shadow-sm'>
+            <div className='container mx-auto flex items-center justify-between p-3 md:p-4 bg-background rounded-lg shadow-sm'>
                 <Button asChild>
                     <Link href="/">
                         <AppLogo />

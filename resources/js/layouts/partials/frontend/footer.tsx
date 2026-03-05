@@ -67,8 +67,8 @@ export function FrontendFooter() {
                     </p>
                     <div className='flex items-center gap-2'>
                         {SocialLinks.map((link) => (
-                            <a href={link.href} target='_blank'>
-                                <Button key={link.name} size="icon" className='bg-card-foreground text-white cursor-pointer p-2 hover:bg-card-foreground/80 transition-all duration-200'>
+                            <a href={link.href} target='_blank' rel="noopener noreferrer" key={link.name}>
+                                <Button size="icon" className='bg-card-foreground text-white cursor-pointer p-2 hover:bg-card-foreground/80 transition-all duration-200'>
                                     <link.icon className="w-4 h-4" />
                                 </Button>
                             </a>
@@ -81,7 +81,7 @@ export function FrontendFooter() {
                         <ul className='space-y-2'>
                             {Destinations.map((destination) => (
                                 <li key={destination.name}>
-                                    <Link href={destination.href} className='text-muted-foreground text-sm! hover:text-white transition-all duration-200'>{destination.name}</Link>
+                                    <Link href={destination.href} rel="noopener noreferrer" className='text-muted-foreground text-sm! hover:text-white transition-all duration-200'>{destination.name}</Link>
                                 </li>
                             ))}
                         </ul>
@@ -91,7 +91,7 @@ export function FrontendFooter() {
                         <ul className='space-y-2'>
                             {Company.map((company) => (
                                 <li key={company.name}>
-                                    <Link href={company.href} className='text-muted-foreground text-sm! hover:text-white transition-all duration-200'>{company.name}</Link>
+                                    <Link href={company.href} rel="noopener noreferrer" className='text-muted-foreground text-sm! hover:text-white transition-all duration-200'>{company.name}</Link>
                                 </li>
                             ))}
                         </ul>
