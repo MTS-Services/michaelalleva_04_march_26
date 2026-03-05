@@ -56,7 +56,7 @@ const packages: PackageCard[] = [
 export default function Packages({ destination }: { destination: string }) {
     return (
         <FrontendLayout>
-            <section className="relative flex min-h-[280px] w-full flex-col items-center justify-center bg-muted px-4 py-16 md:min-h-[320px]">
+            <section className="relative flex min-h-[280px] w-full flex-col items-center justify-center bg-muted px-4 py-15 md:min-h-[320px]">
                 <div className="mx-auto max-w-4xl text-center">
                     <h1 className="font-oswald text-foreground text-4xl font-bold leading-tight sm:text-5xl">
                         {destination} Packages
@@ -67,7 +67,7 @@ export default function Packages({ destination }: { destination: string }) {
                 </div>
             </section>
 
-            <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 lg:px-8">
+            <section className="mx-auto max-w-7xl px-4 py-15 md:px-6 lg:px-8">
                 <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
                     {packages.map((pkg) => (
                         <article

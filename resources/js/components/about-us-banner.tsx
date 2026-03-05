@@ -3,7 +3,7 @@ import { destination } from '@/routes';
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 
-export interface HomeBannerProps {
+export interface AboutUsBannerProps {
     title?: string;
     tagline?: string;
     badgeLabel?: string;
@@ -13,16 +13,16 @@ export interface HomeBannerProps {
     imageAlt?: string;
 }
 
-const defaultTitle = 'Unforgettable Memories Await';
+const defaultTitle = 'A One-of-One Travel Experience.';
 const defaultTagline =
-    "Handpicked travel experiences to the world's most breathtaking and captivating destinations.";
-const defaultBadgeLabel = 'DISCOVER THE UNKNOWN';
+    "We don’t just book trips; we curate experiences that surprise even the most seasoned travelers.";
+const defaultBadgeLabel = 'Our Story';
 const defaultCtaLabel = 'Explore Destinations';
 const defaultCtaHref = destination().url;
 const defaultImageSrc = '/images/hero-banner.png';
 const defaultImageAlt = 'Travel destination hero';
 
-export function HomeBanner({
+export function AboutUsBanner({
     title = defaultTitle,
     tagline = defaultTagline,
     badgeLabel = defaultBadgeLabel,
@@ -30,7 +30,7 @@ export function HomeBanner({
     ctaHref = defaultCtaHref,
     imageSrc = defaultImageSrc,
     imageAlt = defaultImageAlt,
-}: HomeBannerProps) {
+}: AboutUsBannerProps) {
     return (
         <section className="relative min-h-[480px] w-full md:min-h-[600px] lg:min-h-[730px]">
             {/* Background layer */}

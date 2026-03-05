@@ -28,7 +28,7 @@ export function HomeDestinationSection({
     destinations,
 }: HomeDestinationSectionProps) {
     return (
-        <section className="container mx-auto max-w-7xl px-4 py-16 md:px-6 lg:px-8">
+        <section className="container mx-auto max-w-7xl px-4 py-15 md:px-6 lg:px-8">
             <div className="mx-auto flex max-w-4xl flex-col items-center gap-2 text-center">
                 <h2 className="font-oswald text-foreground text-2xl sm:text-3xl md:text-5xl lg:text-[56px] leading-tight ">
                     {heading}

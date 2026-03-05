@@ -32,7 +32,7 @@ export function HomeContactSection({
     phoneHref = defaultPhoneHref,
 }: HomeContactSectionProps) {
     return (
-        <section className="container mx-auto max-w-7xl px-4 py-16 md:px-6 lg:px-8">
+        <section className="container mx-auto max-w-7xl px-4 py-15 md:px-6 lg:px-8">
             <div className="grid gap-6 lg:grid-cols-2">
                 <article className="flex flex-col items-center justify-center rounded-2xl bg-background p-10 text-center">
                     {usaImageSrc ? (

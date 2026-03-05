@@ -24,13 +24,13 @@ const defaultFeatures: FeatureCard[] = [
     },
 ];
 
-export interface HomeFeatureCardsProps {
+export interface FeatureCardsProps {
     features?: FeatureCard[];
 }
 
-export function HomeFeatureCards({
+export function FeatureCards({
     features = defaultFeatures,
-}: HomeFeatureCardsProps) {
+}: FeatureCardsProps) {
     return (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {features.map(({ icon: Icon, title, description }) => (
@@ -39,7 +39,7 @@ export function HomeFeatureCards({
                     className="flex flex-col items-center rounded-2xl bg-white p-6 text-center"
                 >
                     <div className="mb-6 flex size-[98px] items-center justify-center rounded-lg bg-background">
-                        <Icon className="text-foreground size-10" />
+                        <Icon className="text-foreground size-10 font-normal" />
                     </div>
                     <h3 className="font-oswald text-foreground mb-2 text-2xl font-bold">
                         {title}

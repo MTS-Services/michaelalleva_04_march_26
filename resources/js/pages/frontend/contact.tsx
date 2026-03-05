@@ -1,3 +1,4 @@
+import { ContactBanner } from '@/components/contact-banner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -30,18 +31,9 @@ export default function Contact() {
 
     return (
         <FrontendLayout>
-            <section className="relative flex min-h-[280px] w-full flex-col items-center justify-center bg-muted px-4 py-16 md:min-h-[320px]">
-                <div className="mx-auto max-w-4xl text-center">
-                    <h1 className="font-oswald text-foreground text-4xl font-bold leading-tight sm:text-5xl">
-                        Get in Touch
-                    </h1>
-                    <p className="font-libre-franklin text-foreground mt-4 text-lg">
-                        Have questions? Our travel experts are here to help.
-                    </p>
-                </div>
-            </section>
+            <ContactBanner />
 
-            <div className="mx-auto max-w-7xl px-4 py-16 md:px-6 lg:px-8">
+            <div className="mx-auto max-w-7xl px-4 py-15 md:px-6 lg:px-8">
                 <div className="grid gap-12 lg:grid-cols-2">
                     <div>
                         <h2 className="font-oswald text-foreground mb-6 text-3xl font-bold">

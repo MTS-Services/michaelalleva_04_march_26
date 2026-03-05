@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { aboutUs } from '@/routes';
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
-import { HomeFeatureCards } from './home-feature-cards';
+import { FeatureCards } from '@/components/feature-cards';
 
 export interface HomeAboutSectionProps {
     heading?: string;
@@ -91,7 +91,7 @@ export function HomeAboutSection({
                     </div>
                 </div>
 
-                <HomeFeatureCards />
+                <FeatureCards />
             </div>
         </section>
     );
