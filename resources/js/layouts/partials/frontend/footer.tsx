@@ -1,7 +1,8 @@
 import { Link } from '@inertiajs/react';
+import { Facebook, Instagram, Twitter } from 'lucide-react';
+
 import AppLogo from '@/components/app-logo';
 import { Button } from '@/components/ui/button';
-import { Facebook, Instagram, Twitter } from 'lucide-react';
 
 const SocialLinks = [
     {

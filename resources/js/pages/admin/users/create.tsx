@@ -1,14 +1,15 @@
-import React from 'react';
 import { Head, useForm, Link } from '@inertiajs/react';
-import { store, index } from '@/routes/admin/users';
-import AdminLayout from '@/layouts/admin-layout';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import React from 'react';
+
 import FileUpload from '@/components/file-upload';
 import InputError from '@/components/input-error';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import AdminLayout from '@/layouts/admin-layout';
+import { store, index } from '@/routes/admin/users';
 
 export default function CreateUser() {
   const { data, setData, post, processing, errors } = useForm({

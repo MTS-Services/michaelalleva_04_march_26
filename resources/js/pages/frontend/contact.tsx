@@ -1,10 +1,11 @@
+import { Mail, MapPin, Phone, Clock } from 'lucide-react';
+import { useState } from 'react';
+
 import { ContactBanner } from '@/components/contact-banner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import FrontendLayout from '@/layouts/frontend-layout';
-import { Mail, MapPin, Phone, Clock } from 'lucide-react';
-import { useState } from 'react';
 
 const defaultEmailHref = 'mailto:hello@example.com';
 const defaultPhoneHref = 'tel:+1234567890';

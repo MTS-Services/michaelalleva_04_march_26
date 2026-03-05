@@ -1,8 +1,9 @@
-import { Button } from '@/components/ui/button';
-import { aboutUs } from '@/routes';
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
+
 import { FeatureCards } from '@/components/feature-cards';
+import { Button } from '@/components/ui/button';
+import { aboutUs } from '@/routes';
 
 export interface HomeAboutSectionProps {
     heading?: string;
@@ -33,13 +34,13 @@ export function HomeAboutSection({
                 <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
                     <div className="flex flex-col justify-between gap-2">
                         <div className="flex flex-col gap-2">
-                            <h2 className="font-oswald text-foreground text-2xl sm:text-3xl md:text-5xl lg:text-[56px] leading-tight ">
+                            <h2 className="font-oswald text-foreground text-xl sm:text-2xl md:text-[40px]">
                                 {heading}
                             </h2>
                             {paragraphs.map((p, i) => (
                                 <p
                                     key={i}
-                                    className="font-libre-franklin text-foreground text-base sm:text-lg md:text-2xl leading-relaxed text-left"
+                                    className="font-libre-franklin text-foreground text-lg sm:text-xl md:text-2xl"
                                 >
                                     {p}
                                 </p>

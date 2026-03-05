@@ -1,12 +1,12 @@
 
 import { AboutUsBanner } from '@/components/about-us-banner';
-import FrontendLayout from '@/layouts/frontend-layout';
-import MissionVission from '@/components/mission-vission';
 import AboutUsFeatures from '@/components/about-us-features';
-import { DestinationCard, HomeDestinationSection } from '@/components/home-destination-section';
-import { packages } from '@/routes';
-import TeamArchitects from '@/components/team-architects';
 import GetInTouch from '@/components/get-in-touch';
+import { DestinationCard, HomeDestinationSection } from '@/components/home-destination-section';
+import MissionVission from '@/components/mission-vission';
+import TeamArchitects from '@/components/team-architects';
+import FrontendLayout from '@/layouts/frontend-layout';
+import { packages } from '@/routes';
 
 const defaultDestinations: DestinationCard[] = [
     {

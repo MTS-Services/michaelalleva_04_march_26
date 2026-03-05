@@ -1,8 +1,9 @@
+import { Link } from '@inertiajs/react';
+import { ArrowRight } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import FrontendLayout from '@/layouts/frontend-layout';
 import { contact } from '@/routes';
-import { Link } from '@inertiajs/react';
-import { ArrowRight } from 'lucide-react';
 
 interface PackageCard {
     title: string;
@@ -58,10 +59,10 @@ export default function Packages({ destination }: { destination: string }) {
         <FrontendLayout>
             <section className="relative flex min-h-[280px] w-full flex-col items-center justify-center bg-muted px-4 py-15 md:min-h-[320px]">
                 <div className="mx-auto max-w-4xl text-center">
-                    <h1 className="font-oswald text-foreground text-4xl font-bold leading-tight sm:text-5xl">
+                    <h1 className="text-foreground text-xl sm:text-2xl md:text-[40px]">
                         {destination} Packages
                     </h1>
-                    <p className="font-libre-franklin text-foreground mt-4 text-lg">
+                    <p className="text-foreground mt-4 text-lg sm:text-xl md:text-2xl">
                         Choose the perfect duration for your adventure.
                     </p>
                 </div>
@@ -74,17 +75,17 @@ export default function Packages({ destination }: { destination: string }) {
                             key={`${pkg.title}-${pkg.price}`}
                             className="flex flex-col rounded-2xl bg-muted p-6"
                         >
-                            <h3 className="font-oswald text-foreground text-2xl font-bold">
+                            <h3 className="text-foreground text-xl sm:text-2xl md:text-[40px]">
                                 {pkg.title}
                             </h3>
-                            <p className="font-libre-franklin text-foreground mt-2 text-2xl font-semibold">
+                            <p className="text-foreground mt-2 text-xl sm:text-2xl md:text-[40px]">
                                 {pkg.price}
                             </p>
                             <div className="mt-4 flex flex-1 flex-col gap-2">
-                                <p className="font-libre-franklin text-muted-foreground text-sm font-medium">
+                                <p className="text-muted-foreground text-lg sm:text-xl md:text-2xl mb-4">
                                     Package includes
                                 </p>
-                                <ul className="font-libre-franklin text-foreground list-inside list-disc space-y-1 text-sm">
+                                <ul className="text-foreground list-inside list-disc space-y-1 text-lg sm:text-xl md:text-2xl">
                                     {pkg.includes.map((item) => (
                                         <li key={item}>{item}</li>
                                     ))}

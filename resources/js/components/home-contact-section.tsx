@@ -1,6 +1,7 @@
-import { Button } from '@/components/ui/button';
 import { Link } from '@inertiajs/react';
 import { Mail, Phone } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
 
 export interface HomeContactSectionProps {
     usaHeading?: string;
@@ -46,19 +47,19 @@ export function HomeContactSection({
                     ) : (
                         <div className="bg-background mb-6 flex size-[120px] items-center justify-center rounded-full" />
                     )}
-                    <h2 className="font-oswald text-foreground mb-4 text-2xl sm:text-3xl md:text-5xl lg:text-[56px] leading-tight ">
+                    <h2 className="text-foreground mb-4 text-xl sm:text-2xl md:text-[40px]">
                         {usaHeading}
                     </h2>
-                    <p className="font-libre-franklin text-foreground max-w-md text-base sm:text-lg md:text-2xl leading-relaxed text-left">
+                    <p className="text-foreground max-w-md text-base sm:text-lg md:text-2xl leading-relaxed text-left">
                         {usaContent}
                     </p>
                 </article>
                 <article className="flex flex-col flex-center justify-center rounded-2xl bg-background p-10">
                     <div className='h-fit'>
-                        <h2 className="font-oswald text-foreground mb-4 text-2xl sm:text-3xl md:text-5xl lg:text-[56px] leading-tight ">
+                        <h2 className="font-oswald text-foreground mb-4 text-xl sm:text-2xl md:text-[40px]">
                             {contactHeading}
                         </h2>
-                        <p className="font-libre-franklin text-foreground mb-10 text-2xl leading-relaxed">
+                        <p className="text-foreground mb-10 text-lg sm:text-xl md:text-2xl">
                             {contactContent}
                         </p>
                         <div className="flex flex-wrap gap-6">

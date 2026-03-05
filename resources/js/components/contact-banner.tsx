@@ -1,7 +1,8 @@
-import { Button } from '@/components/ui/button';
-import { destination } from '@/routes';
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
+import { destination } from '@/routes';
 
 export interface ContactBannerProps {
     title?: string;
@@ -52,10 +53,10 @@ export function ContactBanner({
                         </span>
                     ) : null}
                     <div className="flex flex-col gap-2">
-                        <h1 className="font-oswald text-primary-foreground text-2xl sm:text-3xl md:text-5xl lg:text-[56px] leading-tight ">
+                        <h1 className="font-oswald text-primary-foreground text-xl sm:text-2xl md:text-[40px]">
                             {title}
                         </h1>
-                        <p className="font-libre-franklin text-primary-foreground text-base sm:text-lg md:text-2xl">
+                        <p className="font-libre-franklin text-primary-foreground text-lg sm:text-lg md:text-2xl">
                             {tagline}
                         </p>
                     </div>

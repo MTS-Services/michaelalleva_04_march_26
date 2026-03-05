@@ -1,14 +1,15 @@
-import React from 'react';
 import { Head, router, Link } from '@inertiajs/react';
-import { show, edit, destroy, create } from '@/routes/admin/users';
 import { Pencil, Trash2, Eye } from 'lucide-react';
-import AdminLayout from '@/layouts/admin-layout';
+import React from 'react';
+
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/ui/data-table';
 import { useDataTable } from '@/hooks/use-data-table';
-import { PaginationData, ColumnConfig, ActionConfig } from '@/types/data-table.types';
-import { Badge } from '@/components/ui/badge';
+import AdminLayout from '@/layouts/admin-layout';
+import { show, edit, destroy, create } from '@/routes/admin/users';
 import { User } from '@/types';
-import { Button } from '@/components/ui/button';
+import { PaginationData, ColumnConfig, ActionConfig } from '@/types/data-table.types';
 
 interface Props {
   users: User[];

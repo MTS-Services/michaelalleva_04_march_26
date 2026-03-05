@@ -1,7 +1,8 @@
-import { Button } from '@/components/ui/button';
-import { destination } from '@/routes';
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
+import { destination } from '@/routes';
 
 export interface AboutUsBannerProps {
     title?: string;
@@ -19,7 +20,7 @@ const defaultTagline =
 const defaultBadgeLabel = 'Our Story';
 const defaultCtaLabel = 'Explore Destinations';
 const defaultCtaHref = destination().url;
-const defaultImageSrc = '/images/hero-banner.png';
+const defaultImageSrc = '/images/city.png';
 const defaultImageAlt = 'Travel destination hero';
 
 export function AboutUsBanner({
@@ -52,10 +53,10 @@ export function AboutUsBanner({
                         </span>
                     ) : null}
                     <div className="flex flex-col gap-2">
-                        <h1 className="font-oswald text-foreground text-2xl sm:text-3xl md:text-5xl lg:text-[56px] leading-tight ">
+                        <h1 className="font-oswald text-foreground text-xl sm:text-2xl md:text-[40px]">
                             {title}
                         </h1>
-                        <p className="font-libre-franklin text-foreground text-base sm:text-lg md:text-2xl">
+                        <p className="font-libre-franklin text-foreground text-lg sm:text-xl md:text-2xl">
                             {tagline}
                         </p>
                     </div>

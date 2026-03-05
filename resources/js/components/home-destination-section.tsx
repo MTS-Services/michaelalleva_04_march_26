@@ -1,7 +1,9 @@
-﻿import { Button } from '@/components/ui/button';
-import { RouteDefinition } from '@/wayfinder';
-import { Link } from '@inertiajs/react';
+﻿import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
+import { RouteDefinition } from '@/wayfinder';
+
 import ArticleCard from './articale-card';
 
 export interface DestinationCard {
@@ -30,10 +32,10 @@ export function HomeDestinationSection({
     return (
         <section className="container mx-auto max-w-7xl px-4 py-15 md:px-6 lg:px-8">
             <div className="mx-auto flex max-w-4xl flex-col items-center gap-2 text-center">
-                <h2 className="font-oswald text-foreground text-2xl sm:text-3xl md:text-5xl lg:text-[56px] leading-tight ">
+                <h2 className="text-foreground text-xl sm:text-2xl md:text-[40px]">
                     {heading}
                 </h2>
-                <p className="font-libre-franklin text-foreground text-base sm:text-lg md:text-2xl">
+                <p className="text-foreground text-lg sm:text-xl md:text-2xl">
                     {subtext}
                 </p>
             </div>

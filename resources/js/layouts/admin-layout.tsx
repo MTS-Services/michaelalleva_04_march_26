@@ -1,8 +1,11 @@
 import * as React from 'react';
-import { AdminSidebar } from '@/layouts/partials/admin/sidebar';
-import { AdminHeader } from '@/layouts/partials/admin/header';
-import { AdminFooter } from './partials/admin/footer';
+
 import { useAppearance } from '@/hooks/use-appearance';
+import { AdminHeader } from '@/layouts/partials/admin/header';
+import { AdminSidebar } from '@/layouts/partials/admin/sidebar';
+
+import { AdminFooter } from './partials/admin/footer';
+
 
 interface AdminLayoutProps {
     children: React.ReactNode;
