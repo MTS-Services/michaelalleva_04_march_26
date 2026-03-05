@@ -6,27 +6,25 @@ import {
 import FrontendLayout from '@/layouts/frontend-layout';
 import { packages } from '@/routes';
 
-const placeholderImage = '/images/hero-banner.png';
-
 const defaultDestinations: DestinationCard[] = [
     {
         title: 'Egypt',
-        subtitle: 'Explore ancient wonders',
-        imageSrc: placeholderImage,
+        description: 'Explore ancient wonders',
+        imageSrc: '/images/egypt.jpg',
         imageAlt: 'Egypt travel',
         href: packages({ destination: 'egypt' }).url,
     },
     {
         title: 'Costa Rica',
-        subtitle: 'Discover tropical paradise',
-        imageSrc: placeholderImage,
+        description: 'Discover tropical paradise',
+        imageSrc: '/images/costa-rica.jpg',
         imageAlt: 'Costa Rica travel',
         href: packages({ destination: 'costa-rica' }).url,
     },
     {
         title: 'Norway',
-        subtitle: 'Experience Nordic beauty',
-        imageSrc: placeholderImage,
+        description: 'Experience Nordic beauty',
+        imageSrc: '/images/norway.jpg',
         imageAlt: 'Norway travel',
         href: packages({ destination: 'norway' }).url,
     },
@@ -35,6 +33,7 @@ const defaultDestinations: DestinationCard[] = [
 export default function Destination() {
     return (
         <FrontendLayout>
+            <div className='mt-28'></div>
             <HomeDestinationSection destinations={defaultDestinations} />
             <HomeContactSection />
         </FrontendLayout>

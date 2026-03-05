@@ -1,10 +1,12 @@
-import React from 'react';
 import { Head, Link } from '@inertiajs/react';
+import React from 'react';
+
 import { index, edit } from '@/actions/App/Http/Controllers/Admin/UserController';
-import AdminLayout from '@/layouts/admin-layout';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import AdminLayout from '@/layouts/admin-layout';
+
 import { User } from '@/types/user';
 
 interface Props {

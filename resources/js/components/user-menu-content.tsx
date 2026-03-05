@@ -10,10 +10,10 @@ import {
 import { UserInfo } from '@/components/user-info';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { logout } from '@/routes';
-import { edit } from '@/routes/profile';
-import { type User } from '@/types';
-import { dashboard as userDashboard } from '@/routes/user';
 import { dashboard as adminDashboard } from '@/routes/admin';
+import { edit } from '@/routes/profile';
+import { dashboard as userDashboard } from '@/routes/user';
+import { type User } from '@/types';
 
 interface UserMenuContentProps {
     user: User;

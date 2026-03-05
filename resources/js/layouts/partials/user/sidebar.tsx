@@ -1,9 +1,10 @@
-import { cn } from '@/lib/utils';
-import { type NavItem as NavItemType } from '@/types';
 import { Link } from '@inertiajs/react';
 import { Settings, LayoutGrid, LayoutDashboard } from 'lucide-react';
-import AppLogo from '@/components/app-logo';
 import * as React from 'react';
+
+import AppLogo from '@/components/app-logo';
+import { cn } from '@/lib/utils';
+import { type NavItem as NavItemType } from '@/types';
 
 const mainNavItems: NavItemType[] = [
     {

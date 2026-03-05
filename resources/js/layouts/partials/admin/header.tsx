@@ -1,3 +1,10 @@
+import { Link, usePage } from '@inertiajs/react';
+import { Separator } from '@radix-ui/react-separator';
+import { ChevronsLeft, ChevronsRight, Search, BellIcon, } from 'lucide-react';
+import * as React from 'react';
+
+import AppearanceToggleDropdown from '@/components/appearance-dropdown';
+import { Icon } from '@/components/icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -8,14 +15,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
-import { useInitials } from '@/hooks/use-initials';
-import { type BreadcrumbItem, type SharedData, type NavItem as NavItemType } from '@/types';
-import { Link, usePage } from '@inertiajs/react';
-import { ChevronsLeft, ChevronsRight, Search, BellIcon, } from 'lucide-react';
-import * as React from 'react';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
-import { cn, toUrl } from '@/lib/utils';
-import { Icon } from '@/components/icon';
 import {
     Tooltip,
     TooltipContent,
@@ -24,8 +24,10 @@ import {
 } from '@/components/ui/tooltip';
 import { UserMenuContent } from '@/components/user-menu-content';
 import { useActiveUrl } from '@/hooks/use-active-url';
-import AppearanceToggleDropdown from '@/components/appearance-dropdown';
-import { Separator } from '@radix-ui/react-separator';
+import { useInitials } from '@/hooks/use-initials';
+import { cn, toUrl } from '@/lib/utils';
+import { type BreadcrumbItem, type SharedData, type NavItem as NavItemType } from '@/types';
+
 
 interface AdminHeaderProps {
     isCollapsed: boolean;

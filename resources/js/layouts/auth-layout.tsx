@@ -1,11 +1,12 @@
-import * as React from 'react';
-import AppLogo from '@/components/app-logo';
 import { Head, Link } from '@inertiajs/react';
-import { AuthHeader } from '@/layouts/partials/auth/header';
-import { AuthFooter } from '@/layouts/partials/auth/footer';
+import * as React from 'react';
+
+import AppLogo from '@/components/app-logo';
 import AppLogoIcon from '@/components/app-logo-icon';
-import { home } from '@/routes';
 import { useAppearance } from '@/hooks/use-appearance';
+import { AuthFooter } from '@/layouts/partials/auth/footer';
+import { AuthHeader } from '@/layouts/partials/auth/header';
+import { home } from '@/routes';
 
 
 interface AuthLayoutProps {

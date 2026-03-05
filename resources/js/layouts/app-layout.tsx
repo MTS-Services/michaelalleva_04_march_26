@@ -1,8 +1,9 @@
-import { UserSidebar } from '@/layouts/partials/user/sidebar';
-import { UserHeader } from '@/layouts/partials/user/header';
-import { UserFooter } from '@/layouts/partials/user/footer';
 import * as React from 'react';
+
 import { useAppearance } from '@/hooks/use-appearance';
+import { UserFooter } from '@/layouts/partials/user/footer';
+import { UserHeader } from '@/layouts/partials/user/header';
+import { UserSidebar } from '@/layouts/partials/user/sidebar';
 
 interface AppLayoutProps {
     children: React.ReactNode;

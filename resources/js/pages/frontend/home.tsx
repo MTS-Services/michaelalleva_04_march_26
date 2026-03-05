@@ -5,7 +5,6 @@ import {
     HomeDestinationSection,
     type DestinationCard,
 } from '@/components/home-destination-section';
-import { HomeFeatureCards } from '@/components/home-feature-cards';
 import FrontendLayout from '@/layouts/frontend-layout';
 import { packages } from '@/routes';
 

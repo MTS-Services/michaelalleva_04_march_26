@@ -1,19 +1,20 @@
-import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from '@/components/ui/sheet';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { useInitials } from '@/hooks/use-initials';
-import { aboutUs, contact, destination, login, register } from '@/routes';
-import { type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { Menu, XIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
+
 import AppLogo from '@/components/app-logo';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from '@/components/ui/sheet';
 import { UserMenuContent } from '@/components/user-menu-content';
 import { useActiveUrl } from '@/hooks/use-active-url';
-import { cn } from '@/lib/utils';
-import { home } from '@/routes';
+import { useInitials } from '@/hooks/use-initials';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
+import { aboutUs, contact, destination, login, register } from '@/routes';
+import { home } from '@/routes';
+import { type SharedData } from '@/types';
 
 const NavItems = [
     {

@@ -1,3 +1,8 @@
+import { Link, usePage } from '@inertiajs/react';
+import { ChevronLeft, Menu, ChevronRight, Settings, LayoutGrid } from 'lucide-react';
+import * as React from 'react';
+
+import AppLogo from '@/components/app-logo';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -5,14 +10,11 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { UserMenuContent } from '@/components/user-menu-content';
 import { useInitials } from '@/hooks/use-initials';
 import { type SharedData, type NavItem as NavItemType } from '@/types';
-import { Link, usePage } from '@inertiajs/react';
-import { ChevronLeft, Menu, ChevronRight, Settings, LayoutGrid } from 'lucide-react';
-import * as React from 'react';
-import AppLogo from '@/components/app-logo';
-import { UserMenuContent } from '@/components/user-menu-content';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+
 
 interface UserHeaderProps {
     isCollapsed: boolean;

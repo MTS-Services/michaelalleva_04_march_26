@@ -1,5 +1,6 @@
-import React, { useState, useRef, DragEvent, ChangeEvent, useEffect } from 'react';
 import { X, Upload, FileText, FileImage, FileVideo, File as FileIcon, Download } from 'lucide-react';
+import React, { useState, useRef, DragEvent, ChangeEvent, useEffect } from 'react';
+
 import { cn } from '@/lib/utils';
 
 // File type icons mapping
