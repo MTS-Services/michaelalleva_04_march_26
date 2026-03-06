@@ -40,7 +40,7 @@ export default function TwoFactorChallenge() {
                                     <InputOTP maxLength={OTP_MAX_LENGTH} value={code} onChange={setCode} pattern={REGEXP_ONLY_DIGITS}>
                                         <InputOTPGroup className="gap-2">
                                             {Array.from({ length: 6 }).map((_, i) => (
-                                                <InputOTPSlot key={i} index={i} className="h-12 w-10 border-muted-foreground/30 rounded-lg bg-background" />
+                                                <InputOTPSlot key={i} index={i} className="h-12 w-10 border-muted-foreground/30 rounded-lg bg-card" />
                                             ))}
                                         </InputOTPGroup>
                                     </InputOTP>

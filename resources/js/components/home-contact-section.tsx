@@ -35,7 +35,7 @@ export function HomeContactSection({
     return (
         <section className="container mx-auto max-w-7xl px-4 py-15 md:px-6 lg:px-8">
             <div className="grid gap-6 lg:grid-cols-2">
-                <article className="flex flex-col items-center justify-center rounded-2xl bg-background p-10 text-center">
+                <article className="flex flex-col items-center justify-center rounded-2xl bg-card p-10 text-center">
                     {usaImageSrc ? (
                         <div className="mb-6 size-[120px] overflow-hidden rounded-full">
                             <img
@@ -45,7 +45,7 @@ export function HomeContactSection({
                             />
                         </div>
                     ) : (
-                        <div className="bg-background mb-6 flex size-[120px] items-center justify-center rounded-full" />
+                        <div className="bg-card mb-6 flex size-[120px] items-center justify-center rounded-full" />
                     )}
                     <h2 className="text-foreground mb-4 text-xl sm:text-2xl md:text-[40px]">
                         {usaHeading}
@@ -54,7 +54,7 @@ export function HomeContactSection({
                         {usaContent}
                     </p>
                 </article>
-                <article className="flex flex-col flex-center justify-center rounded-2xl bg-background p-10">
+                <article className="flex flex-col flex-center justify-center rounded-2xl bg-card p-10">
                     <div className='h-fit'>
                         <h2 className="font-oswald text-foreground mb-4 text-xl sm:text-2xl md:text-[40px]">
                             {contactHeading}

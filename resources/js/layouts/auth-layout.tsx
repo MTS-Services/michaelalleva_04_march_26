@@ -31,7 +31,7 @@ export default function AuthLayout({
         }
     }, [appearance, updateAppearance]);
     return (
-        <div className="flex min-h-svh flex-col bg-background relative overflow-hidden">
+        <div className="flex min-h-svh flex-col bg-card relative overflow-hidden">
 
             {/* Top Left Ellipse */}
             <span

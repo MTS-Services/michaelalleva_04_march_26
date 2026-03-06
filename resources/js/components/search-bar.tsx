@@ -10,7 +10,7 @@ export function SearchBar() {
             <Input
                 type="search"
                 placeholder="Search..."
-                className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[310px]"
+                className="w-full rounded-lg bg-card pl-8 md:w-[200px] lg:w-[310px]"
             />
         </div>
     );

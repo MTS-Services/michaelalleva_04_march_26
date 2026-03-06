@@ -29,24 +29,24 @@ export default function Register() {
                             <div className="grid gap-4">
                                 <div className="grid gap-1.5">
                                     <Label htmlFor="name">Full Name</Label>
-                                    <Input id="name" type="text" required autoFocus name="name" placeholder="John Doe" className="bg-background/50" />
+                                    <Input id="name" type="text" required autoFocus name="name" placeholder="John Doe" className="bg-card/50" />
                                     <InputError message={errors.name} />
                                 </div>
 
                                 <div className="grid gap-1.5">
                                     <Label htmlFor="email">Email address</Label>
-                                    <Input id="email" type="email" required name="email" placeholder="name@company.com" className="bg-background/50" />
+                                    <Input id="email" type="email" required name="email" placeholder="name@company.com" className="bg-card/50" />
                                     <InputError message={errors.email} />
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="grid gap-1.5">
                                         <Label htmlFor="password">Password</Label>
-                                        <Input id="password" type="password" required name="password" placeholder="••••••••" className="bg-background/50" />
+                                        <Input id="password" type="password" required name="password" placeholder="••••••••" className="bg-card/50" />
                                     </div>
                                     <div className="grid gap-1.5">
                                         <Label htmlFor="password_confirmation">Confirm</Label>
-                                        <Input id="password_confirmation" type="password" required name="password_confirmation" placeholder="••••••••" className="bg-background/50" />
+                                        <Input id="password_confirmation" type="password" required name="password_confirmation" placeholder="••••••••" className="bg-card/50" />
                                     </div>
                                 </div>
                                 <InputError message={errors.password} />

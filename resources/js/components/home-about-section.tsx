@@ -29,7 +29,7 @@ export function HomeAboutSection({
     imageSrcs,
 }: HomeAboutSectionProps) {
     return (
-        <section className="bg-background py-20">
+        <section className="bg-card py-20">
             <div className="container mx-auto max-w-7xl px-4 md:px-6 lg:px-8 space-y-10">
                 <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
                     <div className="flex flex-col justify-between gap-2">
@@ -57,14 +57,14 @@ export function HomeAboutSection({
                         {imageSrcs ? (
                             <>
                                 <div className="grid grid-cols-2 gap-6">
-                                    <div className="relative aspect-282/232 overflow-hidden rounded-2xl bg-background">
+                                    <div className="relative aspect-282/232 overflow-hidden rounded-2xl bg-card">
                                         <img
                                             src={imageSrcs[0]}
                                             alt=""
                                             className="size-full object-cover"
                                         />
                                     </div>
-                                    <div className="relative aspect-282/232 overflow-hidden rounded-2xl bg-background">
+                                    <div className="relative aspect-282/232 overflow-hidden rounded-2xl bg-card">
                                         <img
                                             src={imageSrcs[1]}
                                             alt=""
@@ -72,7 +72,7 @@ export function HomeAboutSection({
                                         />
                                     </div>
                                 </div>
-                                <div className="relative aspect-588/232 overflow-hidden rounded-2xl bg-background">
+                                <div className="relative aspect-588/232 overflow-hidden rounded-2xl bg-card">
                                     <img
                                         src={imageSrcs[2]}
                                         alt=""
@@ -83,10 +83,10 @@ export function HomeAboutSection({
                         ) : (
                             <>
                                 <div className="grid grid-cols-2 gap-6">
-                                    <div className="aspect-282/232 rounded-2xl bg-background/80" />
-                                    <div className="aspect-282/232 rounded-2xl bg-background/80" />
+                                    <div className="aspect-282/232 rounded-2xl bg-card/80" />
+                                    <div className="aspect-282/232 rounded-2xl bg-card/80" />
                                 </div>
-                                <div className="aspect-588/232 w-full rounded-2xl bg-background/80" />
+                                <div className="aspect-588/232 w-full rounded-2xl bg-card/80" />
                             </>
                         )}
                     </div>

@@ -52,7 +52,7 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
                                     autoComplete="new-password"
                                     autoFocus
                                     placeholder="••••••••"
-                                    className="bg-background/50"
+                                    className="bg-card/50"
                                 />
                                 <InputError message={errors.password} />
                             </div>
@@ -65,7 +65,7 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
                                     name="password_confirmation"
                                     autoComplete="new-password"
                                     placeholder="••••••••"
-                                    className="bg-background/50"
+                                    className="bg-card/50"
                                 />
                                 <InputError message={errors.password_confirmation} />
                             </div>

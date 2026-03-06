@@ -1,12 +1,11 @@
-
-import { AboutUsBanner } from '@/components/about-us-banner';
 import AboutUsFeatures from '@/components/about-us-features';
+import { Banner } from '@/components/banner';
 import GetInTouch from '@/components/get-in-touch';
 import { DestinationCard, HomeDestinationSection } from '@/components/home-destination-section';
 import MissionVission from '@/components/mission-vission';
 import TeamArchitects from '@/components/team-architects';
 import FrontendLayout from '@/layouts/frontend-layout';
-import { packages } from '@/routes';
+import { destination, packages } from '@/routes';
 
 const defaultDestinations: DestinationCard[] = [
     {
@@ -32,10 +31,21 @@ const defaultDestinations: DestinationCard[] = [
     },
 ];
 
+const BannerConfig = {
+    title: 'A One-of-One Travel Experience.',
+    tagline:
+        "We don’t just book trips; we curate experiences that surprise even the most seasoned travelers.",
+    badgeLabel: 'Our Story',
+    ctaLabel: 'Explore Destinations',
+    ctaHref: destination().url,
+    imageSrc: '/images/city.png',
+    imageAlt: 'Travel destination hero'
+}
+
 export default function AboutUs() {
     return (
         <FrontendLayout>
-            <AboutUsBanner />
+            <Banner title={BannerConfig.title} tagline={BannerConfig.tagline} badgeLabel={BannerConfig.badgeLabel} ctaLabel={BannerConfig.ctaLabel} ctaHref={BannerConfig.ctaHref} imageSrc={BannerConfig.imageSrc} imageAlt={BannerConfig.imageAlt} />
             <MissionVission />
             <AboutUsFeatures />
             <HomeDestinationSection destinations={defaultDestinations} />

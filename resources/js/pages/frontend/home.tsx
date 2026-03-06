@@ -1,12 +1,12 @@
 import { HomeAboutSection } from '@/components/home-about-section';
-import { HomeBanner } from '@/components/home-banner';
+import { Banner } from '@/components/banner';
 import { HomeContactSection } from '@/components/home-contact-section';
 import {
     HomeDestinationSection,
     type DestinationCard,
 } from '@/components/home-destination-section';
 import FrontendLayout from '@/layouts/frontend-layout';
-import { packages } from '@/routes';
+import { destination, packages } from '@/routes';
 
 const defaultDestinations: DestinationCard[] = [
     {
@@ -38,10 +38,21 @@ const imageSrcs = [
     '/images/fishing.jpg',
 ];
 
+const BannerConfig = {
+    title: 'Unforgettable Memories Await',
+    tagline:
+        "Handpicked travel experiences to the world's most breathtaking and captivating destinations.",
+    badgeLabel: 'DISCOVER THE UNKNOWN',
+    ctaLabel: 'Explore Destinations',
+    ctaHref: destination().url,
+    imageSrc: '/images/hero-banner.png',
+    imageAlt: 'Travel destination hero'
+}
+
 export default function Home() {
     return (
         <FrontendLayout>
-            <HomeBanner />
+            <Banner title={BannerConfig.title} tagline={BannerConfig.tagline} badgeLabel={BannerConfig.badgeLabel} ctaLabel={BannerConfig.ctaLabel} ctaHref={BannerConfig.ctaHref} imageSrc={BannerConfig.imageSrc} imageAlt={BannerConfig.imageAlt} />
             <HomeDestinationSection destinations={defaultDestinations} />
             <HomeAboutSection imageSrcs={imageSrcs} />
             <HomeContactSection />

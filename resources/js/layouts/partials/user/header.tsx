@@ -39,7 +39,7 @@ export function UserHeader({ isCollapsed, setIsCollapsed }: UserHeaderProps) {
     const getInitials = useInitials();
 
     return (
-        <header className="flex h-16 items-center justify-between border-b bg-background px-4">
+        <header className="flex h-16 items-center justify-between border-b bg-card px-4">
             <div className="flex items-center gap-4">
                 <Button
                     variant="outline"

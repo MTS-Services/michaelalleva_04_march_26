@@ -10,7 +10,7 @@ class PackageController extends Controller
 {
     public function index(string $destination): Response
     {
-        return Inertia::render('frontend/packages/index', [
+        return Inertia::render('frontend/packages', [
             'destination' => $destination,
         ]);
     }

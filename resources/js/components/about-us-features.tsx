@@ -2,7 +2,7 @@ import { FeatureCards } from "./feature-cards";
 
 export default function AboutUsFeatures() {
     return (
-        <section className="bg-background py-20">
+        <section className="bg-card py-20">
             <div className="container mx-auto max-w-7xl px-4 md:px-6 lg:px-8 space-y-10">
                 <div className="mx-auto max-w-5/6 space-y-4 text-center">
                     <h2 className="font-oswald text-foreground text-xl sm:text-2xl md:text-[40px]">

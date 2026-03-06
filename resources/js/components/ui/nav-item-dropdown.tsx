@@ -24,7 +24,7 @@ export const NavItemDropdown = React.memo<NavItemDropdownProps>(({
         <div
             ref={dropdownRef}
             className={cn(
-                "fixed z-50 w-auto min-w-200px max-w-400px bg-background",
+                "fixed z-50 w-auto min-w-200px max-w-400px bg-card",
                 "border border-border rounded-lg shadow-lg",
                 "animate-in fade-in-0 zoom-in-95 slide-in-from-left-2",
                 "duration-200"

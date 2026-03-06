@@ -36,7 +36,7 @@ export default function ConfirmPassword() {
                                     placeholder="••••••••"
                                     autoComplete="current-password"
                                     autoFocus
-                                    className="bg-background/50"
+                                    className="bg-card/50"
                                 />
                                 <InputError message={errors.password} />
                             </div>
