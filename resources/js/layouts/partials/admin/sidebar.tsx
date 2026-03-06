@@ -104,7 +104,7 @@ export const AdminSidebar = React.memo<AdminSidebarProps>(({ isCollapsed, active
     return (
         <aside
             className={cn(
-                'relative hidden h-screen border-r bg-background',
+                'relative hidden h-screen border-r bg-card',
                 'transition-all duration-300 ease-in-out',
                 'md:flex flex-col',
                 isCollapsed ? 'w-16' : 'w-64'

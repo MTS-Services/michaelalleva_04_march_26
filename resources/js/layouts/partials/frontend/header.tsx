@@ -70,7 +70,7 @@ export function FrontendHeader() {
             className="fixed left-0 right-0 z-50 transition-all duration-300 ease-in-out px-4"
             style={{ top: `${topOffset * 0.25}rem` }}
         >
-            <div className='container mx-auto flex items-center justify-between p-3 md:p-4 bg-background rounded-lg shadow-sm'>
+            <div className='container mx-auto flex items-center justify-between p-3 md:p-4 bg-card rounded-lg shadow-sm'>
                 <Button asChild>
                     <Link href="/">
                         <AppLogo />

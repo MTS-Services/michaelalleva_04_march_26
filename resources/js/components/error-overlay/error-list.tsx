@@ -99,11 +99,11 @@ function ErrorListItem({ error, isSelected, onClick }: ErrorListItemProps) {
                         </p>
                         <div className="mt-2 flex flex-wrap gap-2 text-xs text-muted-foreground">
                             {error.metadata.component && (
-                                <span className="rounded-md bg-background px-2 py-0.5 font-mono">
+                                <span className="rounded-md bg-card px-2 py-0.5 font-mono">
                                     {error.metadata.component}
                                 </span>
                             )}
-                            <span className="rounded-md bg-background px-2 py-0.5">
+                            <span className="rounded-md bg-card px-2 py-0.5">
                                 {new Date(error.lastOccurrence).toLocaleTimeString()}
                             </span>
                         </div>

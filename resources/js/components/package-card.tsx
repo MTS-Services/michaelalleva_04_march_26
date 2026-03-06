@@ -29,7 +29,7 @@ export default function PackageCard({
     href = '#',
 }: PackageCardProps) {
     return (
-        <div className="bg-background p-6 rounded-xl relative w-full min-w-xs">
+        <div className="bg-card p-6 rounded-xl relative w-full min-w-xs">
             <div className="bg-white absolute top-0 right-0 pl-2 pb-2 rounded-bl-xl">
                 <Button className="bg-foreground text-white hover:bg-foreground">
                     {badge}

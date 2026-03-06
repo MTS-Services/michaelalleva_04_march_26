@@ -38,7 +38,7 @@ export function FeatureCards({
                     key={title}
                     className="flex flex-col items-center rounded-2xl bg-white p-6 text-center"
                 >
-                    <div className="mb-6 flex size-[98px] items-center justify-center rounded-lg bg-background">
+                    <div className="mb-6 flex size-[98px] items-center justify-center rounded-lg bg-card">
                         <Icon className="text-foreground size-10 font-normal" />
                     </div>
                     <h3 className="font-oswald text-foreground mb-2 text-2xl font-bold">

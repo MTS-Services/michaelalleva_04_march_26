@@ -27,7 +27,7 @@ export function UserSidebar({ isCollapsed }: UserSidebarProps) {
     return (
         <div
             className={cn(
-                'relative hidden h-screen border-r bg-background transition-all duration-300 md:flex flex-col',
+                'relative hidden h-screen border-r bg-card transition-all duration-300 md:flex flex-col',
                 isCollapsed ? 'w-20' : 'w-64'
             )}
         >

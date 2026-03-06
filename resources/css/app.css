@@ -74,7 +74,7 @@
 }
 
 :root {
-    --background: hsl(173, 21%, 93%);
+    --background: hsl(173, 80%, 98%);
     --foreground: hsla(173, 80%, 4%, 1);
     --card: hsl(173, 21%, 93%);
     --card-foreground: hsla(171, 11%, 23%, 1);
@@ -217,7 +217,7 @@
     }
 
     body {
-        @apply text-foreground;
+        @apply text-foreground bg-background;
     }
 }
 

@@ -36,7 +36,7 @@ export default function AdminLayout({ children, activeSlug }: AdminLayoutProps) 
     }, [isCollapsed]);
 
     return (
-        <div className="relative flex h-full max-h-screen min-h-screen bg-background">
+        <div className="relative flex h-full max-h-screen min-h-screen bg-card">
             <AdminSidebar isCollapsed={isCollapsed} activeSlug={activeSlug} />
             <div className="flex flex-1 flex-col overflow-hidden">
                 <AdminHeader isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
