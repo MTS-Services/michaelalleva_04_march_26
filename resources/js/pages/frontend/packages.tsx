@@ -3,12 +3,23 @@ import { ArrowRight } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import FrontendLayout from '@/layouts/frontend-layout';
-import { contact } from '@/routes';
+import { contact, destination } from '@/routes';
 
 interface PackageCard {
     title: string;
     price: string;
     includes: string[];
+}
+
+const Banner = {
+    title: 'Unforgettable Memories Await',
+    tagline:
+        "Handpicked travel experiences to the world's most breathtaking and captivating destinations.",
+    badgeLabel: 'DISCOVER THE UNKNOWN',
+    ctaLabel: 'Explore Destinations',
+    ctaHref: destination().url,
+    imageSrc: '/images/hero-banner.png',
+    imageAlt: 'Travel destination hero'
 }
 
 const packages: PackageCard[] = [

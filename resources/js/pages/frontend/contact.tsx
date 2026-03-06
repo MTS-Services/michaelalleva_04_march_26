@@ -1,16 +1,28 @@
 import { Mail, MapPin, Clock, PhoneCall } from 'lucide-react';
 import { useRef, useState } from 'react';
 
-import { ContactBanner } from '@/components/contact-banner';
+import { Banner } from '@/components/banner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import FrontendLayout from '@/layouts/frontend-layout';
 import { Field, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { destination } from '@/routes';
 
 const defaultEmailHref = 'mailto:info@wanderlusttravels.com';
 const defaultPhoneHref = 'tel:+1-800-123-4567';
+
+const BannerConfig = {
+    title: 'A One-of-One Travel Experience.',
+    tagline:
+        "We don’t just book trips; we curate experiences that surprise even the most seasoned travelers.",
+    badgeLabel: 'Our Story',
+    ctaLabel: 'Explore Destinations',
+    ctaHref: destination().url,
+    imageSrc: '/images/airplane.jpg',
+    imageAlt: 'Travel destination hero'
+}
 
 export default function Contact() {
     const [fullName, setFullName] = useState('');
@@ -36,9 +48,11 @@ export default function Contact() {
         }
     };
 
+
+
     return (
         <FrontendLayout>
-            <ContactBanner />
+            <Banner title={BannerConfig.title} tagline={BannerConfig.tagline} badgeLabel={BannerConfig.badgeLabel} ctaLabel={BannerConfig.ctaLabel} ctaHref={BannerConfig.ctaHref} imageSrc={BannerConfig.imageSrc} imageAlt={BannerConfig.imageAlt} darkMode={true} />
 
             {/* Responsive padding: py-10 on mobile, py-15 on desktop */}
             <div className="mx-auto max-w-7xl px-4 py-10 md:py-15 md:px-6 lg:px-8">
