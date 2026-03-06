@@ -1,16 +1,16 @@
-import { Mail, MapPin, Phone, Clock } from 'lucide-react';
-import { useState } from 'react';
+import { Mail, MapPin, Clock, PhoneCall } from 'lucide-react';
+import { useRef, useState } from 'react';
 
 import { ContactBanner } from '@/components/contact-banner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import FrontendLayout from '@/layouts/frontend-layout';
+import { Field, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-const defaultEmailHref = 'mailto:hello@example.com';
-const defaultPhoneHref = 'tel:+1234567890';
-const officeAddress = '123 Travel Street, Suite 100, Your City, ST 12345';
-const businessHours = 'Monday – Friday: 9:00 AM – 6:00 PM ET';
+const defaultEmailHref = 'mailto:info@wanderlusttravels.com';
+const defaultPhoneHref = 'tel:+1-800-123-4567';
 
 export default function Contact() {
     const [fullName, setFullName] = useState('');
@@ -19,137 +19,133 @@ export default function Contact() {
     const [subject, setSubject] = useState('');
     const [message, setMessage] = useState('');
     const [submitted, setSubmitted] = useState(false);
+    const isSubmitting = useRef(false);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        setSubmitted(true);
-        setFullName('');
-        setEmail('');
-        setInterestedDestination('');
-        setSubject('');
-        setMessage('');
+        isSubmitting.current = true;
+        try {
+            const formData = new FormData(e.target as HTMLFormElement);
+            const data = Object.fromEntries(formData.entries());
+            console.log(data);
+            setSubmitted(true); // Added for UX feedback
+        } catch (error) {
+            console.error(error);
+        } finally {
+            isSubmitting.current = false;
+        }
     };
 
     return (
         <FrontendLayout>
             <ContactBanner />
 
-            <div className="mx-auto max-w-7xl px-4 py-15 md:px-6 lg:px-8">
-                <div className="grid gap-12 lg:grid-cols-2">
-                    <div>
-                        <h2 className="font-oswald text-foreground mb-6 text-3xl font-bold">
+            {/* Responsive padding: py-10 on mobile, py-15 on desktop */}
+            <div className="mx-auto max-w-7xl px-4 py-10 md:py-15 md:px-6 lg:px-8">
+                {/* Responsive gap: gap-8 on mobile, gap-12 on desktop */}
+                <div className="grid gap-8 lg:gap-12 lg:grid-cols-2 items-start">
+
+                    {/* Left Column: Contact Information */}
+                    <div className="flex flex-col justify-center">
+                        <h2 className="text-xl md:text-2xl font-semibold mb-3">
                             We'd Love to Hear From You
                         </h2>
-                        <div className="font-libre-franklin text-foreground space-y-6">
-                            <p className="text-lg leading-relaxed">
-                                Reach out with any questions about destinations,
-                                packages, or booking. We typically respond within
-                                24 hours.
-                            </p>
-                            <div className="flex flex-col gap-4">
-                                <a
-                                    href={defaultEmailHref}
-                                    className="flex items-center gap-3 text-lg hover:opacity-80"
-                                >
-                                    <Mail className="size-5 shrink-0" />
-                                    <span>hello@example.com</span>
+                        <p className="text-base md:text-lg leading-relaxed text-muted-foreground">
+                            Whether you have questions about our packages, need help choosing a destination, or want to learn more about our booking process — we're here for you.
+                        </p>
+
+                        <div className="space-y-6 mt-8">
+                            {/* Contact Item Wrapper */}
+                            {[
+                                { href: defaultEmailHref, icon: Mail, label: 'Email', value: 'info@wanderlusttravels.com' },
+                                { href: defaultPhoneHref, icon: PhoneCall, label: 'Phone (Mon-Fri, 9am-6pm EST)', value: '+1 (800) 123-4567' },
+                            ].map((item, idx) => (
+                                <a key={idx} href={item.href} className="flex items-center gap-4 group">
+                                    <span className="inline-flex shrink-0 rounded-xl items-center justify-center p-3 md:p-4 bg-muted/30 text-secondary-foreground group-hover:bg-muted/50 transition-colors">
+                                        <item.icon className="size-5 md:size-6" />
+                                    </span>
+                                    <div className="min-w-0">
+                                        <p className="text-sm font-medium text-muted-foreground">{item.label}</p>
+                                        <h4 className="text-md md:text-xl font-medium truncate">{item.value}</h4>
+                                    </div>
                                 </a>
-                                <a
-                                    href={defaultPhoneHref}
-                                    className="flex items-center gap-3 text-lg hover:opacity-80"
-                                >
-                                    <Phone className="size-5 shrink-0" />
-                                    <span>+1 (234) 567-890</span>
-                                </a>
-                                <div className="flex items-start gap-3 text-lg">
-                                    <MapPin className="size-5 mt-0.5 shrink-0" />
-                                    <span>{officeAddress}</span>
+                            ))}
+
+                            <div className="flex items-center gap-4">
+                                <span className="inline-flex shrink-0 rounded-xl items-center justify-center p-3 md:p-4 bg-muted/30 text-secondary-foreground">
+                                    <MapPin className="size-5 md:size-6" />
+                                </span>
+                                <div>
+                                    <p className="text-sm font-medium text-muted-foreground">Office (New York, NY 10118, USA)</p>
+                                    <h4 className="text-md md:text-xl font-medium">350 Fifth Avenue, Suite 4100</h4>
                                 </div>
-                                <div className="flex items-center gap-3 text-lg">
-                                    <Clock className="size-5 shrink-0" />
-                                    <span>{businessHours}</span>
+                            </div>
+
+                            <div className="flex items-center gap-4">
+                                <span className="inline-flex shrink-0 rounded-xl items-center justify-center p-3 md:p-4 bg-muted/30 text-secondary-foreground">
+                                    <Clock className="size-5 md:size-6" />
+                                </span>
+                                <div>
+                                    <p className="text-sm font-medium text-muted-foreground">Business hours</p>
+                                    <h4 className="text-md md:text-xl font-medium">Mon - Fri: 9:00 AM - 6:00 PM</h4>
+                                    <p className="text-xs text-muted-foreground">Saturday: 10:00 AM - 3:00 PM (EST)</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="rounded-2xl bg-muted p-8">
-                        <h2 className="font-oswald text-foreground mb-6 text-2xl font-bold">
+                    {/* Right Column: Contact Form */}
+                    <div className="rounded-2xl bg-muted/30 p-6">
+                        <h2 className="text-xl md:text-2xl font-semibold mb-2">
                             Send Us a Message
                         </h2>
-                        {submitted ? (
-                            <p className="font-libre-franklin text-foreground text-lg">
-                                Thank you for your message. We'll be in touch soon.
-                            </p>
-                        ) : (
-                            <form onSubmit={handleSubmit} className="space-y-4">
-                                <div>
-                                    <Label htmlFor="full_name">Full name</Label>
-                                    <Input
-                                        id="full_name"
-                                        value={fullName}
-                                        onChange={(e) =>
-                                            setFullName(e.target.value)
-                                        }
-                                        className="mt-1"
-                                        autoComplete="name"
-                                    />
-                                </div>
-                                <div>
-                                    <Label htmlFor="email">Email</Label>
-                                    <Input
-                                        id="email"
-                                        type="email"
-                                        value={email}
-                                        onChange={(e) =>
-                                            setEmail(e.target.value)
-                                        }
-                                        className="mt-1"
-                                        autoComplete="email"
-                                    />
-                                </div>
-                                <div>
-                                    <Label htmlFor="interested_destination">
-                                        Interested destination
-                                    </Label>
-                                    <Input
-                                        id="interested_destination"
-                                        value={interestedDestination}
-                                        onChange={(e) =>
-                                            setInterestedDestination(
-                                                e.target.value,
-                                            )
-                                        }
-                                        className="mt-1"
-                                        placeholder="e.g. Egypt, Costa Rica"
-                                    />
-                                </div>
-                                <div>
-                                    <Label htmlFor="subject">Subject</Label>
-                                    <Input
-                                        id="subject"
-                                        value={subject}
-                                        onChange={(e) =>
-                                            setSubject(e.target.value)
-                                        }
-                                        className="mt-1"
-                                    />
-                                </div>
-                                <div>
-                                    <Label htmlFor="message">Message</Label>
-                                    <textarea
-                                        id="message"
-                                        rows={4}
-                                        value={message}
-                                        onChange={(e) =>
-                                            setMessage(e.target.value)
-                                        }
-                                        className="border-input bg-background placeholder:text-muted-foreground focus-visible:ring-ring mt-1 flex w-full rounded-md border px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                    />
-                                </div>
-                                <Button type="submit">Send Message</Button>
-                            </form>
-                        )}
+
+                        <p className="text-sm md:text-base text-muted-foreground mb-8">
+                            We typically respond within 24 hours on business days.
+                        </p>
+                        <form onSubmit={handleSubmit} className="space-y-10">
+                            <FieldSet className="w-full">
+                                <FieldGroup className="gap-4">
+                                    <Field className='gap-4'>
+                                        <FieldLabel htmlFor="name">Full name</FieldLabel>
+                                        <Input id="name" name="fullName" type="text" placeholder="Your Name" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
+                                    </Field>
+
+                                    <Field className='gap-4'>
+                                        <FieldLabel htmlFor="email">Email</FieldLabel>
+                                        <Input id="email" name="email" type="email" placeholder="Email address" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                                    </Field>
+
+                                    <Field className='gap-4'>
+                                        <FieldLabel htmlFor="destination">Interested Destination</FieldLabel>
+                                        <Select value={interestedDestination} onValueChange={setInterestedDestination}>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select a destination" />
+                                            </SelectTrigger>
+                                            <SelectContent position="popper">
+                                                <SelectItem value="egypt">Egypt</SelectItem>
+                                                <SelectItem value="costa-rica">Costa Rica</SelectItem>
+                                                <SelectItem value="norway">Norway</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </Field>
+
+                                    <Field className='gap-4'>
+                                        <FieldLabel htmlFor="subject">Subject</FieldLabel>
+                                        <Input id="subject" name="subject" type="text" placeholder="Enter subject" value={subject} onChange={(e) => setSubject(e.target.value)} required />
+                                    </Field>
+
+                                    <Field className='gap-4'>
+                                        <FieldLabel htmlFor="message">Message</FieldLabel>
+                                        <Textarea id="message" name="message" placeholder="Enter your message here..." value={message} onChange={(e) => setMessage(e.target.value)} required rows={4} />
+                                    </Field>
+                                </FieldGroup>
+                            </FieldSet>
+
+                            <Button type="submit" className="w-full md:w-auto px-8" disabled={isSubmitting.current}>
+                                {isSubmitting.current ? 'Sending...' : 'Send'}
+                            </Button>
+                        </form>
                     </div>
                 </div>
             </div>
