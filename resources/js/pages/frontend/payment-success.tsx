@@ -1,5 +1,5 @@
 import FrontendLayout from '@/layouts/frontend-layout';
-import { CheckCircle2 } from 'lucide-react';
+import { Check, CheckCircle2, Info } from 'lucide-react';
 
 interface PaymentSuccessProps {
     destination?: string;
@@ -16,27 +16,28 @@ export default function PaymentSuccess({
 }: PaymentSuccessProps) {
     return (
         <FrontendLayout>
-            <div className="flex min-h-[70vh] items-start justify-center px-4 py-16">
-                <div className="w-full max-w-2xl space-y-5">
+            <div className='mt-24 md:mt-28 lg:mt-32'></div>
+            <section className="flex items-start justify-center px-4 py-15 md:px-6 lg:px-8">
+                <div className="container max-w-7xl p-6 bg-card space-y-6" style={{ borderRadius: '24px' }}>
                     {/* Success card */}
-                    <div className="rounded-2xl border border-primary/30 bg-card p-8 shadow-sm">
+                    <div className="rounded-2xl bg-background border border-primary p-6">
                         {/* Header */}
                         <div className="mb-6 flex items-center gap-3">
-                            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary">
-                                <CheckCircle2 className="h-5 w-5 text-primary-foreground" strokeWidth={2.5} />
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary">
+                                <Check className="h-5 w-5 text-primary-foreground" strokeWidth={2.5} />
                             </div>
                             <div>
-                                <h1 className="font-oswald text-2xl font-semibold text-foreground">
+                                <h1 className="text-lg md:text-xl lg:text-2xl">
                                     Payment Successful!
                                 </h1>
-                                <p className="font-libre-franklin text-sm text-muted-foreground">
+                                <p>
                                     Your booking has been confirmed
                                 </p>
                             </div>
                         </div>
 
                         {/* Booking details table */}
-                        <div className="overflow-hidden rounded-xl border border-border bg-card">
+                        <div className="overflow-hidden rounded-xl bg-card p-6">
                             <DetailRow label="Destination:" value={destination} />
                             <DetailRow label="Departure:" value={departureDate} />
                             <DetailRow label="Travelers:" value={String(travelers)} />
@@ -45,24 +46,24 @@ export default function PaymentSuccess({
                     </div>
 
                     {/* Booking Status – Pending Waiver */}
-                    <div className="flex items-start gap-3 rounded-2xl border border-yellow-200 bg-yellow-50 p-6 dark:border-yellow-900/40 dark:bg-yellow-900/10">
-                        <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-yellow-400 text-white">
-                            <span className="text-xs font-bold">!</span>
+                    <div className="flex items-start gap-3 rounded-2xl border border-[#FFCC00] bg-yellow-50 p-6 dark:border-yellow-900/40 dark:bg-yellow-900/10">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-yellow-400 text-white">
+                            <Info className="h-5 w-5 text-white" strokeWidth={2.5} />
                         </div>
-                        <div>
-                            <p className="font-oswald mb-2 text-base font-semibold text-foreground">
+                        <div className='space-y-4'>
+                            <h4 className="text-lg md:text-xl lg:text-2xl">
                                 Booking Status
-                            </p>
-                            <p className="font-libre-franklin text-sm text-muted-foreground">
+                            </h4>
+                            <p>
                                 Your booking is currently in{' '}
-                                <a href="#" className="font-medium text-foreground underline decoration-muted-foreground/50 underline-offset-2">
+                                <a href="#" className="underline">
                                     Pending Waiver
                                 </a>{' '}
                                 status. Once you submit this waiver, our team will review and approve
                                 it. you will receive a confirmation{' '}
-                                <strong className="text-foreground">email</strong> when your booking
+                                <strong>email</strong> when your booking
                                 status is updated to{' '}
-                                <a href="#" className="font-medium text-foreground underline decoration-muted-foreground/50 underline-offset-2">
+                                <a href="#" className="underline">
                                     approved
                                 </a>
                                 .
@@ -70,7 +71,7 @@ export default function PaymentSuccess({
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </FrontendLayout>
     );
 }
@@ -86,12 +87,10 @@ function DetailRow({
 }) {
     return (
         <div
-            className={`flex items-center justify-between px-5 py-4 ${
-                last ? '' : 'border-b border-border'
-            }`}
+            className={`flex items-center justify-between`}
         >
-            <span className="font-libre-franklin text-sm text-muted-foreground">{label}</span>
-            <span className="font-libre-franklin text-sm text-foreground">{value}</span>
+            <span className="text-muted-foreground/80">{label}</span>
+            <span className="">{value}</span>
         </div>
     );
 }
