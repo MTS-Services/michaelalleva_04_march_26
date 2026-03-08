@@ -27,6 +27,7 @@ import { useActiveUrl } from '@/hooks/use-active-url';
 import { useInitials } from '@/hooks/use-initials';
 import { cn, toUrl } from '@/lib/utils';
 import { type BreadcrumbItem, type SharedData, type NavItem as NavItemType } from '@/types';
+import { dashboard } from '@/routes/admin';
 
 
 interface AdminHeaderProps {
@@ -52,36 +53,6 @@ export function AdminHeader({ isCollapsed, setIsCollapsed }: AdminHeaderProps) {
             >
                 {isCollapsed ? <ChevronsRight className="h-4 w-4" /> : <ChevronsLeft className="h-4 w-4" />}
             </Button>
-            {/* <div className="hidden h-full items-center space-x-6 lg:flex">
-                <NavigationMenu className="flex h-full items-stretch">
-                    <NavigationMenuList className="flex h-full items-stretch space-x-2">
-
-                        <NavigationMenuItem
-                            key="dashboard"
-                            className="relative flex h-full items-center"
-                        >
-
-                            <Link
-                                href="#"
-                                className={cn(
-                                    navigationMenuTriggerStyle(),
-                                    urlIsActive('#') && activeItemStyles,
-                                    'h-9 cursor-pointer px-3',
-                                )}
-                            >
-
-                                <Icon
-                                    iconNode={ChevronsRight}
-                                    className="mr-2 h-4 w-4"
-                                />
-                            </Link>
-                            {urlIsActive('#') && (
-                                <div className="absolute bottom-0 left-0 h-0.5 w-full translate-y-px bg-black dark:bg-white"></div>
-                            )}
-                        </NavigationMenuItem>
-                    </NavigationMenuList>
-                </NavigationMenu>
-            </div> */}
 
             <div className="ml-auto flex items-center space-x-2">
                 <div className="relative flex items-center space-x-1">
@@ -117,7 +88,7 @@ export function AdminHeader({ isCollapsed, setIsCollapsed }: AdminHeaderProps) {
                         </TooltipProvider>
                     </div>
                 </div>
-                <DropdownMenu>
+                {/* <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button
                             variant="ghost"
@@ -137,7 +108,17 @@ export function AdminHeader({ isCollapsed, setIsCollapsed }: AdminHeaderProps) {
                     <DropdownMenuContent className="w-56" align="end">
                         <UserMenuContent user={auth.user} />
                     </DropdownMenuContent>
-                </DropdownMenu>
+                </DropdownMenu> */}
+                <Link href={dashboard()}>
+                    <Button className="relative size-12 rounded-full cursor-pointer">
+                        <Avatar>
+                            <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
+                            <AvatarFallback className="bg-primary text-white">
+                                {getInitials(auth.user.name)}
+                            </AvatarFallback>
+                        </Avatar>
+                    </Button>
+                </Link>
             </div>
 
         </header>

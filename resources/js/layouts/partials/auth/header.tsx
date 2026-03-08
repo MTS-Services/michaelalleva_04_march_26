@@ -1,137 +1,221 @@
-import { Link, usePage } from '@inertiajs/react';
-import { Menu, XIcon } from 'lucide-react';
-import { useState } from 'react';
+import { Link, router, usePage } from '@inertiajs/react';
+import { LogOut, Menu, XIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 import AppLogo from '@/components/app-logo';
-import AppearanceToggleDropdown from '@/components/appearance-dropdown';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from '@/components/ui/sheet';
 import { UserMenuContent } from '@/components/user-menu-content';
+import { useActiveUrl } from '@/hooks/use-active-url';
 import { useInitials } from '@/hooks/use-initials';
-import { login, register } from '@/routes';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
+import { aboutUs, contact, destination, login, logout, register } from '@/routes';
+import { home } from '@/routes';
 import { type SharedData } from '@/types';
+import { dashboard as adminDashboard } from '@/routes/admin';
+import { dashboard as userDashboard } from '@/routes/user';
+import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 
+const NavItems = [
+    {
+        name: 'Home',
+        href: home(),
+    },
+    {
+        name: 'Destination',
+        href: destination(),
+    },
+    {
+        name: 'About Us',
+        href: aboutUs(),
+    },
+    {
+        name: 'Contact',
+        href: contact(),
+    },
+];
 
 export function AuthHeader() {
-    const { auth } = usePage<SharedData>().props;
+    const { auth, features } = usePage<SharedData>().props;
     const getInitials = useInitials();
+    const { urlIsActive } = useActiveUrl();
+    const isMobile = useIsMobile();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const cleanup = useMobileNavigation();
+    const [topOffset, setTopOffset] = useState(13);
 
-    const navLinks = [
-        { name: 'Features', href: '#' },
-        { name: 'Pricing', href: '#' },
-        { name: 'About', href: '#' },
-    ];
+    useEffect(() => {
+        const handleScroll = () => {
+            if (isMobile) {
+                if (window.scrollY > 10) {
+                    setTopOffset(1);
+                } else {
+                    setTopOffset(8);
+                }
+            } else {
+                if (window.scrollY > 10) {
+                    setTopOffset(3);
+                } else {
+                    setTopOffset(13);
+                }
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const dashboardUrl = auth?.user?.is_admin ? adminDashboard() : userDashboard();
+
+    const handleLogout = () => {
+        cleanup();
+        router.flushAll();
+    };
 
     return (
-        <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-card/80 backdrop-blur-md">
-            <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
-                <div className="flex items-center gap-8">
-                    <Link href="/" className="transition-transform active:scale-95">
+        <header
+            className="fixed left-0 right-0 z-50 transition-all duration-300 ease-in-out px-4"
+            style={{ top: `${topOffset * 0.25}rem` }}
+        >
+            <div className='container mx-auto flex items-center justify-between p-3 md:p-4 bg-card rounded-lg shadow-sm'>
+                <Button asChild>
+                    <Link href={home()}>
                         <AppLogo />
                     </Link>
+                </Button>
 
-                    <nav className="hidden items-center gap-1 md:flex">
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
-                    </nav>
-                </div>
-
-                <div className="flex items-center gap-3">
-                    <AppearanceToggleDropdown />
-
-                    <div className="hidden h-6 w-[1px] bg-border md:block" /> {/* Divider */}
-
+                <nav className={cn("items-center gap-6 md:flex justify-center", isMobile ? 'hidden' : 'flex')}>
+                    {NavItems.map((item) => (
+                        <Link key={item.name} href={item.href} className={cn(
+                            "hover:text-primary/90 transition-colors duration-200",
+                            urlIsActive(item.href) && 'text-primary'
+                        )}>
+                            {item.name}
+                        </Link>
+                    ))}
+                </nav>
+                <div className={cn("flex items-center gap-3", isMobile ? 'hidden' : 'flex')}>
                     {auth.user ? (
-                        <DropdownMenu>
+                        <>
+                            {/* <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="relative h-9 w-9 rounded-full ring-offset-background transition-all hover:ring-2 hover:ring-ring">
-                                    <Avatar className="h-9 w-9">
+                                <Button className="relative size-12 rounded-full">
+                                    <Avatar className="">
                                         <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
-                                        <AvatarFallback className="bg-violet-600 text-white text-xs">
+                                        <AvatarFallback className="bg-primary text-white">
                                             {getInitials(auth.user.name)}
                                         </AvatarFallback>
                                     </Avatar>
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-56" align="end" sideOffset={8}>
+                            <DropdownMenuContent className="w-52" align="end" sideOffset={5}>
                                 <UserMenuContent user={auth.user} />
                             </DropdownMenuContent>
-                        </DropdownMenu>
-                    ) : (
-                        <div className="hidden items-center gap-2 md:flex">
-                            <Link href={login()}>
-                                <Button variant="ghost" size="sm" className="text-sm font-medium">Log in</Button>
-                            </Link>
-                            <Link href={register()}>
-                                <Button size="sm" className="bg-violet-600 text-white shadow-sm hover:bg-violet-700">
-                                    Get Started
+                        </DropdownMenu> */}
+                            <Link href={dashboardUrl}>
+                                <Button className="relative size-12 rounded-full">
+                                    <Avatar>
+                                        <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
+                                        <AvatarFallback className="bg-primary text-white">
+                                            {getInitials(auth.user.name)}
+                                        </AvatarFallback>
+                                    </Avatar>
                                 </Button>
                             </Link>
+                        </>
+                    ) : (
+                        <div className="flex items-center gap-3">
+                            {features.canRegister &&
+                                <Button variant="outline" asChild>
+                                    <Link href={register()}>
+                                        Sign Up
+                                    </Link>
+                                </Button>
+                            }
+                            <Button asChild>
+                                <Link href={login()}>
+                                    Login
+                                </Link>
+                            </Button>
                         </div>
                     )}
-
-                    {/* Mobile Menu Trigger */}
-                    <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-                        <SheetTrigger asChild>
-                            <Button variant="ghost" size="icon" className="md:hidden">
-                                <Menu className="h-5 w-5" />
-                            </Button>
-                        </SheetTrigger>
-                        <SheetContent side="right" className="flex w-full flex-col p-0 sm:max-w-sm">
-                            <SheetHeader className="flex-row items-center justify-between border-b p-6 space-y-0">
-                                <AppLogo />
-                                <SheetClose asChild>
-                                    <Button variant="ghost" size="icon" className="rounded-full">
-                                        <XIcon className="h-5 w-5" />
-                                    </Button>
-                                </SheetClose>
-                            </SheetHeader>
-
-                            <div className="flex flex-1 flex-col justify-between p-6">
-                                <nav className="flex flex-col gap-2">
-                                    {navLinks.map((link) => (
-                                        <Link
-                                            key={link.name}
-                                            href={link.href}
-                                            className="block rounded-lg px-4 py-3 text-lg font-medium transition-colors hover:bg-accent"
-                                            onClick={() => setIsMobileMenuOpen(false)}
-                                        >
-                                            {link.name}
-                                        </Link>
-                                    ))}
-                                </nav>
-
-                                <div className="space-y-3">
-                                    {!auth.user ? (
-                                        <>
-                                            <Link href={login()} className="block w-full" onClick={() => setIsMobileMenuOpen(false)}>
-                                                <Button variant="outline" className="w-full py-6">Log in</Button>
-                                            </Link>
-                                            <Link href={register()} className="block w-full" onClick={() => setIsMobileMenuOpen(false)}>
-                                                <Button className="w-full bg-violet-600 py-6 hover:bg-violet-700">Get Started</Button>
-                                            </Link>
-                                        </>
-                                    ) : (
-                                        <Link href={route('dashboard')} className="block w-full" onClick={() => setIsMobileMenuOpen(false)}>
-                                            <Button className="w-full bg-violet-600 py-6">Dashboard</Button>
-                                        </Link>
-                                    )}
-                                </div>
-                            </div>
-                        </SheetContent>
-                    </Sheet>
                 </div>
+
+                <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen} >
+                    <SheetTrigger asChild>
+                        <Button variant="ghost" className={cn("transition-all duration-200", !isMobile && 'hidden')}>
+                            <Menu className="size-6" />
+                        </Button>
+                    </SheetTrigger>
+                    <SheetContent side="right" showCloseButton={false} className="flex w-full flex-col p-0 sm:max-w-sm">
+                        <SheetHeader className="flex-row items-center justify-between border-b p-6 space-y-0">
+                            <Button asChild>
+                                <Link href={home()}>
+                                    <AppLogo />
+                                </Link>
+                            </Button>
+                            <SheetClose asChild>
+                                <Button variant="ghost" size="icon" className="rounded-full">
+                                    <XIcon className="size-5" />
+                                </Button>
+                            </SheetClose>
+                        </SheetHeader>
+
+                        <div className="flex flex-1 flex-col justify-between p-6">
+                            <div className="flex flex-col gap-2 space-y-2">
+                                {NavItems.map((item) => (
+                                    <Link key={item.name} href={item.href} className={cn(
+                                        "hover:text-primary/90 transition-colors duration-200 text-lg font-medium",
+                                        urlIsActive(item.href) && 'text-primary'
+                                    )}>
+                                        {item.name}
+                                    </Link>
+                                ))}
+                            </div>
+                            <div className="space-y-3">
+                                {!auth.user ? (
+                                    <div className="flex flex-col gap-2 space-y-2">
+                                        {features.canRegister &&
+                                            <Button variant="outline" asChild>
+                                                <Link href={register()}>
+                                                    Sign Up
+                                                </Link>
+                                            </Button>
+                                        }
+                                        <Button asChild>
+                                            <Link href={login()}>
+                                                Login
+                                            </Link>
+                                        </Button>
+                                    </div>
+                                ) : (
+                                    <div className="flex items-center justify-between">
+                                        <Link href={dashboardUrl}>
+                                            <Button className="py-6 cursor-pointer">
+                                                <Avatar>
+                                                    <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
+                                                    <AvatarFallback className="bg-primary text-white">
+                                                        {getInitials(auth.user.name)}
+                                                    </AvatarFallback>
+                                                </Avatar>
+                                            </Button>
+                                        </Link>
+                                        <Link href={logout()} as="button" onClick={handleLogout} data-test="logout-button">
+                                            <Button variant="outline" className="w-full cursor-pointer">
+                                                <LogOut className="size-4" />
+                                                Log Out
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </SheetContent>
+                </Sheet>
             </div>
-        </header>
+        </header >
     );
 }

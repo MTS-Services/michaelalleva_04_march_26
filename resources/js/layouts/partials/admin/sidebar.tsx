@@ -5,7 +5,8 @@ import * as React from 'react';
 import AppLogo from '@/components/app-logo';
 import { NavItem } from '@/components/ui/nav-item';
 import { cn } from '@/lib/utils';
-import { type NavItemType, type SharedData } from '@/types';
+import { type NavItem as NavItemType, type SharedData } from '@/types';
+import { dashboard } from '@/routes/admin';
 // Navigation configuration
 const adminNavItems: NavItemType[] = [
     {
@@ -96,9 +97,9 @@ export const AdminSidebar = React.memo<AdminSidebarProps>(({ isCollapsed, active
     const userPermissions = React.useMemo(() => {
         const auth = props.auth as SharedData['auth'];
         return auth?.user?.permissions ||
-               auth?.user?.all_permissions ||
-               auth?.permissions ||
-               [];
+            auth?.user?.all_permissions ||
+            auth?.permissions ||
+            [];
     }, [props.auth]);
 
     return (
@@ -116,7 +117,7 @@ export const AdminSidebar = React.memo<AdminSidebarProps>(({ isCollapsed, active
                 isCollapsed ? "justify-center px-2" : "px-6"
             )}>
                 <Link
-                    href="/"
+                    href={dashboard()}
                     className="flex items-center gap-2 transition-opacity hover:opacity-80"
                 >
                     {isCollapsed ? (

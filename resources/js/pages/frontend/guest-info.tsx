@@ -168,7 +168,7 @@ export default function GuestInfo({
                                     <ArrowLeft className="h-4 w-4" />
                                 </Button>
                             </Link>
-                            <Link href={canContinue ? checkout({ bookingUid: '1234567890' }).url : '#'} className='flex-1' disabled={!canContinue}>
+                            <Link href={canContinue ? checkout({ bookingUid: '1234567890' }).url : '#'} className={cn('flex-1', !canContinue && 'cursor-not-allowed')} disabled={!canContinue}>
                                 <Button type="button" variant="default" disabled={!canContinue} className="w-full cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
                                     Continue To Checkout Details
                                     <ArrowRight className="h-4 w-4" />

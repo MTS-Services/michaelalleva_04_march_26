@@ -1,20 +1,16 @@
-import { Link, usePage } from '@inertiajs/react';
-import { ChevronLeft, Menu, ChevronRight, Settings, LayoutGrid } from 'lucide-react';
+import { Link, router, usePage } from '@inertiajs/react';
+import { ChevronLeft, Menu, ChevronRight, Settings, LayoutGrid, LogOut } from 'lucide-react';
 import * as React from 'react';
 
 import AppLogo from '@/components/app-logo';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { UserMenuContent } from '@/components/user-menu-content';
+import { Sheet, SheetContent, SheetFooter, SheetTrigger } from '@/components/ui/sheet';
 import { useInitials } from '@/hooks/use-initials';
+import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { type SharedData, type NavItem as NavItemType } from '@/types';
-
+import { logout } from '@/routes';
+import { dashboard as userDashboard } from '@/routes/user';
 
 interface UserHeaderProps {
     isCollapsed: boolean;
@@ -37,6 +33,11 @@ const mainNavItems: NavItemType[] = [
 export function UserHeader({ isCollapsed, setIsCollapsed }: UserHeaderProps) {
     const { auth } = usePage<SharedData>().props;
     const getInitials = useInitials();
+    const cleanup = useMobileNavigation();
+    const handleLogout = () => {
+        cleanup();
+        router.flushAll();
+    };
 
     return (
         <header className="flex h-16 items-center justify-between border-b bg-card px-4">
@@ -58,7 +59,7 @@ export function UserHeader({ isCollapsed, setIsCollapsed }: UserHeaderProps) {
                     </SheetTrigger>
                     <SheetContent side="left" className="w-64 p-0">
                         <div className="flex h-16 items-center border-b px-6">
-                            <Link href="/">
+                            <Link href={userDashboard()}>
                                 <AppLogo />
                             </Link>
                         </div>
@@ -74,11 +75,20 @@ export function UserHeader({ isCollapsed, setIsCollapsed }: UserHeaderProps) {
                                 </Link>
                             ))}
                         </nav>
+                        <SheetFooter>
+
+                            <Link href={logout()} as="button" onClick={handleLogout} data-test="logout-button">
+                                <Button variant="outline" className="cursor-pointer">
+                                    <LogOut className="size-4" />
+                                    Log Out
+                                </Button>
+                            </Link>
+                        </SheetFooter>
                     </SheetContent>
                 </Sheet>
             </div>
 
-            <DropdownMenu>
+            {/* <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon" className="relative rounded-full">
                         <Avatar className="h-8 w-8">
@@ -90,7 +100,17 @@ export function UserHeader({ isCollapsed, setIsCollapsed }: UserHeaderProps) {
                 <DropdownMenuContent className="w-56" align="end" forceMount>
                     <UserMenuContent user={auth.user} />
                 </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu> */}
+            <Link href={userDashboard()}>
+                <Button className="relative size-12 rounded-full cursor-pointer">
+                    <Avatar>
+                        <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
+                        <AvatarFallback className="bg-primary text-white">
+                            {getInitials(auth.user.name)}
+                        </AvatarFallback>
+                    </Avatar>
+                </Button>
+            </Link>
         </header>
     );
 }
