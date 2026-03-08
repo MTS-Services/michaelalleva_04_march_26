@@ -10,10 +10,17 @@ class GuestInfoController extends Controller
 {
     public function index(string $destination, string $package): Response
     {
+        $currentUrl = url()->current();
+        $previousUrl = url()->previous();
+
+        $prevStep = ($previousUrl && $previousUrl !== $currentUrl)
+            ? $previousUrl
+            : route('select-date', [$destination, $package]);
+
         return Inertia::render('frontend/guest-info', [
             'destinationSlug' => $destination,
             'packageSlug' => $package,
-            'prevStep' => url()->previous() ?? route('frontend.select-date', [$destination, $package]),
+            'prevStep' => $prevStep,
         ]);
     }
 }

@@ -37,6 +37,8 @@ export default function GuestInfo({
     const [emailCode, setEmailCode] = useState('');
     const [emailSent, setEmailSent] = useState(false);
 
+    console.log("prevStep", prevStep);
+
     const setGuestAge = (idx: number, val: string) => {
         setGuests((prev) => prev.map((g, i) => (i === idx ? { age: val } : g)));
     };
@@ -152,27 +154,30 @@ export default function GuestInfo({
                                 </Field>
                             </FieldGroup>
                         </FieldSet>
+
+                        {/* Navigation */}
+                        <div className="mt-8 flex gap-3 flex-wrap">
+                            <Link href={prevStep} className='flex-1'>
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    className="w-full cursor-pointer"
+                                    disabled={!canContinue}
+                                >
+                                    Back
+                                    <ArrowLeft className="h-4 w-4" />
+                                </Button>
+                            </Link>
+                            <Link href={canContinue ? checkout({ bookingUid: '1234567890' }).url : '#'} className='flex-1' disabled={!canContinue}>
+                                <Button type="button" variant="default" disabled={!canContinue} className="w-full cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+                                    Continue To Checkout Details
+                                    <ArrowRight className="h-4 w-4" />
+                                </Button>
+                            </Link>
+                        </div>
                     </form>
 
-                    {/* Navigation */}
-                    <div className="mt-8 flex gap-3">
-                        <Link href={prevStep} className='flex-1'>
-                            <Button
-                                variant="outline"
-                                className="w-full cursor-pointer"
-                                disabled={!canContinue}
-                            >
-                                Back
-                                <ArrowLeft className="h-4 w-4" />
-                            </Button>
-                        </Link>
-                        <Link href={canContinue ? checkout({ bookingUid: '1234567890' }).url : '#'} className='flex-1' disabled={!canContinue}>
-                            <Button variant="default" disabled={!canContinue} className="w-full cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
-                                Continue To Checkout Details
-                                <ArrowRight className="h-4 w-4" />
-                            </Button>
-                        </Link>
-                    </div>
+
                 </div>
 
                 {/* Verification Required info box */}

@@ -1,9 +1,13 @@
 
 import { BookingProgress } from '@/components/booking-progress';
+import { Checkbox } from '@/components/ui/checkbox';
 import FrontendLayout from '@/layouts/frontend-layout';
 import { cn } from '@/lib/utils';
-import { ArrowRight, Lock } from 'lucide-react';
+import { paymentFailure, paymentSuccess } from '@/routes';
+import { router } from '@inertiajs/react';
+import { ArrowRight, Circle, Lock } from 'lucide-react';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 interface CheckoutProps {
     destination?: string;
@@ -34,22 +38,37 @@ export default function Checkout({
         setSubmitting(true);
         // wire to Inertia form post in real usage
         setTimeout(() => setSubmitting(false), 2000);
+        const successUrl = paymentSuccess.url({ bookingUid: '1234567890' });
+        const failureUrl = paymentFailure.url({ bookingUid: '1234567890' });
+
+        // Randomly redirect to success or failure url
+        const random = Math.random();
+        const redirectTo = random < 0.5 ? successUrl : failureUrl;
+        router.visit(redirectTo, {
+            onSuccess: () => {
+                toast.success('Payment successful');
+            },
+            onError: () => {
+                toast.error('Payment failed');
+            },
+        });
     };
 
     return (
         <FrontendLayout>
+            <div className='mt-34 sm:mt-36 lg:mt-40 xl:mt-44'></div>
             <BookingProgress currentStep={3} />
 
-            <div className="container mx-auto px-4 py-12">
-                <div className="mx-auto grid max-w-4xl gap-6 lg:grid-cols-[1fr_280px]">
+            <div className="container max-w-7xl mx-auto px-4 py-12">
+                <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
                     {/* Left column */}
                     <div className="space-y-5">
                         {/* Booking Summary */}
-                        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-                            <h2 className="font-oswald mb-5 text-base font-semibold text-foreground">
+                        <div className="rounded-2xl bg-card p-6 space-y-6">
+                            <h2 className="text-lg md:text-xl lg:text-2xl">
                                 Booking Summary
                             </h2>
-                            <div className="space-y-3 font-libre-franklin text-sm">
+                            <div className="space-y-4 text-base md:text-lg lg:text-xl">
                                 <SummaryRow label="Destination:" value={destination} />
                                 <SummaryRow label="Package:" value={packageName} />
                                 <SummaryRow label="Travelers:" value={String(travelers)} />
@@ -58,18 +77,16 @@ export default function Checkout({
                         </div>
 
                         {/* Payment Method */}
-                        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-                            <h2 className="font-oswald mb-4 text-base font-semibold text-foreground">
+                        <div className="rounded-2xl bg-card p-6 space-y-6">
+                            <h2 className="text-lg md:text-xl lg:text-2xl">
                                 Payment Method
                             </h2>
-                            <div className="space-y-3">
+                            <div className="space-y-4">
                                 {/* PayPal option */}
                                 <label
                                     className={cn(
-                                        'flex cursor-pointer items-center gap-3 rounded-xl border p-4 transition-all',
-                                        paymentMethod === 'paypal'
-                                            ? 'border-primary bg-primary/5'
-                                            : 'border-border bg-card hover:border-primary/40',
+                                        'flex cursor-pointer items-center gap-3 rounded-xl border-2 p-4 transition-all bg-background',
+                                        paymentMethod === 'paypal' ? 'border-primary' : 'border-transparent'
                                     )}
                                 >
                                     <div className="relative flex h-5 w-5 items-center justify-center">
@@ -87,10 +104,10 @@ export default function Checkout({
                                         )}
                                     </div>
                                     <div>
-                                        <p className="font-libre-franklin font-medium text-foreground">
+                                        <h4 className="text-base md:text-lg lg:text-xl">
                                             PayPal
-                                        </p>
-                                        <p className="font-libre-franklin text-xs text-muted-foreground">
+                                        </h4>
+                                        <p className="text-sm md:text-base">
                                             Pay securely with PayPal
                                         </p>
                                     </div>
@@ -99,10 +116,8 @@ export default function Checkout({
                                 {/* Credit Card option */}
                                 <label
                                     className={cn(
-                                        'flex cursor-pointer items-center gap-3 rounded-xl border p-4 transition-all',
-                                        paymentMethod === 'credit'
-                                            ? 'border-primary bg-primary/5'
-                                            : 'border-border bg-card hover:border-primary/40',
+                                        'flex cursor-pointer items-center gap-3 rounded-xl border-2 p-4 transition-all bg-background',
+                                        paymentMethod === 'credit' ? 'border-primary' : 'border-transparent'
                                     )}
                                 >
                                     <div className="relative flex h-5 w-5 items-center justify-center">
@@ -120,10 +135,10 @@ export default function Checkout({
                                         )}
                                     </div>
                                     <div>
-                                        <p className="font-libre-franklin font-medium text-foreground">
+                                        <h4 className="text-base md:text-lg lg:text-xl">
                                             Credit Card
-                                        </p>
-                                        <p className="font-libre-franklin text-xs text-muted-foreground">
+                                        </h4>
+                                        <p className="text-sm md:text-base">
                                             Pay with Stripe
                                         </p>
                                     </div>
@@ -132,21 +147,21 @@ export default function Checkout({
                         </div>
 
                         {/* Terms of Service */}
-                        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-                            <h2 className="font-oswald mb-4 text-base font-semibold text-foreground">
+                        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm space-y-6">
+                            <h2 className="text-lg md:text-xl lg:text-2xl">
                                 Terms of Service
                             </h2>
 
-                            <div className="space-y-4 font-libre-franklin text-sm text-foreground">
-                                <div>
-                                    <p className="mb-1 font-semibold">Non-Refundable Policy</p>
-                                    <p className="text-muted-foreground">
+                            <div className="space-y-4">
+                                <div className='space-y-2'>
+                                    <h6 className="text-base">Non-Refundable Policy</h6>
+                                    <p>
                                         All bookings are{' '}
-                                        <strong className="text-foreground">non-refundable</strong>{' '}
+                                        <strong>non-refundable</strong>{' '}
                                         once payment is processed. By proceeding with this booking,
                                         you acknowledge and agree that:
                                     </p>
-                                    <ul className="mt-2 space-y-1 text-muted-foreground">
+                                    <ul className="mt-2 space-y-1">
                                         {[
                                             'No refunds will be issued for cancellations, changes, or no-shows',
                                             'Refunds are only available if the provider cancels the trip',
@@ -155,32 +170,32 @@ export default function Checkout({
                                             'You must comply with all health and safety requirements',
                                         ].map((item) => (
                                             <li key={item} className="flex items-start gap-2">
-                                                <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-muted-foreground" />
+                                                <Circle className="size-1 fill-muted-foreground mt-1" />
                                                 {item}
                                             </li>
                                         ))}
                                     </ul>
                                 </div>
 
-                                <div>
-                                    <p className="mb-1 font-semibold">Payment Terms</p>
-                                    <ul className="space-y-1 text-muted-foreground">
+                                <div className='space-y-2'>
+                                    <h6>Payment Terms</h6>
+                                    <ul className="space-y-1 ">
                                         {[
                                             'Full payment is required at time of booking',
                                             'All prices are in USD',
                                             'Taxes and fees are included in the total price',
                                         ].map((item) => (
                                             <li key={item} className="flex items-start gap-2">
-                                                <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-muted-foreground" />
+                                                <Circle className="size-1 fill-muted-foreground mt-1" />
                                                 {item}
                                             </li>
                                         ))}
                                     </ul>
                                 </div>
 
-                                <div>
-                                    <p className="mb-1 font-semibold">Waiver Requirement</p>
-                                    <p className="text-muted-foreground">
+                                <div className='space-y-2'>
+                                    <h6>Waiver Requirement</h6>
+                                    <p >
                                         After payment, you will be required to sign a digital waiver
                                         for injury and property damage. Your booking will remain in
                                         &ldquo;Pending&rdquo; status until the waiver is completed
@@ -190,14 +205,19 @@ export default function Checkout({
 
                                 {/* Agreement checkbox */}
                                 <label className="flex cursor-pointer items-start gap-3 pt-1">
-                                    <div className="relative mt-0.5 flex-shrink-0">
-                                        <input
+                                    <div className="relative mt-0.5 shrink-0">
+                                        {/* <input
                                             type="checkbox"
                                             checked={agreed}
                                             onChange={(e) => setAgreed(e.target.checked)}
                                             className="peer sr-only"
+                                        /> */}
+                                        <Checkbox
+                                            checked={agreed}
+                                            onCheckedChange={(checked) => setAgreed(checked as boolean)}
+                                            className='size-5 data-[state=checked]:bg-primary border-primary!'
                                         />
-                                        <div
+                                        {/* <div
                                             className={cn(
                                                 'flex h-5 w-5 items-center justify-center rounded border-2 transition-all',
                                                 agreed
@@ -220,9 +240,9 @@ export default function Checkout({
                                                     />
                                                 </svg>
                                             )}
-                                        </div>
+                                        </div> */}
                                     </div>
-                                    <span className="text-sm text-muted-foreground">
+                                    <span className="text-sm ">
                                         I have read and agree to the Terms of Service, including the
                                         non-refundable policy. I understand that I must complete a
                                         waiver after payment.
@@ -233,41 +253,41 @@ export default function Checkout({
                     </div>
 
                     {/* Right column: order summary */}
-                    <div className="lg:sticky lg:top-6 h-fit space-y-3">
-                        <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-                            <h2 className="font-oswald mb-4 text-base font-semibold text-foreground">
+                    <div className="lg:sticky lg:top-30 h-fit space-y-3">
+                        <div className="rounded-2xl border border-border bg-card p-5 shadow-sm space-y-6">
+                            <h2 className="text-lg md:text-xl lg:text-2xl">
                                 Order Summary
                             </h2>
-                            <div className="space-y-3 font-libre-franklin text-sm">
+                            <div className="space-y-4">
                                 <div className="flex justify-between">
-                                    <span className="text-muted-foreground">Package Price</span>
+                                    <span>Package Price</span>
                                     <span className="text-foreground">
                                         ${packagePrice.toLocaleString()}
                                     </span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span className="text-muted-foreground">Travelers</span>
+                                    <span>Travelers</span>
                                     <span className="text-foreground">x {travelers}</span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span className="text-muted-foreground">Subtotal</span>
+                                    <span>Subtotal</span>
                                     <span className="text-foreground">
                                         ${subtotal.toLocaleString()}
                                     </span>
                                 </div>
-                                <div className="border-t border-border pt-2" />
+                                <div className="h-px w-full bg-foreground" />
                                 <div className="flex justify-between">
-                                    <span className="text-muted-foreground">Taxes &amp; Fees</span>
+                                    <span>Taxes & Fees</span>
                                     <span className="text-foreground">
                                         ${taxesFees.toLocaleString()}
                                     </span>
                                 </div>
-                                <div className="border-t border-border pt-2" />
+                                <div className="h-px w-full bg-foreground" />
                                 <div className="flex items-baseline justify-between">
-                                    <span className="font-oswald font-semibold text-foreground">
+                                    <span className="text-lg md:text-xl lg:text-2xl">
                                         Total
                                     </span>
-                                    <span className="font-oswald text-xl font-bold text-primary">
+                                    <span className="text-lg md:text-xl lg:text-2xl text-primary">
                                         ${total.toLocaleString()}
                                     </span>
                                 </div>
@@ -277,19 +297,19 @@ export default function Checkout({
                                 onClick={handleSubmit}
                                 disabled={!agreed || submitting}
                                 className={cn(
-                                    'font-libre-franklin mt-5 flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-medium text-primary-foreground transition',
+                                    'mt-5 flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-medium text-primary-foreground transition',
                                     agreed && !submitting
                                         ? 'bg-primary hover:bg-primary/90'
-                                        : 'cursor-not-allowed bg-muted text-muted-foreground',
+                                        : 'cursor-not-allowed bg-muted ',
                                 )}
                             >
                                 {submitting ? 'Processing…' : 'Complete Booking'}
                                 {!submitting && <ArrowRight className="h-4 w-4" />}
                             </button>
 
-                            <div className="mt-3 flex items-center justify-center gap-1.5 text-muted-foreground">
+                            <div className="mt-3 flex items-center justify-center gap-1.5 ">
                                 <Lock className="h-3.5 w-3.5" />
-                                <span className="font-libre-franklin text-xs">
+                                <span className="text-xs">
                                     Your payment is secure and encrypted
                                 </span>
                             </div>
@@ -304,7 +324,7 @@ export default function Checkout({
 function SummaryRow({ label, value }: { label: string; value: string }) {
     return (
         <div className="flex items-center justify-between">
-            <span className="text-muted-foreground">{label}</span>
+            <span >{label}</span>
             <span className="text-foreground">{value}</span>
         </div>
     );

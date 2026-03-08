@@ -11,10 +11,16 @@ class SelectDateController extends Controller
 {
     public function index(string $destination, string $package): Response
     {
+        $currentUrl = url()->current();
+        $previousUrl = url()->previous();
+
+        $prevStep = ($previousUrl && $previousUrl !== $currentUrl)
+            ? $previousUrl
+            : route('travelers-count', [$destination, $package]);
         return Inertia::render('frontend/select-date', [
             'destinationSlug' => $destination,
             'packageSlug' => $package,
-            'prevStep' => url()->previous() ?? route('frontend.travelers-count', [$destination, $package]),
+            'prevStep' => $prevStep,
         ]);
     }
 }

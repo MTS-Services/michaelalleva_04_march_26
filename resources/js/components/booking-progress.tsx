@@ -18,37 +18,52 @@ interface BookingProgressProps {
 export function BookingProgress({ currentStep }: BookingProgressProps) {
     return (
         <div className="w-full border-b border-border bg-card px-4 py-4">
-            <div className="container mx-auto">
-                <div className="flex items-center justify-center gap-0">
+            <div className="container mx-auto max-w-4xl">
+                {/* Using justify-between and relative positioning ensures 
+                    the circles stay in their mathematical thirds.
+                */}
+                <div className="relative flex items-center justify-between w-full">
+                    
+                    {/* Background Line: Ensures the connecting bar is perfectly straight and centered */}
+                    <div className="absolute top-1/2 left-0 h-px w-full -translate-y-1/2 bg-muted z-0" />
+
                     {BOOKING_STEPS.map((step, idx) => {
                         const isActive = step.id === currentStep;
-                        const isLast = idx === BOOKING_STEPS.length - 1;
+                        const isCompleted = step.id < currentStep;
 
                         return (
-                            <div key={step.id} className="flex items-center">
-                                <div className="flex items-center gap-2.5">
-                                    <div
-                                        className={cn(
-                                            'flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-sm font-semibold transition-all',
-                                            isActive
-                                                ? 'bg-primary text-primary-foreground'
-                                                : 'border border-muted bg-card text-muted-foreground',
-                                        )}
-                                    >
-                                        <span className="font-oswald">{step.id}</span>
+                            <div key={step.id} className="relative z-10 flex flex-col items-center">
+                                <div className="flex items-center bg-card px-2 sm:px-3">
+                                    <div className="flex items-center gap-2 sm:gap-2.5">
+                                        {/* Circle */}
+                                        <div
+                                            className={cn(
+                                                'flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-sm font-semibold transition-all',
+                                                isActive || isCompleted
+                                                    ? 'bg-primary text-primary-foreground'
+                                                    : 'border border-muted bg-card text-muted-foreground',
+                                            )}
+                                        >
+                                            <span className="font-oswald">{step.id}</span>
+                                        </div>
+
+                                        {/* Label: 
+                                            On mobile, we only show the label for the active step.
+                                            We use absolute positioning for the text or hide inactive ones 
+                                            to prevent the text width from pushing the circles.
+                                        */}
+                                        <span
+                                            className={cn(
+                                                'font-libre-franklin text-sm font-medium whitespace-nowrap transition-opacity',
+                                                isActive 
+                                                    ? 'text-primary block' 
+                                                    : 'text-muted-foreground hidden md:block',
+                                            )}
+                                        >
+                                            {step.label}
+                                        </span>
                                     </div>
-                                    <span
-                                        className={cn(
-                                            'font-libre-franklin text-sm font-medium whitespace-nowrap',
-                                            isActive ? 'text-primary' : 'text-muted-foreground',
-                                        )}
-                                    >
-                                        {step.label}
-                                    </span>
                                 </div>
-                                {!isLast && (
-                                    <div className="mx-6 h-px w-20 bg-muted sm:w-36 md:w-52" />
-                                )}
                             </div>
                         );
                     })}
