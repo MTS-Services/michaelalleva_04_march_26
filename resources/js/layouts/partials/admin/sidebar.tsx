@@ -1,9 +1,12 @@
 import { Link, usePage } from '@inertiajs/react';
-import { Users, User, BarChart, Shield, LayoutGrid, Settings } from 'lucide-react';
+import { Users, User, BarChart, Shield, LayoutGrid, Settings, XIcon } from 'lucide-react';
 import * as React from 'react';
 
 import AppLogo from '@/components/app-logo';
+import { Button } from '@/components/ui/button';
 import { NavItem } from '@/components/ui/nav-item';
+import { Sheet, SheetClose, SheetContent } from '@/components/ui/sheet';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { type NavItem as NavItemType, type SharedData } from '@/types';
 import { dashboard } from '@/routes/admin';
@@ -84,33 +87,23 @@ const adminNavItems: NavItemType[] = [
     },
 ];
 
-interface AdminSidebarProps {
+interface AdminSidebarContentProps {
     isCollapsed: boolean;
+    currentRoute: string;
+    userPermissions: string[];
     activeSlug?: string | null;
+    showCloseButton?: boolean;
 }
 
-export const AdminSidebar = React.memo<AdminSidebarProps>(({ isCollapsed, activeSlug }) => {
-    const { url, props } = usePage();
-    const currentRoute = url;
-
-    // Extract permissions from auth props
-    const userPermissions = React.useMemo(() => {
-        const auth = props.auth as SharedData['auth'];
-        return auth?.user?.permissions ||
-            auth?.user?.all_permissions ||
-            auth?.permissions ||
-            [];
-    }, [props.auth]);
-
+function AdminSidebarContent({
+    isCollapsed,
+    currentRoute,
+    userPermissions,
+    activeSlug,
+    showCloseButton = false,
+}: AdminSidebarContentProps) {
     return (
-        <aside
-            className={cn(
-                'relative hidden h-screen border-r bg-card',
-                'transition-all duration-300 ease-in-out',
-                'md:flex flex-col',
-                isCollapsed ? 'w-16' : 'w-64'
-            )}
-        >
+        <>
             {/* Logo Section */}
             <div className={cn(
                 "flex h-16 items-center border-b",
@@ -118,12 +111,21 @@ export const AdminSidebar = React.memo<AdminSidebarProps>(({ isCollapsed, active
             )}>
                 <Link
                     href={dashboard()}
-                    className="flex items-center gap-2 transition-opacity hover:opacity-80"
+                    className="flex items-center gap-2 transition-opacity hover:opacity-80 w-full"
                 >
                     {isCollapsed ? (
                         <LayoutGrid className="h-6 w-6 text-primary" />
                     ) : (
-                        <AppLogo />
+                        <div className="flex items-center justify-between gap-2 w-full">
+                            <AppLogo />
+                            {showCloseButton && (
+                                <SheetClose asChild>
+                                    <Button variant="ghost" size="icon" aria-label="Close menu">
+                                        <XIcon className="size-5" />
+                                    </Button>
+                                </SheetClose>
+                            )}
+                        </div>
                     )}
                 </Link>
             </div>
@@ -152,6 +154,79 @@ export const AdminSidebar = React.memo<AdminSidebarProps>(({ isCollapsed, active
                     </div>
                 </div>
             )}
+        </>
+    );
+}
+
+interface AdminSidebarProps {
+    isCollapsed: boolean;
+    activeSlug?: string | null;
+    isMobileOpen?: boolean;
+    onMobileOpenChange?: (open: boolean) => void;
+}
+
+export const AdminSidebar = React.memo<AdminSidebarProps>(({
+    isCollapsed,
+    activeSlug,
+    isMobileOpen = false,
+    onMobileOpenChange,
+}) => {
+    const [mounted, setMounted] = React.useState(false);
+    const isMobile = useIsMobile();
+
+    React.useEffect(() => setMounted(true), []);
+
+    // Use mobile (Sheet) only after mount to avoid SSR/hydration mismatch with useIsMobile
+    const effectiveIsMobile = mounted && isMobile;
+
+    const { url, props } = usePage();
+    const currentRoute = url;
+
+    // Extract permissions from auth props
+    const userPermissions = React.useMemo(() => {
+        const auth = props.auth as SharedData['auth'];
+        return auth?.user?.permissions ||
+            auth?.user?.all_permissions ||
+            auth?.permissions ||
+            [];
+    }, [props.auth]);
+
+    const sidebarContent = (
+        <AdminSidebarContent
+            isCollapsed={effectiveIsMobile ? false : isCollapsed}
+            currentRoute={currentRoute}
+            userPermissions={userPermissions}
+            activeSlug={activeSlug}
+            showCloseButton={effectiveIsMobile}
+        />
+    );
+
+    if (effectiveIsMobile) {
+        return (
+            <Sheet open={isMobileOpen} onOpenChange={onMobileOpenChange}>
+                <SheetContent
+                    side="left"
+                    className="flex w-64 flex-col p-0 [&>button]:hidden"
+                    showCloseButton={false}
+                >
+                    <div className="flex h-full flex-col">
+                        {sidebarContent}
+                    </div>
+                </SheetContent>
+            </Sheet>
+        );
+    }
+
+    return (
+        <aside
+            className={cn(
+                'relative hidden h-screen border-r bg-card',
+                'transition-all duration-300 ease-in-out',
+                'md:flex flex-col',
+                isCollapsed ? 'w-16' : 'w-64'
+            )}
+        >
+            {sidebarContent}
         </aside>
     );
 });

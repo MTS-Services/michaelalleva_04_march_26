@@ -1,6 +1,6 @@
 import { Link, usePage } from '@inertiajs/react';
 import { Separator } from '@radix-ui/react-separator';
-import { ChevronsLeft, ChevronsRight, Search, BellIcon, } from 'lucide-react';
+import { ChevronsLeft, ChevronsRight, Menu, Search, BellIcon } from 'lucide-react';
 import * as React from 'react';
 
 import AppearanceToggleDropdown from '@/components/appearance-dropdown';
@@ -25,6 +25,7 @@ import {
 import { UserMenuContent } from '@/components/user-menu-content';
 import { useActiveUrl } from '@/hooks/use-active-url';
 import { useInitials } from '@/hooks/use-initials';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { cn, toUrl } from '@/lib/utils';
 import { type BreadcrumbItem, type SharedData, type NavItem as NavItemType } from '@/types';
 import { dashboard } from '@/routes/admin';
@@ -33,25 +34,37 @@ import { dashboard } from '@/routes/admin';
 interface AdminHeaderProps {
     isCollapsed: boolean;
     setIsCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
+    onOpenMobileSidebar?: () => void;
 }
 
 const activeItemStyles =
     'text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100';
 
-export function AdminHeader({ isCollapsed, setIsCollapsed }: AdminHeaderProps) {
+export function AdminHeader({ isCollapsed, setIsCollapsed, onOpenMobileSidebar }: AdminHeaderProps) {
     const { auth } = usePage<SharedData>().props;
     const getInitials = useInitials();
     const page = usePage<SharedData>();
     const { urlIsActive } = useActiveUrl();
+    const isMobile = useIsMobile();
+    const [mounted, setMounted] = React.useState(false);
+    React.useEffect(() => setMounted(true), []);
+    const showMobileMenu = mounted && isMobile;
 
     return (
         <header className="flex h-16 shrink-0 items-center gap-2 border-b border-sidebar-border/50 px-6 transition-all ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 md:px-4">
             <Button
                 variant="outline"
                 size="icon"
-                onClick={() => setIsCollapsed(!isCollapsed)}
+                onClick={() =>
+                    showMobileMenu ? onOpenMobileSidebar?.() : setIsCollapsed(!isCollapsed)
+                }
+                aria-label={showMobileMenu ? 'Open menu' : 'Toggle sidebar'}
             >
-                {isCollapsed ? <ChevronsRight className="h-4 w-4" /> : <ChevronsLeft className="h-4 w-4" />}
+                {showMobileMenu ? (
+                    <Menu className="h-4 w-4" />
+                ) : (
+                    isCollapsed ? <ChevronsRight className="h-4 w-4" /> : <ChevronsLeft className="h-4 w-4" />
+                )}
             </Button>
 
             <div className="ml-auto flex items-center space-x-2">
