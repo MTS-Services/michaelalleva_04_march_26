@@ -20,7 +20,7 @@ class LoginResponse implements LoginResponseContract
     {
         $redirect = $request->user()->is_admin
             ? route('admin.dashboard')
-            : route('user.dashboard');
+            : route('user.trips.index');
 
         return $request->wantsJson()
             ? new JsonResponse(['two_factor' => false])
