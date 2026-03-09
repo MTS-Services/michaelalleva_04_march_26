@@ -1,5 +1,8 @@
 import { PageHeader } from '@/components/dashboard/page-header';
-import UserLayout from '@/layouts/user-layout';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import AppLayout from '@/layouts/app-layout';
+import { cn } from '@/lib/utils';
 import { Download, Headphones, Info, PenLine } from 'lucide-react';
 import { useState } from 'react';
 
@@ -13,6 +16,8 @@ interface ProfileData {
     city: string;
     state: string;
     zipCode: string;
+    password?: string;
+    confirmPassword?: string;
 }
 
 interface ProfilePageProps {
@@ -30,6 +35,8 @@ const DEMO_PROFILE: ProfileData = {
     city: 'Austin',
     state: 'Texas',
     zipCode: '78701',
+    password: '123456',
+    confirmPassword: '123456',
 };
 
 export default function ProfilePage({
@@ -41,7 +48,7 @@ export default function ProfilePage({
     const set = (k: keyof ProfileData, v: string) => setForm((p) => ({ ...p, [k]: v }));
 
     return (
-        <UserLayout userName={userName}>
+        <AppLayout activeSlug="user-profile">
             <div className="space-y-6">
                 <PageHeader
                     title="Profile Settings"
@@ -57,31 +64,53 @@ export default function ProfilePage({
                                 <h2 className="font-oswald font-semibold text-foreground">
                                     Personal Information
                                 </h2>
-                                <button
+                                <Button
                                     onClick={() => setEditing((e) => !e)}
-                                    className="font-libre-franklin flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"
+                                    className="cursor-pointer"
                                 >
                                     <PenLine className="h-3.5 w-3.5" />
                                     {editing ? 'Done' : 'Edit'}
-                                </button>
+                                </Button>
                             </div>
 
                             <div className="space-y-4">
                                 <ProfileField label="Full name">
-                                    <input readOnly={!editing} value={form.fullName} onChange={(e) => set('fullName', e.target.value)} placeholder="Name" className={inputCls(editing)} />
+                                    <Input readOnly={!editing} value={form.fullName} onChange={(e) => set('fullName', e.target.value)} placeholder="Name" className={cn(
+                                        !editing && 'border-primary cursor-help'
+                                    )} />
                                 </ProfileField>
                                 <ProfileField label="Date of Birth">
-                                    <input readOnly={!editing} value={form.dateOfBirth} onChange={(e) => set('dateOfBirth', e.target.value)} className={inputCls(editing)} />
+                                    <Input readOnly={!editing} value={form.dateOfBirth} onChange={(e) => set('dateOfBirth', e.target.value)} className={cn(
+                                        !editing && 'border-primary cursor-help'
+                                    )} />
                                 </ProfileField>
                                 <ProfileField label="Email">
-                                    <input readOnly={!editing} type="email" value={form.email} onChange={(e) => set('email', e.target.value)} className={inputCls(editing)} />
+                                    <Input readOnly={!editing} type="email" value={form.email} onChange={(e) => set('email', e.target.value)} className={cn(
+                                        !editing && 'border-primary cursor-help'
+                                    )} />
                                 </ProfileField>
                                 <div className="grid grid-cols-2 gap-4">
+                                    <ProfileField label="Password">
+                                        <Input readOnly={!editing} type="password" value={form.password} onChange={(e) => set('password', e.target.value)} className={cn(
+                                            !editing && 'border-primary cursor-help'
+                                        )} placeholder="Password" />
+                                    </ProfileField>
+                                    <ProfileField label="Confirm Password">
+                                        <Input readOnly={!editing} type="password" value={form.confirmPassword} onChange={(e) => set('confirmPassword', e.target.value)} className={cn(
+                                            !editing && 'border-primary cursor-help'
+                                        )} placeholder="Confirm Password" />
+                                    </ProfileField>
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
                                     <ProfileField label="Phone Number (US Only)">
-                                        <input readOnly={!editing} type="tel" value={form.phone} onChange={(e) => set('phone', e.target.value)} className={inputCls(editing)} />
+                                        <Input readOnly={!editing} type="tel" value={form.phone} onChange={(e) => set('phone', e.target.value)} className={cn(
+                                            !editing && 'border-primary cursor-help'
+                                        )} />
                                     </ProfileField>
                                     <ProfileField label="Country">
-                                        <input readOnly={!editing} value={form.country} onChange={(e) => set('country', e.target.value)} className={inputCls(editing)} />
+                                        <Input readOnly={!editing} value={form.country} onChange={(e) => set('country', e.target.value)} className={cn(
+                                            !editing && 'border-primary cursor-help'
+                                        )} />
                                     </ProfileField>
                                 </div>
                             </div>
@@ -94,17 +123,25 @@ export default function ProfilePage({
                             </h2>
                             <div className="space-y-4">
                                 <ProfileField label="Street Address">
-                                    <input readOnly={!editing} value={form.streetAddress} onChange={(e) => set('streetAddress', e.target.value)} className={inputCls(editing)} />
+                                    <Input readOnly={!editing} value={form.streetAddress} onChange={(e) => set('streetAddress', e.target.value)} className={cn(
+                                        !editing && 'border-primary cursor-help'
+                                    )} />
                                 </ProfileField>
                                 <div className="grid grid-cols-3 gap-4">
                                     <ProfileField label="City">
-                                        <input readOnly={!editing} value={form.city} onChange={(e) => set('city', e.target.value)} className={inputCls(editing)} />
+                                        <Input readOnly={!editing} value={form.city} onChange={(e) => set('city', e.target.value)} className={cn(
+                                            !editing && 'border-primary cursor-help'
+                                        )} />
                                     </ProfileField>
                                     <ProfileField label="State">
-                                        <input readOnly={!editing} value={form.state} onChange={(e) => set('state', e.target.value)} className={inputCls(editing)} />
+                                        <Input readOnly={!editing} value={form.state} onChange={(e) => set('state', e.target.value)} className={cn(
+                                            !editing && 'border-primary cursor-help'
+                                        )} />
                                     </ProfileField>
                                     <ProfileField label="Zip Code">
-                                        <input readOnly={!editing} value={form.zipCode} onChange={(e) => set('zipCode', e.target.value)} className={inputCls(editing)} />
+                                        <Input readOnly={!editing} value={form.zipCode} onChange={(e) => set('zipCode', e.target.value)} className={cn(
+                                            !editing && 'border-primary cursor-help'
+                                        )} />
                                     </ProfileField>
                                 </div>
                             </div>
@@ -114,21 +151,21 @@ export default function ProfilePage({
                     {/* Right: actions + notice */}
                     <div className="space-y-4">
                         {/* Quick Actions */}
-                        <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+                        {/* <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
                             <h3 className="font-oswald mb-3 font-semibold text-foreground">
                                 Quick actions
                             </h3>
                             <div className="space-y-2">
-                                <button className="font-libre-franklin flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3 text-sm font-medium text-primary-foreground transition hover:bg-primary/90">
+                                <Button className="cursor-pointer w-full">
                                     <Download className="h-4 w-4" />
                                     Download Invoice
-                                </button>
-                                <button className="font-libre-franklin flex w-full items-center justify-center gap-2 rounded-xl border border-border py-3 text-sm font-medium text-foreground transition hover:border-primary hover:text-primary">
+                                </Button>
+                                <Button className="cursor-pointer w-full border border-border">
                                     <Headphones className="h-4 w-4" />
                                     Contact Support
-                                </button>
+                                </Button>
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* USA Clients Only */}
                         <div className="flex items-start gap-3 rounded-2xl border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-900/40 dark:bg-yellow-900/10">
@@ -157,7 +194,7 @@ export default function ProfilePage({
                     </div>
                 </div>
             </div>
-        </UserLayout>
+        </AppLayout>
     );
 }
 
