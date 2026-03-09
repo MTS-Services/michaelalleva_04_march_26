@@ -77,13 +77,13 @@
     --background: hsl(173, 80%, 98%);
     --foreground: hsla(173, 80%, 4%, 1);
     --card: hsl(173, 21%, 93%);
-    --card-foreground: hsl(168, 9%, 79%);
+    --card-foreground: hsla(171, 11%, 23%, 1);
     --popover: hsl(173, 21%, 93%);
     --popover-foreground: hsla(171, 11%, 23%, 1);
     --primary: hsla(173, 80%, 40%, 1);
     --primary-foreground: hsl(173, 80%, 98%);
     --secondary: hsla(173, 80%, 90%, 1);
-    --secondary-foreground: hsla(171, 11%, 23%, 1);
+    --secondary-foreground: hsl(168, 9%, 79%);
     --muted: hsla(168, 9%, 79%, 1);
     --muted-foreground: hsla(173, 21%, 03%, 1);
     --accent: hsla(173, 80%, 40%, 1);
