@@ -1,5 +1,6 @@
 import { PageHeader } from '@/components/dashboard/page-header';
-import UserLayout from '@/layouts/user-layout';
+import { Button } from '@/components/ui/button';
+import AppLayout from '@/layouts/app-layout';
 import { Check, Clock, Download, Headphones, Info } from 'lucide-react';
 
 interface GuestInfo {
@@ -59,7 +60,7 @@ export default function TripDetails({
     bookingStatus = DEMO_STATUS,
 }: TripDetailsPageProps) {
     return (
-        <UserLayout userName={userName}>
+        <AppLayout activeSlug="user-trips">
             <div className="space-y-6">
                 <PageHeader
                     title={`Welcome back, ${userName}!`}
@@ -136,14 +137,14 @@ export default function TripDetails({
                                 Quick actions
                             </h3>
                             <div className="space-y-2">
-                                <button className="font-libre-franklin flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3 text-sm font-medium text-primary-foreground transition hover:bg-primary/90">
+                                <Button className='w-full cursor-pointer'>
                                     <Download className="h-4 w-4" />
                                     Download Invoice
-                                </button>
-                                <button className="font-libre-franklin flex w-full items-center justify-center gap-2 rounded-xl border border-border py-3 text-sm font-medium text-foreground transition hover:border-primary hover:text-primary">
+                                </Button>
+                                <Button variant="outline" className='w-full cursor-pointer'>
                                     <Headphones className="h-4 w-4" />
                                     Contact Support
-                                </button>
+                                </Button>
                             </div>
                         </div>
 
@@ -176,7 +177,7 @@ export default function TripDetails({
                     </div>
                 </div>
             </div>
-        </UserLayout>
+        </AppLayout>
     );
 }
 
