@@ -1,6 +1,9 @@
 import { AddDestinationModal } from '@/components/dashboard/add-destination-modal';
 import { AddPackageModal, type PackageFormData } from '@/components/dashboard/add-package-modal';
 import { PageHeader } from '@/components/dashboard/page-header';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Switch } from '@/components/ui/switch';
 import AdminLayout from '@/layouts/admin-layout';
 import { cn } from '@/lib/utils';
 import { CalendarX, Check, PenLine, Trash2 } from 'lucide-react';
@@ -35,11 +38,11 @@ const DEMO_DESTINATIONS: Destination[] = [
         id: 'egypt',
         name: 'Egypt',
         packages: [
-            { id: 1, name: 'Desert Safari', nights: 5, pricePerPerson: 7000, weeklyCapacity: 5, booked: 3, active: true, details: ['Airport pickup & drop-off', '4-night desert camp stay', 'Camel ride experience', 'All meals included'] },
+            { id: 1, name: 'Desert Safari', nights: 5, pricePerPerson: 7000, weeklyCapacity: 5, booked: 4, active: true, details: ['Airport pickup & drop-off', '4-night desert camp stay', 'Camel ride experience', 'All meals included'] },
             { id: 2, name: 'Pyramids & Pharaohs', nights: 5, pricePerPerson: 7000, weeklyCapacity: 5, booked: 3, active: true, details: ['Guided Giza pyramid tour', 'Egyptian Museum entry', 'Nile dinner cruise'] },
-            { id: 3, name: 'Luxury Nile Experience', nights: 5, pricePerPerson: 7000, weeklyCapacity: 5, booked: 3, active: true, details: ['5-star Nile cruise cabin', 'Luxor & Karnak temples', 'Private Egyptologist guide'] },
-            { id: 4, name: 'Ancient Wonders', nights: 5, pricePerPerson: 7000, weeklyCapacity: 5, booked: 3, active: false, details: ['Abu Simbel flight', 'Valley of the Kings', 'Aswan High Dam visit'] },
-            { id: 5, name: 'Complete Egypt Journey', nights: 5, pricePerPerson: 7000, weeklyCapacity: 5, booked: 3, active: true, details: ['Cairo + Luxor + Aswan', 'All domestic flights', 'Luxury hotels throughout'] },
+            { id: 3, name: 'Luxury Nile Experience', nights: 5, pricePerPerson: 7000, weeklyCapacity: 5, booked: 2, active: true, details: ['5-star Nile cruise cabin', 'Luxor & Karnak temples', 'Private Egyptologist guide'] },
+            { id: 4, name: 'Ancient Wonders', nights: 5, pricePerPerson: 7000, weeklyCapacity: 5, booked: 0, active: false, details: ['Abu Simbel flight', 'Valley of the Kings', 'Aswan High Dam visit'] },
+            { id: 5, name: 'Complete Egypt Journey', nights: 5, pricePerPerson: 7000, weeklyCapacity: 5, booked: 1, active: true, details: ['Cairo + Luxor + Aswan', 'All domestic flights', 'Luxury hotels throughout'] },
         ],
     },
     { id: 'costa-rica', name: 'Costa Rica', packages: [] },
@@ -83,6 +86,7 @@ export default function AdminInventory({
     /** Convert a Package → PackageFormData for the modal */
     const toFormData = (pkg: Package): PackageFormData & { id: number } => ({
         id: pkg.id,
+        destination: selectedDest,
         name: pkg.name,
         duration: String(pkg.nights),
         price: String(pkg.pricePerPerson),
@@ -101,10 +105,10 @@ export default function AdminInventory({
 
                 {/* ── Global Settings ───────────────────────────────────── */}
                 <Card>
-                    <h2 className={heading}>Global Settings</h2>
+                    <h2 className={cn(heading, 'mb-5')}>Global Settings</h2>
                     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                         <SettingField label="Global Weekly Capacity" suffix="bookings / week">
-                            <input type="number" value={capacity} onChange={(e) => setCapacity(Number(e.target.value))} className={inputCls} />
+                            <Input type="number" value={capacity} onChange={(e) => setCapacity(Number(e.target.value))} className={inputCls} />
                         </SettingField>
                         <SettingField label="Advance Booking Window" suffix="days in advance">
                             <input type="number" value={window_} onChange={(e) => setWindow(Number(e.target.value))} className={inputCls} />
@@ -116,7 +120,7 @@ export default function AdminInventory({
                 <Card>
                     <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                         <h2 className={heading}>Select Destination</h2>
-                        <button onClick={() => setShowAddDest(true)} className={btnPrimary}>Add Destination</button>
+                        <Button onClick={() => setShowAddDest(true)} className='cursor-pointer'>Add Destination</Button>
                     </div>
                     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
                         {destinations.map((d) => (
@@ -124,19 +128,19 @@ export default function AdminInventory({
                                 key={d.id}
                                 onClick={() => setSelectedDest(d.id)}
                                 className={cn(
-                                    'relative rounded-xl border p-3 text-left transition-all sm:p-4',
+                                    'relative rounded-xl border p-3 text-left transition-all pb-4 sm:p-4 sm:pb-8 cursor-pointer',
                                     selectedDest === d.id
                                         ? 'border-primary bg-primary/5'
-                                        : 'border-border bg-background hover:border-primary/40',
+                                        : 'border-muted bg-transparent',
                                 )}
                             >
                                 {selectedDest === d.id && (
-                                    <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                                    <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground border-2 border-background">
                                         <Check className="h-3 w-3" strokeWidth={3} />
                                     </span>
                                 )}
-                                <p className="font-libre-franklin pr-5 text-sm font-semibold text-foreground">{d.name}</p>
-                                <p className="font-libre-franklin mt-0.5 text-xs text-muted-foreground">{d.packages.length} packages</p>
+                                <h4 className="text-base md:text-lg lg:text-xl mb-1">{d.name}</h4>
+                                <p className="mt-0.5 text-xs text-muted-foreground">{d.packages.length} packages</p>
                             </button>
                         ))}
                     </div>
@@ -148,13 +152,13 @@ export default function AdminInventory({
                         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                             <h2 className={heading}>{activeDest.name} — Packages &amp; Capacity</h2>
                             <div className="flex flex-wrap gap-2">
-                                <button className={btnOutline}>Block Week</button>
-                                <button onClick={() => setShowAddPkg(true)} className={btnPrimary}>Add Package</button>
+                                <Button variant="outline" className='cursor-pointer'>Block Week</Button>
+                                <Button onClick={() => setShowAddPkg(true)} className='cursor-pointer' >Add Package</Button>
                             </div>
                         </div>
 
                         {activeDest.packages.length === 0 ? (
-                            <p className="font-libre-franklin py-8 text-center text-sm text-muted-foreground">
+                            <p className=" py-8 text-center text-sm text-muted-foreground">
                                 No packages yet. Click "Add Package" to create one.
                             </p>
                         ) : (
@@ -163,28 +167,15 @@ export default function AdminInventory({
                                     const isActive = activeMap[pkg.id] ?? pkg.active;
                                     const pct = Math.round((pkg.booked / pkg.weeklyCapacity) * 100);
                                     return (
-                                        <div key={pkg.id} className="rounded-xl border border-border bg-background px-4 py-3">
+                                        <div key={pkg.id} className="rounded-xl border-[1.5px] border-primary bg-primary/30 px-4 py-3">
                                             <div className="flex items-start gap-3 lg:items-center">
                                                 {/* Toggle */}
-                                                <button
-                                                    type="button"
-                                                    onClick={() => toggleActive(pkg.id)}
-                                                    aria-label={isActive ? 'Deactivate' : 'Activate'}
-                                                    className={cn(
-                                                        'relative mt-0.5 h-5 w-9 flex-shrink-0 rounded-full transition-colors lg:mt-0',
-                                                        isActive ? 'bg-primary' : 'bg-muted',
-                                                    )}
-                                                >
-                                                    <span className={cn(
-                                                        'absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform',
-                                                        isActive ? 'translate-x-4' : 'translate-x-0.5',
-                                                    )} />
-                                                </button>
+                                                <Switch checked={isActive} onCheckedChange={() => toggleActive(pkg.id)} className="data-[state=checked]:bg-primary data-[state=unchecked]:bg-foreground/20" aria-label={isActive ? 'Deactivate' : 'Activate'} aria-checked={isActive} />
 
                                                 {/* Name + meta */}
                                                 <div className="min-w-0 flex-1">
-                                                    <p className="font-libre-franklin truncate text-sm font-medium text-foreground">{pkg.name}</p>
-                                                    <p className="font-libre-franklin text-xs text-muted-foreground">
+                                                    <p className="text-base md:text-lg lg:text-xl mb-1">{pkg.name}</p>
+                                                    <p className=" text-xs text-muted-foreground">
                                                         {pkg.nights} nights · ${pkg.pricePerPerson.toLocaleString()}/person
                                                     </p>
                                                     {/* Capacity — mobile only */}
@@ -199,7 +190,7 @@ export default function AdminInventory({
                                                 </div>
 
                                                 {/* Edit / Delete */}
-                                                <div className="flex flex-shrink-0 gap-1.5">
+                                                <div className="flex shrink-0 gap-1.5">
                                                     <IconBtn
                                                         aria-label="Edit package"
                                                         onClick={() => setEditingPkg(toFormData(pkg))}
@@ -229,15 +220,15 @@ export default function AdminInventory({
                                 .map((w) => (
                                     <div key={w.id} className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-background px-4 py-3">
                                         <div className="flex items-center gap-3">
-                                            <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                                            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                                                 <CalendarX className="h-4 w-4" />
                                             </div>
                                             <div>
-                                                <p className="font-libre-franklin text-sm font-medium text-foreground">{w.dateRange}</p>
-                                                <p className="font-libre-franklin text-xs text-muted-foreground">{w.reason}</p>
+                                                <p className=" text-sm font-medium text-foreground">{w.dateRange}</p>
+                                                <p className=" text-xs text-muted-foreground">{w.reason}</p>
                                             </div>
                                         </div>
-                                        <button className={btnOutline}>Unblock</button>
+                                        <Button variant="outline" className='cursor-pointer'>Unblock</Button>
                                     </div>
                                 ))}
                         </div>
@@ -275,21 +266,20 @@ export default function AdminInventory({
 }
 
 /* ── Shared style tokens ──────────────────────────────────────────────── */
-const heading = 'font-oswald text-base font-semibold text-foreground';
-const inputCls = 'w-20 rounded-xl border border-border bg-background px-3 py-2 font-libre-franklin text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all';
-const btnPrimary = 'font-libre-franklin rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/30 whitespace-nowrap';
-const btnOutline = 'font-libre-franklin rounded-xl border border-border px-4 py-2 text-sm font-medium text-foreground transition hover:border-primary hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/30 whitespace-nowrap';
+const heading = 'text-lg md:text-xl text-2xl';
+const inputCls = 'w-20 rounded-md border border-primary bg-background px-3 py-2  text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all';
+
 
 /* ── Sub-components ───────────────────────────────────────────────────── */
 function Card({ children }: { children: React.ReactNode }) {
-    return <div className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6">{children}</div>;
+    return <div className="rounded-2xl border border-primary/70 bg-card p-4 shadow-sm sm:p-6">{children}</div>;
 }
 
 function SettingField({ label, suffix, children }: { label: string; suffix: string; children: React.ReactNode }) {
     return (
-        <div>
-            <label className="font-libre-franklin mb-1.5 block text-xs text-muted-foreground">{label}</label>
-            <div className="flex flex-wrap items-center gap-2">{children}<span className="font-libre-franklin text-xs text-muted-foreground">{suffix}</span></div>
+        <div className='space-y-3'>
+            <label className="font-oswald mb-1.5 block text-muted-foreground">{label}</label>
+            <div className="flex flex-wrap items-center gap-3">{children}<span className="text-xs text-muted-foreground">{suffix}</span></div>
         </div>
     );
 }
@@ -297,17 +287,19 @@ function SettingField({ label, suffix, children }: { label: string; suffix: stri
 function CapacityRow({ pkg, pct, showBar }: { pkg: Package; pct: number; showBar?: boolean }) {
     return (
         <>
-            <span className="font-libre-franklin whitespace-nowrap text-xs text-muted-foreground">Weekly cap:</span>
-            <span className="font-libre-franklin text-xs font-medium text-foreground">{pkg.weeklyCapacity}</span>
-            <button type="button" className="text-muted-foreground transition hover:text-primary" aria-label="Edit capacity">
-                <PenLine className="h-3.5 w-3.5" />
-            </button>
+            <span className=" whitespace-nowrap text-xs text-muted-foreground">Weekly cap:</span>
+            {/* <div className='flex items-center gap-2 bg-card-foreground rounded-md p-2 cursor-pointer'>
+                <span className=" text-xs font-medium text-foreground">{pkg.weeklyCapacity}</span>
+                <button type="button" className="text-muted-foreground transition hover:text-primary cursor-pointer" aria-label="Edit capacity">
+                    <PenLine className="h-3.5 w-3.5" />
+                </button>
+            </div> */}
             {showBar && (
                 <div className="h-1.5 w-16 overflow-hidden rounded-full bg-muted sm:w-20">
                     <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${pct}%` }} />
                 </div>
             )}
-            <span className="font-libre-franklin text-xs text-muted-foreground">{pkg.booked}/{pkg.weeklyCapacity}</span>
+            <span className=" text-xs text-muted-foreground">{pkg.booked}/{pkg.weeklyCapacity}</span>
         </>
     );
 }
@@ -324,7 +316,7 @@ function IconBtn({ children, variant = 'default', 'aria-label': ariaLabel, onCli
             aria-label={ariaLabel}
             onClick={onClick}
             className={cn(
-                'flex h-7 w-7 items-center justify-center rounded-lg border border-border transition',
+                'flex h-8 w-8 items-center justify-center rounded-md transition bg-card-foreground cursor-pointer',
                 variant === 'danger'
                     ? 'hover:border-destructive hover:text-destructive'
                     : 'hover:border-primary hover:text-primary',

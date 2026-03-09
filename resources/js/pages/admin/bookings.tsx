@@ -145,7 +145,7 @@ export default function AdminBookings({ bookings = DEMO_BOOKINGS }: AdminBooking
                 <DataTable2nd
                     columns={columns}
                     data={bookings}
-                    searchPlaceholder="Search by customer name…"
+                    searchPlaceholder="Search bookings..."
                     searchColumn="customerName"
                     pageSize={11}
                 />

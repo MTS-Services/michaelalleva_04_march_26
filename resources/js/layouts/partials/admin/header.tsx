@@ -57,7 +57,7 @@ export function AdminHeader({ isCollapsed, setIsCollapsed, onOpenMobileSidebar }
                                     src={auth.user.avatar}
                                     alt={auth.user.name}
                                 />
-                                <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                                <AvatarFallback className="rounded-lg bg-primary text-white text-lg font-semibold ">
                                     {getInitials(auth.user.name)}
                                 </AvatarFallback>
                             </Avatar>

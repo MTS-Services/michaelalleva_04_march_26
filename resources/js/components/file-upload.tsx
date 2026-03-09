@@ -1,4 +1,4 @@
-import { X, Upload, FileText, FileImage, FileVideo, File as FileIcon, Download } from 'lucide-react';
+import { X, Upload, FileText, FileImage, FileVideo, File as FileIcon, Download, ImagePlus } from 'lucide-react';
 import React, { useState, useRef, DragEvent, ChangeEvent, useEffect } from 'react';
 
 import { cn } from '@/lib/utils';
@@ -239,8 +239,8 @@ export default function FileUpload({
                     onDrop={handleDrop}
                     onClick={() => !disabled && fileInputRef.current?.click()}
                     className={cn(
-                        'border-2 border-dashed rounded-lg transition-all cursor-pointer',
-                        'hover:border-primary hover:bg-accent/50',
+                        'border-2 rounded-lg transition-all cursor-pointer border-input',
+                        'hover:border-primary hover:bg-primary/10',
                         'dark:border-gray-700 dark:hover:border-primary',
                         isDragging && 'border-primary bg-accent/50 scale-[1.02]',
                         disabled && 'opacity-50 cursor-not-allowed',
@@ -260,23 +260,7 @@ export default function FileUpload({
                     />
 
                     <div className="flex flex-col items-center justify-center text-center">
-                        <div className={cn(
-                            'rounded-full p-4 mb-4',
-                            'bg-primary/10 dark:bg-primary/20'
-                        )}>
-                            <Upload className="w-8 h-8 text-primary" />
-                        </div>
-
-                        <p className="text-sm font-medium mb-1 dark:text-gray-200">
-                            <span className="text-primary cursor-pointer hover:underline">Click to upload</span>
-                            {' '}or drag and drop
-                        </p>
-
-                        <p className="text-xs text-muted-foreground dark:text-gray-400">
-                            {accept ? `Accepted: ${accept}` : 'Any file type'}
-                            {maxSize && ` • Max ${maxSize}MB`}
-                            {maxFiles && multiple && ` • Up to ${maxFiles} files`}
-                        </p>
+                            <ImagePlus className="h-5 w-5 text-input" />
                     </div>
                 </div>
             )}
@@ -289,7 +273,7 @@ export default function FileUpload({
             {/* Preview Section */}
             {(existingFiles.length > 0 || filePreviews.length > 0) && (
                 <div className={cn(
-                    'border-2 border-dashed rounded-lg p-4 mt-4',
+                    'border-2 border-primary rounded-lg p-1',
                     'dark:border-gray-700',
                     error && 'border-red-500'
                 )}>

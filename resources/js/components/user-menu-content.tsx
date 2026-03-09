@@ -76,7 +76,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
                     onClick={handleLogout}
                     data-test="logout-button"
                 >
-                    <span className='bg-primary text-white rounded p-1 inline-flex items-center justify-center mr-2'>
+                    <span className='bg-destructive text-white rounded p-1 inline-flex items-center justify-center mr-2'>
                         <LogOut className="size-4 text-white" />
                     </span>
                     Log out

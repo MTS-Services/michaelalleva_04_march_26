@@ -62,18 +62,19 @@ export default function Dashboard({
                     subtitle="Welcome back! Here's your booking overview."
                 />
 
-                {/* Stats grid */}
-                <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-                    <StatsCard label="Total Bookings" value={totalBookings} change="68.95%" />
-                    <StatsCard label="Total revenue" value={totalRevenue} change="68.95%" />
-                    <StatsCard label="Active Travelers" value={activeTravelers} change="68.95%" />
-                    <StatsCard label="Active destination" value={activeDestinations} />
-                </div>
+                <div className='grid gap-4 lg:grid-cols-3'>
+                    {/* Stats grid */}
+                    <div className="grid grid-cols-2 gap-4">
+                        <StatsCard label="Total Bookings" value={totalBookings} change="68.95%" />
+                        <StatsCard label="Total revenue" value={totalRevenue} change="68.95%" />
+                        <StatsCard label="Active Travelers" value={activeTravelers} change="68.95%" />
+                        <StatsCard label="Active destination" value={activeDestinations} />
+                    </div>
 
-                {/* Charts row */}
-                <div className="grid gap-4 lg:grid-cols-[1fr_300px]">
+                    {/* Charts row */}
+
                     {/* Revenue bar chart */}
-                    <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+                    <div className="rounded-2xl border border-border bg-card p-5 shadow-sm col-span-2">
                         <div className="mb-4 flex items-start justify-between">
                             <div>
                                 <h3 className="font-oswald font-semibold text-foreground">
@@ -110,6 +111,54 @@ export default function Dashboard({
                                 <Bar dataKey="value" fill="hsl(173,80%,40%)" radius={[4, 4, 0, 0]} />
                             </BarChart>
                         </ResponsiveContainer>
+                    </div>
+
+                </div>
+
+                <div className="grid gap-4 lg:grid-cols-[1fr_500px]">
+                    {/* Recent bookings */}
+                    <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+                        <div className="mb-4 flex items-center justify-between">
+                            <h3 className="font-oswald font-semibold text-foreground">
+                                Recent bookings
+                            </h3>
+                            <Link
+                                href="/admin/bookings"
+                                className="font-libre-franklin text-sm font-medium text-primary hover:underline"
+                            >
+                                View All
+                            </Link>
+                        </div>
+                        <div className="space-y-3">
+                            {recentBookings.map((b, i) => (
+                                <div
+                                    key={i}
+                                    className="flex items-center justify-between rounded-xl border border-border bg-background px-4 py-3"
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <img
+                                            src={b.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(b.name)}&background=14b8a6&color=fff&size=36`}
+                                            alt={b.name}
+                                            className="h-9 w-9 rounded-full object-cover"
+                                        />
+                                        <div>
+                                            <p className="font-libre-franklin text-sm font-medium text-foreground">
+                                                {b.name}
+                                            </p>
+                                            <p className="font-libre-franklin text-xs text-muted-foreground">
+                                                {b.destination} · {b.package}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <span className="font-libre-franklin text-sm font-medium text-foreground">
+                                            {b.amount}
+                                        </span>
+                                        <StatusBadge status={b.status} />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
 
                     {/* Avg bookings donut */}
@@ -151,51 +200,6 @@ export default function Dashboard({
                                 </div>
                             ))}
                         </div>
-                    </div>
-                </div>
-
-                {/* Recent bookings */}
-                <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-                    <div className="mb-4 flex items-center justify-between">
-                        <h3 className="font-oswald font-semibold text-foreground">
-                            Recent bookings
-                        </h3>
-                        <Link
-                            href="/admin/bookings"
-                            className="font-libre-franklin text-sm font-medium text-primary hover:underline"
-                        >
-                            View All
-                        </Link>
-                    </div>
-                    <div className="space-y-3">
-                        {recentBookings.map((b, i) => (
-                            <div
-                                key={i}
-                                className="flex items-center justify-between rounded-xl border border-border bg-background px-4 py-3"
-                            >
-                                <div className="flex items-center gap-3">
-                                    <img
-                                        src={b.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(b.name)}&background=14b8a6&color=fff&size=36`}
-                                        alt={b.name}
-                                        className="h-9 w-9 rounded-full object-cover"
-                                    />
-                                    <div>
-                                        <p className="font-libre-franklin text-sm font-medium text-foreground">
-                                            {b.name}
-                                        </p>
-                                        <p className="font-libre-franklin text-xs text-muted-foreground">
-                                            {b.destination} · {b.package}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="flex items-center gap-3">
-                                    <span className="font-libre-franklin text-sm font-medium text-foreground">
-                                        {b.amount}
-                                    </span>
-                                    <StatusBadge status={b.status} />
-                                </div>
-                            </div>
-                        ))}
                     </div>
                 </div>
             </div>

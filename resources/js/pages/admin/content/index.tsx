@@ -1,7 +1,7 @@
 import { PageHeader } from '@/components/dashboard/page-header';
 import AdminLayout from '@/layouts/admin-layout';
 import { Link } from '@inertiajs/react';
-import { PenLine } from 'lucide-react';
+import {  SquarePen } from 'lucide-react';
 
 interface ContentItem {
     key: string;
@@ -45,17 +45,17 @@ export default function ContentIndex({ items = DEMO_ITEMS }: ContentIndexPagePro
                             className="flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm"
                         >
                             <div className="mb-3 flex items-center justify-between">
-                                <h2 className="font-oswald font-semibold text-foreground">
+                                <p className="text-base md:text-lg lg:text-xl font-bold">
                                     {item.title}
-                                </h2>
+                                </p>
                                 <Link
                                     href={item.editHref}
-                                    className="flex h-8 w-8 items-center justify-center rounded-lg border border-border transition hover:border-primary hover:text-primary"
+                                    className="flex h-8 w-8 items-center justify-center rounded-md border border-accent transition hover:border-primary hover:text-primary"
                                 >
-                                    <PenLine className="h-4 w-4" />
+                                    <SquarePen className="h-4 w-4" />
                                 </Link>
                             </div>
-                            <p className="font-libre-franklin mb-3 text-xs font-medium text-muted-foreground">
+                            <p className="text-base md:text-lg lg:text-xl">
                                 Details
                             </p>
                             <div className="flex-1 rounded-xl bg-background p-4">

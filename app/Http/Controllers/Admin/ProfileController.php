@@ -9,5 +9,8 @@ use Inertia\Response;
 
 class ProfileController extends Controller
 {
-    //
+    public function index()
+    {
+        return Inertia::render('admin/profile');
+    }
 }

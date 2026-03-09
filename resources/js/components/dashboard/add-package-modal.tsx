@@ -1,6 +1,10 @@
 import { cn } from '@/lib/utils';
 import { Plus, X } from 'lucide-react';
 import { useState } from 'react';
+import { Input } from '../ui/input';
+import { Button } from '../ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { Switch } from '../ui/switch';
 
 /* ── Types ─────────────────────────────────────────────────────────────── */
 
@@ -11,6 +15,7 @@ export interface PackageFormData {
     weeklyCapacity: string;
     details: string[];
     active: boolean;
+    destination: string;
 }
 
 interface PackageModalProps {
@@ -41,6 +46,7 @@ export function AddPackageModal({
                 // Ensure at least one detail row
                 details: initialData.details.length > 0 ? initialData.details : [''],
                 active: initialData.active,
+                destination: initialData.destination,
             }
             : {
                 name: '',
@@ -49,6 +55,7 @@ export function AddPackageModal({
                 weeklyCapacity: '5',
                 details: [''],
                 active: true,
+                destination: '',
             },
     );
 
@@ -82,70 +89,83 @@ export function AddPackageModal({
             <div className="w-full max-w-lg rounded-2xl bg-card shadow-2xl flex flex-col max-h-[90vh]">
 
                 {/* Header */}
-                <div className="flex items-center justify-between border-b border-border px-6 py-5 flex-shrink-0">
+                <div className="flex items-center justify-between border-b border-border px-6 py-5 shrink-0">
                     <div>
-                        <h2 className="font-oswald text-lg font-semibold text-foreground">
+                        <h2 className="font-oswald text-lg md:text-xl lg:text-2xl">
                             {isEdit ? 'Edit Package' : 'Add New Package'}
                         </h2>
                         {destinationName && (
-                            <p className="font-libre-franklin mt-0.5 text-xs text-muted-foreground">
+                            <p className="text-sm md:text-base lg:text-lg text-muted-foreground">
                                 Destination: {destinationName}
                             </p>
                         )}
                     </div>
-                    <button
+                    <Button
                         type="button"
                         onClick={onClose}
                         className="flex h-8 w-8 items-center justify-center rounded-lg border border-border transition hover:bg-muted"
                         aria-label="Close"
                     >
                         <X className="h-4 w-4" />
-                    </button>
+                    </Button>
                 </div>
 
                 {/* Scrollable body */}
                 <div className="overflow-y-auto flex-1 space-y-4 p-6">
+
+                    <Field label="Destination">
+                        <Select
+                            value={form.destination}
+                            onValueChange={(value) => set('destination', value)}
+                        >
+                            <SelectTrigger className='py-6'>
+                                <SelectValue placeholder="Select a destination" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="1">Egypt</SelectItem>
+                                <SelectItem value="2">Costa Rica</SelectItem>
+                                <SelectItem value="3">Norway</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </Field>
+
                     {/* Package name */}
                     <Field label="Package Name" required>
-                        <input
+                        <Input
                             type="text"
                             value={form.name}
                             onChange={(e) => set('name', e.target.value)}
                             placeholder="e.g., Luxury Safari"
-                            className={inputCls}
                         />
                     </Field>
 
                     {/* Duration + Price */}
                     <div className="grid grid-cols-2 gap-4">
                         <Field label="Duration (nights)" required>
-                            <input
+                            <Input
                                 type="number"
                                 min={1}
                                 value={form.duration}
                                 onChange={(e) => set('duration', e.target.value)}
-                                className={inputCls}
                             />
                         </Field>
                         <Field label="Price / Person ($)" required>
-                            <input
+                            <Input
                                 type="number"
                                 min={0}
                                 value={form.price}
                                 onChange={(e) => set('price', e.target.value)}
-                                className={inputCls}
                             />
                         </Field>
                     </div>
 
                     {/* Weekly capacity */}
                     <Field label="Weekly Capacity">
-                        <input
+                        <Input
                             type="number"
                             min={1}
                             value={form.weeklyCapacity}
                             onChange={(e) => set('weeklyCapacity', e.target.value)}
-                            className={inputCls}
                         />
                     </Field>
 
@@ -156,12 +176,11 @@ export function AddPackageModal({
                                 const isLast = i === form.details.length - 1;
                                 return (
                                     <div key={i} className="flex items-center gap-2">
-                                        <input
+                                        <Input
                                             type="text"
                                             value={d}
                                             onChange={(e) => setDetail(i, e.target.value)}
                                             placeholder={`Detail ${i + 1} — e.g., Airport transfers included`}
-                                            className={cn(inputCls, 'flex-1')}
                                         />
 
                                         {isLast ? (
@@ -169,28 +188,28 @@ export function AddPackageModal({
                                              * LAST row → "+" button to add a new detail.
                                              * If there's only 1 row this is the only button shown.
                                              */
-                                            <button
+                                            <Button
                                                 type="button"
                                                 onClick={addDetail}
                                                 aria-label="Add detail"
-                                                className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl border border-primary/40 text-primary transition hover:bg-primary hover:text-primary-foreground"
+                                                className="h-11 w-11 cursor-pointer"
                                             >
                                                 <Plus className="h-4 w-4" />
-                                            </button>
+                                            </Button>
                                         ) : (
                                             /*
                                              * Any row that is NOT the last → "×" button to remove it.
                                              * The last row always shows "+" so the user always has
                                              * a way to add more rows.
                                              */
-                                            <button
+                                            <Button
                                                 type="button"
                                                 onClick={() => removeDetail(i)}
                                                 aria-label="Remove detail"
-                                                className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl border border-border text-muted-foreground transition hover:border-destructive hover:text-destructive"
+                                                className="h-11 w-11 cursor-pointer bg-destructive hover:bg-destructive/90"
                                             >
                                                 <X className="h-4 w-4" />
-                                            </button>
+                                            </Button>
                                         )}
                                     </div>
                                 );
@@ -203,13 +222,13 @@ export function AddPackageModal({
 
                     {/* Active toggle */}
                     <label className="flex cursor-pointer items-center gap-3">
-                        <button
+                        {/* <button
                             type="button"
                             role="switch"
                             aria-checked={form.active}
                             onClick={() => set('active', !form.active)}
                             className={cn(
-                                'relative h-6 w-11 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary/30',
+                                'relative h-6 w-11 rounded-full transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/30',
                                 form.active ? 'bg-primary' : 'bg-muted',
                             )}
                         >
@@ -219,7 +238,12 @@ export function AddPackageModal({
                                     form.active ? 'translate-x-5' : 'translate-x-0.5',
                                 )}
                             />
-                        </button>
+                        </button> */}
+
+                        <Switch
+                            checked={form.active}
+                            onCheckedChange={(checked) => set('active', checked)}
+                        />
                         <span className="font-libre-franklin text-sm text-foreground">
                             Active{' '}
                             <span className="text-muted-foreground">(visible to users)</span>
@@ -229,20 +253,18 @@ export function AddPackageModal({
 
                 {/* Footer */}
                 <div className="flex gap-3 border-t border-border px-6 pb-6 pt-4 flex-shrink-0">
-                    <button
-                        type="button"
+                    <Button
                         onClick={onClose}
-                        className="font-libre-franklin flex-1 rounded-xl bg-secondary py-3 text-sm font-medium text-secondary-foreground transition hover:bg-muted"
+                        variant="outline" className='flex-1 cursor-pointer'
                     >
                         Cancel
-                    </button>
-                    <button
-                        type="button"
-                        onClick={handleSubmit}
-                        className="font-libre-franklin flex-1 rounded-xl bg-primary py-3 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"
+                    </Button>
+                    <Button
+                        onClick={handleSubmit} className='flex-1 cursor-pointer'
+
                     >
                         {isEdit ? 'Save Changes' : 'Add Package'}
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>
@@ -250,9 +272,6 @@ export function AddPackageModal({
 }
 
 /* ── Shared styles ─────────────────────────────────────────────────────── */
-
-const inputCls =
-    'w-full rounded-xl border border-primary/40 bg-background px-4 py-3 font-libre-franklin text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all';
 
 function Field({
     label,
