@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { LayoutGrid, CalendarCheck, MapPinPlus, PencilLine, XIcon, LogOut } from 'lucide-react';
+import { Users, User, BarChart, Shield, LayoutGrid, Settings, XIcon } from 'lucide-react';
 import * as React from 'react';
 
 import AppLogo from '@/components/app-logo';
@@ -10,38 +10,80 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { type NavItem as NavItemType, type SharedData } from '@/types';
 import { dashboard } from '@/routes/admin';
-import { index as bookingIndex } from '@/routes/admin/bookings';
-import { index as inventoryIndex } from '@/routes/admin/inventory';
-import { index as contentIndex } from '@/routes/admin/content';
-import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { AvatarFallback } from '@radix-ui/react-avatar';
-import { useInitials } from '@/hooks/use-initials';
-import { home, logout } from '@/routes';
 // Navigation configuration
 const adminNavItems: NavItemType[] = [
     {
-        title: 'Overview',
-        href: dashboard(),
+        title: 'Dashboard',
+        href: route('admin.dashboard'),
         icon: LayoutGrid,
         slug: 'dashboard',
     },
     {
-        title: 'Bookings',
-        href: bookingIndex(),
-        icon: CalendarCheck,
-        slug: 'admin-bookings',
+        title: 'User Management',
+        href: '#',
+        icon: Users,
+        badge: 42,
+        children: [
+            {
+                title: 'Admins',
+                href: '#',
+                icon: Shield,
+                permission: 'manage admins',
+                children: [
+                    { title: 'All Admins', href: '#' },
+                    { title: 'Active', href: '#' },
+                    {
+                        title: 'Inactive',
+                        href: '#',
+                        children: [
+                            { title: 'Recently Inactive', href: '#' },
+                            { title: 'Long Inactive', href: '#' },
+                            {
+                                title: 'Archive',
+                                href: '#',
+                                children: [
+                                    { title: 'Over 1 year', href: '#' },
+                                    { title: 'Over 2 years', href: '#' },
+                                ]
+                            }
+                        ]
+                    },
+                ],
+            },
+            {
+                title: 'Users',
+                href: '#',
+                icon: User,
+                children: [
+                    {
+                        title: 'All',
+                        href: route('admin.users.index'),
+                        icon: User,
+                        slug: 'admin-users'
+                    },
+                    { title: 'Active', href: '#' },
+                    { title: 'Premium', href: '#', badge: 15 },
+                ],
+            },
+        ],
     },
     {
-        title: 'Inventory',
-        href: inventoryIndex(),
-        icon: MapPinPlus,
-        slug: 'admin-inventory',
+        title: 'Analytics',
+        href: '#',
+        icon: BarChart,
+        permission: 'view analytics',
     },
     {
-        title: 'Content',
-        href: contentIndex(),
-        icon: PencilLine,
-        slug: 'admin-content',
+        title: 'Settings',
+        href: '#',
+        icon: Settings,
+        badge: 3,
+    },
+    {
+        title: 'Disabled Item',
+        href: '#',
+        icon: Shield,
+        disabled: true,
     },
 ];
 
@@ -60,12 +102,10 @@ function AdminSidebarContent({
     activeSlug,
     showCloseButton = false,
 }: AdminSidebarContentProps) {
-    const { auth } = usePage<SharedData>().props;
-    const getInitials = useInitials();
     return (
         <>
             {/* Logo Section */}
-            {/* <div className={cn(
+            <div className={cn(
                 "flex h-16 items-center border-b",
                 isCollapsed ? "justify-center px-2" : "px-6"
             )}>
@@ -77,11 +117,7 @@ function AdminSidebarContent({
                         <LayoutGrid className="h-6 w-6 text-primary" />
                     ) : (
                         <div className="flex items-center justify-between gap-2 w-full">
-                            <Button asChild>
-                                <Link href={home()}>
-                                    <AppLogo />
-                                </Link>
-                            </Button>
+                            <AppLogo />
                             {showCloseButton && (
                                 <SheetClose asChild>
                                     <Button variant="ghost" size="icon" aria-label="Close menu">
@@ -92,7 +128,7 @@ function AdminSidebarContent({
                         </div>
                     )}
                 </Link>
-            </div> */}
+            </div>
 
             {/* Navigation */}
             <div className="flex-1 overflow-y-auto px-3 py-4 custom-scrollbar">
@@ -112,41 +148,15 @@ function AdminSidebarContent({
 
             {/* Footer Section (Optional) */}
             {!isCollapsed && (
-                <div className="border-t border-foreground p-4">
-                    <Link href={dashboard()} className="flex items-center gap-3">
-                        <Button className="relative size-12 rounded-full cursor-pointer">
-                            <Avatar>
-                                <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
-                                <AvatarFallback className="bg-primary text-white flex items-center justify-center w-full">
-                                    {getInitials(auth.user.name)}
-                                </AvatarFallback>
-                            </Avatar>
-                        </Button>
-                        <div className="min-w-0 flex-1">
-                            <p className="font-libre-franklin truncate text-sm font-semibold text-foreground">
-                                {auth.user.name}
-                            </p>
-                            <p className="font-libre-franklin truncate text-xs text-muted-foreground">
-                                {auth.user.email}
-                            </p>
-                        </div>
-                    </Link>
-                    <Button
-                        variant="ghost"
-                        className="mt-3 w-full cursor-pointer text-destructive justify-start"
-                        asChild
-                    >
-                        <Link href={logout()}>
-                            <LogOut className="size-6" />
-                            Log Out
-                        </Link>
-                    </Button>
+                <div className="border-t p-4">
+                    <div className="text-xs text-muted-foreground text-center">
+                        v1.0.0
+                    </div>
                 </div>
             )}
         </>
     );
 }
-
 
 interface AdminSidebarProps {
     isCollapsed: boolean;

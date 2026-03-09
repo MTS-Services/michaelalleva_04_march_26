@@ -18,6 +18,9 @@ import { type SharedData } from '@/types';
 import { dashboard as adminDashboard } from '@/routes/admin';
 import { dashboard as userDashboard } from '@/routes/user';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
+import { index as adminProfile } from '@/routes/admin/profile';
+import { index as userProfile } from '@/routes/user/profile';
+
 
 const NavItems = [
     {
@@ -70,6 +73,8 @@ export function FrontendHeader() {
     }, []);
 
     const dashboardUrl = auth?.user?.is_admin ? adminDashboard() : userDashboard();
+
+    const profileUrl = auth?.user?.is_admin ? adminProfile() : userProfile();
 
     const handleLogout = () => {
         cleanup();

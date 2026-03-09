@@ -1,24 +1,16 @@
-import { NavItem } from '@/components/ui/nav-item';
-import { cn } from '@/lib/utils';
-import { dashboard } from '@/routes/admin';
-import { Link, router, usePage } from '@inertiajs/react';
-import {
-    BookOpen,
-    LayoutGrid,
-    LogOut,
-    MapPin,
-    PenLine,
-} from 'lucide-react';
-import { AdminSidebar } from './partials/admin/sidebar';
-import { AdminHeader } from './partials/admin/header';
+import { router } from '@inertiajs/react';
 import * as React from 'react';
-import { useAppearance } from '@/hooks/use-appearance';
 
+import { useAppearance } from '@/hooks/use-appearance';
+import { AdminHeader } from '@/layouts/partials/admin/header';
+import { AdminSidebar } from '@/layouts/partials/admin/sidebar';
+
+import { AdminFooter } from './partials/admin/footer';
 
 
 interface AdminLayoutProps {
     children: React.ReactNode;
-    activeSlug?: string;
+    activeSlug?: string | null;
 }
 
 export default function AdminLayout({ children, activeSlug }: AdminLayoutProps) {
@@ -54,20 +46,25 @@ export default function AdminLayout({ children, activeSlug }: AdminLayoutProps) 
     }, []);
 
     return (
-        <div className="relative flex h-full max-h-screen min-h-screen bg-background">
+        <div className="relative flex h-full max-h-screen min-h-screen bg-card">
             <AdminSidebar
                 isCollapsed={isCollapsed}
                 activeSlug={activeSlug}
                 isMobileOpen={isMobileSidebarOpen}
                 onMobileOpenChange={setIsMobileSidebarOpen}
             />
-            {/* Sidebar */}
             <div className="flex flex-1 flex-col overflow-hidden">
-                <AdminHeader isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} onOpenMobileSidebar={() => setIsMobileSidebarOpen(true)} />
-                <main className="flex-1 overflow-y-auto overflow-x-hidden p-6 space-y-6">{children}</main>
+                <AdminHeader
+                    isCollapsed={isCollapsed}
+                    setIsCollapsed={setIsCollapsed}
+                    onOpenMobileSidebar={() => setIsMobileSidebarOpen(true)}
+                />
+                <main className="flex-1 overflow-y-auto overflow-x-hidden p-6 space-y-6">
+                    {children}
+                </main>
+
+                <AdminFooter />
             </div>
-            {/* Main content */}
-            {/* <main className="flex-1 overflow-auto p-6">{children}</main> */}
-        </div >
+        </div>
     );
 }

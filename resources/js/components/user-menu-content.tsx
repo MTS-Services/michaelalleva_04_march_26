@@ -1,5 +1,5 @@
 import { Link, router } from '@inertiajs/react';
-import { LayoutDashboard, LogOut, Settings } from 'lucide-react';
+import { LayoutDashboard, LogOut, Settings, UserIcon } from 'lucide-react';
 
 import {
     DropdownMenuItem,
@@ -14,6 +14,8 @@ import { dashboard as adminDashboard } from '@/routes/admin';
 import { edit } from '@/routes/profile';
 import { dashboard as userDashboard } from '@/routes/user';
 import { type User } from '@/types';
+import { index as adminProfile } from '@/routes/admin/profile';
+import { index as userProfile } from '@/routes/user/profile';
 
 interface UserMenuContentProps {
     user: User;
@@ -28,7 +30,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
     };
 
     const dashboardLink = user.is_admin ? adminDashboard() : userDashboard();
-
+    const profileLink = user.is_admin ? adminProfile() : userProfile();
     return (
         <>
             <DropdownMenuLabel className="p-0 font-normal">
@@ -54,14 +56,14 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
                 <DropdownMenuItem asChild>
                     <Link
                         className="block w-full cursor-pointer"
-                        href={edit()}
+                        href={profileLink}
                         prefetch
                         onClick={cleanup}
                     >
                         <span className='bg-primary text-white rounded p-1 inline-flex items-center justify-center mr-2'>
-                            <Settings className="size-4 text-white" />
+                            <UserIcon className="size-4 text-white" />
                         </span>
-                        Settings
+                        Profile
                     </Link>
                 </DropdownMenuItem>
             </DropdownMenuGroup>

@@ -1,17 +1,34 @@
+import { Link, usePage } from '@inertiajs/react';
+import { Separator } from '@radix-ui/react-separator';
+import { ChevronsLeft, ChevronsRight, Menu, Search, BellIcon } from 'lucide-react';
 import * as React from 'react';
-import { usePage } from '@inertiajs/react';
-import { ChevronsLeft, ChevronsRight } from 'lucide-react';
+
+import AppearanceToggleDropdown from '@/components/appearance-dropdown';
+import { Icon } from '@/components/icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuTrigger,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
+import { NavigationMenu, NavigationMenuItem, NavigationMenuList, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { UserMenuContent } from '@/components/user-menu-content';
+import { useActiveUrl } from '@/hooks/use-active-url';
 import { useInitials } from '@/hooks/use-initials';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { type SharedData } from '@/types';
+import { cn, toUrl } from '@/lib/utils';
+import { type BreadcrumbItem, type SharedData, type NavItem as NavItemType } from '@/types';
+import { dashboard } from '@/routes/admin';
 
 
 interface AdminHeaderProps {
@@ -20,9 +37,14 @@ interface AdminHeaderProps {
     onOpenMobileSidebar?: () => void;
 }
 
+const activeItemStyles =
+    'text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100';
+
 export function AdminHeader({ isCollapsed, setIsCollapsed, onOpenMobileSidebar }: AdminHeaderProps) {
     const { auth } = usePage<SharedData>().props;
     const getInitials = useInitials();
+    const page = usePage<SharedData>();
+    const { urlIsActive } = useActiveUrl();
     const isMobile = useIsMobile();
     const [mounted, setMounted] = React.useState(false);
     React.useEffect(() => setMounted(true), []);
@@ -39,14 +61,47 @@ export function AdminHeader({ isCollapsed, setIsCollapsed, onOpenMobileSidebar }
                 aria-label={showMobileMenu ? 'Open menu' : 'Toggle sidebar'}
             >
                 {showMobileMenu ? (
-                    <ChevronsRight className="h-4 w-4" />
+                    <Menu className="h-4 w-4" />
                 ) : (
                     isCollapsed ? <ChevronsRight className="h-4 w-4" /> : <ChevronsLeft className="h-4 w-4" />
                 )}
             </Button>
 
             <div className="ml-auto flex items-center space-x-2">
-                <DropdownMenu>
+                <div className="relative flex items-center space-x-1">
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="group h-9 w-9 cursor-pointer"
+                    >
+                        <Search className="size-5! opacity-80 group-hover:opacity-100" />
+                    </Button>
+                    <Separator orientation="vertical" />
+                    <AppearanceToggleDropdown />
+                    <div className="hidden lg:flex">
+                        <TooltipProvider
+                            key="notification"
+                            delayDuration={0}
+                        >
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <Button
+                                        asChild
+                                        variant="ghost"
+                                        size="icon"
+                                        className="group h-9 w-9 cursor-pointer"
+                                    >
+                                        <BellIcon className="size-5! opacity-80 group-hover:opacity-100" />
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Notification</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    </div>
+                </div>
+                {/* <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button
                             variant="ghost"
@@ -66,8 +121,8 @@ export function AdminHeader({ isCollapsed, setIsCollapsed, onOpenMobileSidebar }
                     <DropdownMenuContent className="w-56" align="end">
                         <UserMenuContent user={auth.user} />
                     </DropdownMenuContent>
-                </DropdownMenu>
-                {/* <Link href={dashboard()}>
+                </DropdownMenu> */}
+                <Link href={dashboard()}>
                     <Button className="relative size-12 rounded-full cursor-pointer">
                         <Avatar>
                             <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
@@ -76,7 +131,7 @@ export function AdminHeader({ isCollapsed, setIsCollapsed, onOpenMobileSidebar }
                             </AvatarFallback>
                         </Avatar>
                     </Button>
-                </Link> */}
+                </Link>
             </div>
 
         </header>
