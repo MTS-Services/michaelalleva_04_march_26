@@ -1,10 +1,16 @@
-import { Link } from '@inertiajs/react';
-import { Settings, LayoutGrid, LayoutDashboard } from 'lucide-react';
+import { Link, router, usePage } from '@inertiajs/react';
+import { Settings, LayoutGrid, LayoutDashboard, LogOut } from 'lucide-react';
 import * as React from 'react';
 
 import AppLogo from '@/components/app-logo';
 import { cn } from '@/lib/utils';
-import { type NavItem as NavItemType } from '@/types';
+import { SharedData, type NavItem as NavItemType } from '@/types';
+import { logout } from '@/routes';
+import { dashboard as userDashboard } from '@/routes/user';
+import { Button } from '@/components/ui/button';
+import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useInitials } from '@/hooks/use-initials';
 
 const mainNavItems: NavItemType[] = [
     {
@@ -24,6 +30,14 @@ interface UserSidebarProps {
 }
 
 export function UserSidebar({ isCollapsed }: UserSidebarProps) {
+    const cleanup = useMobileNavigation();
+    const handleLogout = () => {
+        cleanup();
+        router.flushAll();
+    };
+
+    const { auth } = usePage<SharedData>().props;
+    const getInitials = useInitials();
     return (
         <div
             className={cn(
@@ -32,8 +46,15 @@ export function UserSidebar({ isCollapsed }: UserSidebarProps) {
             )}
         >
             <div className="flex h-16 items-center border-b px-6">
-                <Link href="/">
-                    {isCollapsed ? <LayoutDashboard className="h-6 w-6" /> : <AppLogo />}
+                <Link href={userDashboard()}>
+                    <Button className="relative size-12 rounded-full cursor-pointer">
+                        <Avatar>
+                            <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
+                            <AvatarFallback className="bg-primary text-white">
+                                {getInitials(auth.user.name)}
+                            </AvatarFallback>
+                        </Avatar>
+                    </Button>
                 </Link>
             </div>
             <nav className="flex-1 space-y-2 p-4">
@@ -49,8 +70,9 @@ export function UserSidebar({ isCollapsed }: UserSidebarProps) {
                         {item.icon && <item.icon className="h-5 w-5" />}
                         <span className={cn('text-sm', isCollapsed && 'hidden')}>{item.title}</span>
                     </Link>
-                ))}
+                ))}                
             </nav>
+
         </div>
     );
 }

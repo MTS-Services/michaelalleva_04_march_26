@@ -8,16 +8,20 @@ import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
+import { Field, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field';
+import { ArrowRight } from 'lucide-react';
+import { PasswordInput } from '@/components/ui/password-input';
+import TextLink from '@/components/text-link';
 
 export default function Register() {
     return (
         <AuthLayout
-            title="Create an account"
-            description="Join thousands of teams shipping faster today."
+            title="Sign up"
+            description="Sign up or create an account"
         >
             <Head title="Register" />
 
-            <div className="mx-auto w-full max-w-md rounded-2xl border border-border/50 bg-card/50 p-8 shadow-xl backdrop-blur-sm">
+            <div className="w-full">
                 <Form
                     {...store.form()}
                     resetOnSuccess={['password', 'password_confirmation']}
@@ -26,47 +30,45 @@ export default function Register() {
                 >
                     {({ processing, errors }) => (
                         <>
-                            <div className="grid gap-4">
-                                <div className="grid gap-1.5">
-                                    <Label htmlFor="name">Full Name</Label>
-                                    <Input id="name" type="text" required autoFocus name="name" placeholder="John Doe" className="bg-card/50" />
-                                    <InputError message={errors.name} />
-                                </div>
+                            <FieldSet className="space-y-6">
+                                <FieldGroup className="gap-7">
+                                    <Field>
+                                        <FieldLabel htmlFor="name" className="font-oswald mb-2 block text-lg md:text-xl">Full Name</FieldLabel>
+                                        <Input id="name" type="text" required autoFocus name="name" placeholder="John Doe" className="bg-card/50" />
+                                        <InputError message={errors.name} />
+                                    </Field>
 
-                                <div className="grid gap-1.5">
-                                    <Label htmlFor="email">Email address</Label>
-                                    <Input id="email" type="email" required name="email" placeholder="name@company.com" className="bg-card/50" />
-                                    <InputError message={errors.email} />
-                                </div>
+                                    <Field>
+                                        <FieldLabel htmlFor="email" className="font-oswald mb-2 block text-lg md:text-xl">Email address</FieldLabel>
+                                        <Input id="email" type="email" required name="email" placeholder="name@company.com" className="bg-card/50" />
+                                        <InputError message={errors.email} />
+                                    </Field>
 
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="grid gap-1.5">
-                                        <Label htmlFor="password">Password</Label>
-                                        <Input id="password" type="password" required name="password" placeholder="••••••••" className="bg-card/50" />
-                                    </div>
-                                    <div className="grid gap-1.5">
-                                        <Label htmlFor="password_confirmation">Confirm</Label>
-                                        <Input id="password_confirmation" type="password" required name="password_confirmation" placeholder="••••••••" className="bg-card/50" />
-                                    </div>
-                                </div>
-                                <InputError message={errors.password} />
+                                    <Field>
+                                        <FieldLabel htmlFor="password" className="font-oswald mb-2 block text-lg md:text-xl">Password</FieldLabel>
+                                        <PasswordInput id="password" required name="password" placeholder="••••••••" className="bg-card/50" />
+                                    </Field>
+                                    <Field>
+                                        <FieldLabel htmlFor="password_confirmation" className="font-oswald mb-2 block text-lg md:text-xl">Confirm Password</FieldLabel>
+                                        <PasswordInput id="password_confirmation" required name="password_confirmation" placeholder="••••••••" className="bg-card/50" />
+                                    </Field>
 
-                                <Button type="submit" className="w-full bg-violet-600 font-semibold text-white shadow-md transition-all hover:bg-violet-700 hover:shadow-violet-500/20 active:scale-[0.98]" disabled={processing}>
-                                    {processing && <Spinner className="mr-2 h-4 w-4" />}
-                                    Create Account
-                                </Button>
-                            </div>
-
-                            <div className="text-center text-sm text-muted-foreground">
-                                Already have an account?{' '}
-                                <Link href={login()} className="font-medium text-violet-600 hover:text-violet-500 transition-colors">
-                                    Log in
-                                </Link>
-                            </div>
+                                    <Button type="submit" className={`w-full py-6 text-lg ${processing ? 'cursor-not-allowed' : 'cursor-pointer'}`} disabled={processing}>
+                                        {processing && <Spinner className="mr-2 h-4 w-4" />}
+                                        {processing ? <Spinner className="h-4 w-4" /> : <>Continue <ArrowRight className="h-4 w-4" /></>}
+                                    </Button>
+                                </FieldGroup>
+                            </FieldSet>
                         </>
                     )}
                 </Form>
+                <div className="mt-4 text-center text-sm text-muted-foreground">
+                    Already have an account?{' '}
+                    <TextLink href={login()} className="font-medium text-primary hover:text-primary/90 transition-colors underline-offset-4 hover:underline">
+                        Log in
+                    </TextLink>
+                </div>
             </div>
-        </AuthLayout>
+        </AuthLayout >
     );
 }

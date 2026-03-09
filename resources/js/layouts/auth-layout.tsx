@@ -7,6 +7,7 @@ import { useAppearance } from '@/hooks/use-appearance';
 import { AuthFooter } from '@/layouts/partials/auth/footer';
 import { AuthHeader } from '@/layouts/partials/auth/header';
 import { home } from '@/routes';
+import { Button } from '@/components/ui/button';
 
 
 interface AuthLayoutProps {
@@ -21,8 +22,8 @@ export default function AuthLayout({
     children,
     title,
     description,
-    showHeader = false,
-    showFooter = false,
+    showHeader = true,
+    showFooter = true,
 }: AuthLayoutProps) {
     const { appearance, updateAppearance } = useAppearance();
     React.useEffect(() => {
@@ -31,32 +32,24 @@ export default function AuthLayout({
         }
     }, [appearance, updateAppearance]);
     return (
-        <div className="flex min-h-svh flex-col bg-card relative overflow-hidden">
-
-            {/* Top Left Ellipse */}
-            <span
-                className='absolute blur-3xl pointer-events-none -top-[15%] -left-[35%] w-115 h-65 sm:w-150 sm:h-90 md:w-200 md:h-105 xl:-top-[30%] xl:-left-[35%] xl:w-300 xl:h-150 2xl:-top-[45%] 2xl:-left-[40%] 2xl:w-400 2xl:h-200 bg-radial from-[hsla(354,63%,84%,0.9)] from-0% to-transparent to-70%  opacity-80 xl:opacity-100'
-            ></span>
-
-            {/* Bottom Right Ellipse */}
-            <span
-                className='absolute blur-3xl pointer-events-none -bottom-[15%] -right-[35%] w-115 h-65 sm:w-150 sm:h-90 md:w-200 md:h-105 xl:-bottom-[30%] xl:-right-[35%] xl:w-300 xl:h-150 2xl:-bottom-[45%] 2xl:-right-[40%] 2xl:w-400 2xl:h-200 bg-radial from-[hsla(354,63%,84%,0.9)] from-0% to-transparent to-70%  opacity-80 xl:opacity-100'
-            ></span>
-
+        <div className="flex min-h-screen flex-col">
             {showHeader && <AuthHeader />}
 
-            <main className="flex flex-1 items-center justify-center p-6 md:p-10">
-                <div className="w-full max-w-sm space-y-8">
-                    <div className="flex flex-col items-center gap-6">
-                        <Link href={home()} className="flex flex-col items-center gap-2">
-                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/5">
-                                <AppLogoIcon className="size-10 fill-current text-foreground" />
-                            </div>
-                        </Link>
 
-                        <div className="space-y-2 text-center">
-                            <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
-                            <p className="text-sm text-muted-foreground">{description}</p>
+            <div className='mt-24 md:mt-28 lg:mt-32'></div>
+            <main className="flex flex-1 items-center justify-center px-4 py-15 md:px-6 lg:px-8">
+                <div className="container max-w-xl bg-card p-10 rounded-md space-y-7">
+                    <div className="space-y-10">
+                        <div className='flex justify-center'>
+                            <Button asChild>
+                                <Link href={home()}>
+                                    <AppLogo />
+                                </Link>
+                            </Button>
+                        </div>
+                        <div className="space-y-2 ">
+                            <h1 className="text-lg md:text-xl lg:text-2xl">{title}</h1>
+                            <p>{description}</p>
                         </div>
                     </div>
 

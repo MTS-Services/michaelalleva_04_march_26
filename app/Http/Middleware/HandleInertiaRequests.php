@@ -49,9 +49,9 @@ class HandleInertiaRequests extends Middleware
                 // 'canVerifyEmail' => Features::enabled(Features::emailVerification()),
                 // 'canUseTwoFactorAuthentication' => Features::enabled(Features::twoFactorAuthentication()),
                 'canRegister' => true,
-                'canResetPassword' => true,
+                'canResetPassword' => false,
                 'canVerifyEmail' => true,
-                'canUseTwoFactorAuthentication' => true,
+                'canUseTwoFactorAuthentication' => false,
             ],
         ];
     }

@@ -1,5 +1,5 @@
-import { Link, usePage } from '@inertiajs/react';
-import { Menu, XIcon } from 'lucide-react';
+import { Link, router, usePage } from '@inertiajs/react';
+import { LogOut, Menu, XIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import AppLogo from '@/components/app-logo';
@@ -12,9 +12,12 @@ import { useActiveUrl } from '@/hooks/use-active-url';
 import { useInitials } from '@/hooks/use-initials';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import { aboutUs, contact, destination, login, register } from '@/routes';
+import { aboutUs, contact, destination, login, logout, register } from '@/routes';
 import { home } from '@/routes';
 import { type SharedData } from '@/types';
+import { dashboard as adminDashboard } from '@/routes/admin';
+import { dashboard as userDashboard } from '@/routes/user';
+import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 
 const NavItems = [
     {
@@ -41,6 +44,7 @@ export function FrontendHeader() {
     const { urlIsActive } = useActiveUrl();
     const isMobile = useIsMobile();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const cleanup = useMobileNavigation();
 
     const [topOffset, setTopOffset] = useState(13);
 
@@ -65,6 +69,13 @@ export function FrontendHeader() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const dashboardUrl = auth?.user?.is_admin ? adminDashboard() : userDashboard();
+
+    const handleLogout = () => {
+        cleanup();
+        router.flushAll();
+    };
+
     return (
         <header
             className="fixed left-0 right-0 z-50 transition-all duration-300 ease-in-out px-4"
@@ -72,7 +83,7 @@ export function FrontendHeader() {
         >
             <div className='container mx-auto flex items-center justify-between p-3 md:p-4 bg-card rounded-lg shadow-sm'>
                 <Button asChild>
-                    <Link href="/">
+                    <Link href={home()}>
                         <AppLogo />
                     </Link>
                 </Button>
@@ -89,7 +100,8 @@ export function FrontendHeader() {
                 </nav>
                 <div className={cn("flex items-center gap-3", isMobile ? 'hidden' : 'flex')}>
                     {auth.user ? (
-                        <DropdownMenu>
+                        <>
+                            {/* <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button className="relative size-12 rounded-full">
                                     <Avatar className="">
@@ -103,7 +115,18 @@ export function FrontendHeader() {
                             <DropdownMenuContent className="w-52" align="end" sideOffset={5}>
                                 <UserMenuContent user={auth.user} />
                             </DropdownMenuContent>
-                        </DropdownMenu>
+                        </DropdownMenu> */}
+                            <Link href={dashboardUrl}>
+                                <Button className="relative size-12 rounded-full cursor-pointer">
+                                    <Avatar>
+                                        <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
+                                        <AvatarFallback className="bg-primary text-white">
+                                            {getInitials(auth.user.name)}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                </Button>
+                            </Link>
+                        </>
                     ) : (
                         <div className="flex items-center gap-3">
                             {features.canRegister &&
@@ -170,9 +193,32 @@ export function FrontendHeader() {
                                         </Button>
                                     </div>
                                 ) : (
-                                    <Link href={route('admin.dashboard')} className="block w-full" onClick={() => setIsMobileMenuOpen(false)}>
-                                        <Button className="w-full bg-violet-600 py-6">Dashboard</Button>
-                                    </Link>
+                                    // <Link href={dashboardUrl} className="block w-full" onClick={() => setIsMobileMenuOpen(false)}>
+                                    //     <Button className="w-full py-6">Dashboard</Button>
+                                    // </Link>
+                                    <div className="flex items-center justify-between">
+                                        <Link href={dashboardUrl}>
+                                            <Button className="py-6 cursor-pointer">
+                                                <Avatar>
+                                                    <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
+                                                    <AvatarFallback className="bg-primary text-white">
+                                                        {getInitials(auth.user.name)}
+                                                    </AvatarFallback>
+                                                </Avatar>
+                                            </Button>
+                                        </Link>
+                                        <Link
+                                            href={logout()}
+                                            as="button"
+                                            onClick={handleLogout}
+                                            data-test="logout-button"
+                                        >
+                                            <Button variant="outline" className="w-full cursor-pointer">
+                                                <LogOut className="size-4" />
+                                                Log Out
+                                            </Button>
+                                        </Link>
+                                    </div>
                                 )}
                             </div>
                         </div>
