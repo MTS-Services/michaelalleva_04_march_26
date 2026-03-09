@@ -288,7 +288,7 @@ function CapacityRow({ pkg, pct, showBar }: { pkg: Package; pct: number; showBar
     return (
         <>
             <span className=" whitespace-nowrap text-xs text-muted-foreground">Weekly cap:</span>
-            {/* <div className='flex items-center gap-2 bg-card-foreground rounded-md p-2 cursor-pointer'>
+            {/* <div className='flex items-center gap-2 bg-secondary-foreground rounded-md p-2 cursor-pointer'>
                 <span className=" text-xs font-medium text-foreground">{pkg.weeklyCapacity}</span>
                 <button type="button" className="text-muted-foreground transition hover:text-primary cursor-pointer" aria-label="Edit capacity">
                     <PenLine className="h-3.5 w-3.5" />
@@ -316,7 +316,7 @@ function IconBtn({ children, variant = 'default', 'aria-label': ariaLabel, onCli
             aria-label={ariaLabel}
             onClick={onClick}
             className={cn(
-                'flex h-8 w-8 items-center justify-center rounded-md transition bg-card-foreground cursor-pointer',
+                'flex h-8 w-8 items-center justify-center rounded-md transition bg-secondary-foreground cursor-pointer',
                 variant === 'danger'
                     ? 'hover:border-destructive hover:text-destructive'
                     : 'hover:border-primary hover:text-primary',

@@ -12,10 +12,10 @@ import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { logout } from '@/routes';
 import { dashboard as adminDashboard } from '@/routes/admin';
 import { edit } from '@/routes/profile';
-import { dashboard as userDashboard } from '@/routes/user';
 import { type User } from '@/types';
 import { index as adminProfile } from '@/routes/admin/profile';
 import { index as userProfile } from '@/routes/user/profile';
+import { index as userTrips } from '@/routes/user/trips';
 
 interface UserMenuContentProps {
     user: User;
@@ -29,7 +29,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
         router.flushAll();
     };
 
-    const dashboardLink = user.is_admin ? adminDashboard() : userDashboard();
+    const dashboardLink = user.is_admin ? adminDashboard() : userTrips();
     const profileLink = user.is_admin ? adminProfile() : userProfile();
     return (
         <>
@@ -50,7 +50,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
                         <span className='bg-primary text-white rounded p-1 inline-flex items-center justify-center mr-2'>
                             <LayoutDashboard className="size-4 text-white" />
                         </span>
-                        Dashboard
+                        {user.is_admin ? 'Dashboard' : 'My Trips'}
                     </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
