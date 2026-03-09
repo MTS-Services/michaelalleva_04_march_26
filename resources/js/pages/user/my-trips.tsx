@@ -1,9 +1,10 @@
 import { PageHeader } from '@/components/dashboard/page-header';
 import { StatusBadge } from '@/components/dashboard/status-badge';
-import UserLayout from '@/layouts/user-layout';
+import AppLayout from '@/layouts/app-layout';
 import { Link } from '@inertiajs/react';
 import { Calendar, Globe, PlaneTakeoff } from 'lucide-react';
 import { useState } from 'react';
+import { show as tripShow } from '@/routes/user/trips';
 
 interface TripCard {
     id: string;
@@ -17,7 +18,7 @@ interface TripCard {
     status: string;
     ref: string;
     guestAges: string;
-    detailHref: string;
+    bookingUid: string;
 }
 
 interface MyTripsPageProps {
@@ -27,8 +28,8 @@ interface MyTripsPageProps {
 }
 
 const DEMO_ACTIVE: TripCard[] = [
-    { id: '1', destination: 'Egypt', destinationImage: '/images/egypt.jpg', packageName: 'Grand Egypt Expedition', nights: 14, guests: 1, dateRange: 'Mar 15, 2026 – Jun 29, 2026', amount: 25000, status: 'Confirmed', ref: 'WL-EGY-2025-001', guestAges: '29 years old', detailHref: '/dashboard/trips/1' },
-    { id: '2', destination: 'Costa rica', destinationImage: '/images/costa-rica.jpg', packageName: 'Rainforest Adventure', nights: 14, guests: 1, dateRange: 'Mar 15, 2026 – Jun 29, 2026', amount: 25000, status: 'Paid', ref: 'WL-EGY-2025-001', guestAges: '29 years old', detailHref: '/dashboard/trips/2' },
+    { id: '1', destination: 'Egypt', destinationImage: '/images/egypt.jpg', packageName: 'Grand Egypt Expedition', nights: 14, guests: 1, dateRange: 'Mar 15, 2026 – Jun 29, 2026', amount: 25000, status: 'Confirmed', ref: 'WL-EGY-2025-001', guestAges: '29 years old', bookingUid: '1' },
+    { id: '2', destination: 'Costa rica', destinationImage: '/images/costa-rica.jpg', packageName: 'Rainforest Adventure', nights: 14, guests: 1, dateRange: 'Mar 15, 2026 – Jun 29, 2026', amount: 25000, status: 'Paid', ref: 'WL-EGY-2025-001', guestAges: '29 years old', bookingUid: '2' },
 ];
 
 export default function MyTrips({
@@ -40,7 +41,7 @@ export default function MyTrips({
     const displayTrips = tab === 'active' ? activeTrips : historyTrips;
 
     return (
-        <UserLayout userName={userName}>
+        <AppLayout activeSlug="user-trips">
             <div className="space-y-6">
                 <PageHeader
                     title={`Welcome back, ${userName}!`}
@@ -58,21 +59,19 @@ export default function MyTrips({
                 <div className="flex gap-3">
                     <button
                         onClick={() => setTab('active')}
-                        className={`font-libre-franklin rounded-xl px-5 py-2 text-sm font-medium transition ${
-                            tab === 'active'
+                        className={`font-libre-franklin rounded-xl px-5 py-2 text-sm font-medium transition ${tab === 'active'
                                 ? 'bg-primary text-primary-foreground'
                                 : 'border border-primary text-primary hover:bg-primary/5'
-                        }`}
+                            }`}
                     >
                         Active Trips {activeTrips.length}
                     </button>
                     <button
                         onClick={() => setTab('history')}
-                        className={`font-libre-franklin rounded-xl px-5 py-2 text-sm font-medium transition ${
-                            tab === 'history'
+                        className={`font-libre-franklin rounded-xl px-5 py-2 text-sm font-medium transition ${tab === 'history'
                                 ? 'bg-primary text-primary-foreground'
                                 : 'border border-primary text-primary hover:bg-primary/5'
-                        }`}
+                            }`}
                     >
                         History ({historyTrips.length})
                     </button>
@@ -123,7 +122,7 @@ export default function MyTrips({
                                             Ref: {trip.ref}
                                         </p>
                                         <Link
-                                            href={trip.detailHref}
+                                            href={tripShow({ trip: trip.bookingUid })}
                                             className="font-libre-franklin mt-2 inline-block rounded-xl bg-primary px-4 py-1.5 text-xs font-medium text-primary-foreground transition hover:bg-primary/90"
                                         >
                                             View Details
@@ -142,7 +141,7 @@ export default function MyTrips({
                     )}
                 </div>
             </div>
-        </UserLayout>
+        </AppLayout>
     );
 }
 
