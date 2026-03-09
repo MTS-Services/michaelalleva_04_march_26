@@ -1,3 +1,4 @@
+import { router } from '@inertiajs/react';
 import * as React from 'react';
 
 import { useAppearance } from '@/hooks/use-appearance';
@@ -27,6 +28,7 @@ export default function AdminLayout({ children, activeSlug }: AdminLayoutProps) 
         }
         return false;
     });
+    const [isMobileSidebarOpen, setIsMobileSidebarOpen] = React.useState(false);
 
     // Save sidebar state to localStorage
     React.useEffect(() => {
@@ -35,11 +37,28 @@ export default function AdminLayout({ children, activeSlug }: AdminLayoutProps) 
         }
     }, [isCollapsed]);
 
+    // Close mobile sidebar on Inertia navigation
+    React.useEffect(() => {
+        const removeListener = router.on('navigate', () => {
+            setIsMobileSidebarOpen(false);
+        });
+        return removeListener;
+    }, []);
+
     return (
         <div className="relative flex h-full max-h-screen min-h-screen bg-card">
-            <AdminSidebar isCollapsed={isCollapsed} activeSlug={activeSlug} />
+            <AdminSidebar
+                isCollapsed={isCollapsed}
+                activeSlug={activeSlug}
+                isMobileOpen={isMobileSidebarOpen}
+                onMobileOpenChange={setIsMobileSidebarOpen}
+            />
             <div className="flex flex-1 flex-col overflow-hidden">
-                <AdminHeader isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+                <AdminHeader
+                    isCollapsed={isCollapsed}
+                    setIsCollapsed={setIsCollapsed}
+                    onOpenMobileSidebar={() => setIsMobileSidebarOpen(true)}
+                />
                 <main className="flex-1 overflow-y-auto overflow-x-hidden p-6 space-y-6">
                     {children}
                 </main>
